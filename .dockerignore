@@ -1,0 +1,35 @@
+# Keep the build context small: only what `next build` needs.
+
+# dependencies and build output (rebuilt inside the image)
+node_modules
+.next
+out
+build
+*.tsbuildinfo
+next-env.d.ts
+
+# version control and editor/agent tooling
+.git
+.gitignore
+.claude
+.agents
+.vscode
+
+# design source material — never served; production uses /public copies
+static_design
+reference
+prompts
+docs
+*.png
+!public/**/*.png
+
+# local environment and logs
+.env
+.env.*
+!.env.example
+npm-debug.log*
+
+# docker files themselves
+Dockerfile
+docker-compose.yml
+.dockerignore

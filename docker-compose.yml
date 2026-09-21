@@ -1,0 +1,79 @@
+# Kerinti website — CasaOS / Docker Compose deployment.
+#
+#   git clone https://github.com/bedirhan-dikmen/web-design-react.git
+#   cd web-design-react
+#   cp .env.example .env        # fill in the Cloudflare tunnel token
+#   docker compose up -d --build
+#
+# Full walkthrough (Turkish): DEPLOY.md
+
+name: kerinti-web
+
+services:
+  web:
+    build:
+      context: .
+      args:
+        NEXT_PUBLIC_CONTACT_ENDPOINT: ${NEXT_PUBLIC_CONTACT_ENDPOINT:-}
+    image: kerinti-web:latest
+    container_name: kerinti-web
+    restart: unless-stopped
+    ports:
+      # Host port for LAN access (http://<server-ip>:3000). Cloudflare Tunnel
+      # does not need it — it reaches the site over the internal network.
+      - "${WEB_PORT:-3000}:3000"
+    environment:
+      NODE_ENV: production
+      TZ: ${TZ:-Europe/Istanbul}
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:3000/"]
+      interval: 30s
+      timeout: 5s
+      start_period: 20s
+      retries: 3
+    networks:
+      - kerinti
+
+  # Cloudflare Tunnel: publishes the site on your domain without opening any
+  # port on the router. Started only when the "tunnel" profile is enabled —
+  # set COMPOSE_PROFILES=tunnel in .env (see .env.example). In the Cloudflare
+  # dashboard, point the tunnel's public hostname at: http://web:3000
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    container_name: kerinti-cloudflared
+    restart: unless-stopped
+    command: tunnel --no-autoupdate run
+    environment:
+      # Plain default, not ${VAR:?}: Compose interpolates every service, so a
+      # required-variable check here would break setups without the tunnel.
+      TUNNEL_TOKEN: ${CLOUDFLARE_TUNNEL_TOKEN:-}
+    depends_on:
+      web:
+        condition: service_healthy
+    profiles:
+      - tunnel
+    networks:
+      - kerinti
+
+networks:
+  kerinti:
+    name: kerinti
+
+# CasaOS app metadata (shown on the CasaOS dashboard when this compose file is
+# imported through "Custom Install"). Ignored by plain Docker Compose.
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+  main: web
+  author: Kerinti Soft
+  category: Web
+  title:
+    en_us: Kerinti Website
+    tr_tr: Kerinti Web Sitesi
+  tagline:
+    en_us: Kerinti Soft / NeXa website
+    tr_tr: Kerinti Soft / NeXa web sitesi
+  port_map: "3000"
+  scheme: http
+  index: /

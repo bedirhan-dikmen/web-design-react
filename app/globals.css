@@ -1,0 +1,189 @@
+@import "tailwindcss";
+
+/*
+ * Map the next/font-generated variable onto Tailwind's font-sans token.
+ * `@theme inline` is required here: without it Tailwind emits its own
+ * --font-sans on :root and the two declarations tie on specificity.
+ */
+@theme inline {
+  --font-sans: var(--font-inter);
+  --font-script: var(--font-caveat);
+
+  /*
+   * Brand tokens sampled from reference/kerinti-homepage-final-reference.png
+   * (mean fill of each region, not a single pixel).
+   *
+   * Measured CTA fill was #f81933, which lands at 4.06:1 against white — under
+   * the 4.5 threshold. --color-brand-red is the nearest value that clears it
+   * (4.58:1) while staying faithful to the reference hue.
+   */
+  --color-brand-red: #e81532;
+  --color-brand-red-strong: #cc0e2c;
+  --color-brand-navy: #002f77;
+  --color-brand-navy-deep: #001f52;
+
+  /*
+   * Bounds from docs/HERO_RESPONSIVE_SPEC.md and the Phase 01 brief.
+   * Phase 01B widened both after measuring the reference: its cluster box is
+   * 61% of hero width (1172px at 1920) against our 787px, which is why the
+   * composition read as small. The box grew; the raster screens inside it
+   * shrank as a fraction, so density improved rather than degraded.
+   */
+  --spacing-content-max: 1800px;
+  --spacing-cluster-max: 1000px;
+
+  /*
+   * Motion for the homepage "live operations" hero. Slow, small movements:
+   * the product should feel alive, not busy. All of them stop under
+   * prefers-reduced-motion (see the base layer below).
+   */
+  --animate-float: hero-float 7s ease-in-out infinite;
+  --animate-float-slow: hero-float 9s ease-in-out infinite;
+  --animate-card-in: hero-card-in 0.55s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  --animate-live-dot: hero-live-dot 1.8s ease-out infinite;
+  --animate-drift: hero-drift 18s ease-in-out infinite alternate;
+  --animate-marquee: hero-marquee 32s linear infinite;
+  --animate-progress: hero-progress 3s linear both;
+  --animate-kenburns: hero-kenburns 7s ease-out both;
+}
+
+@keyframes hero-marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes hero-progress {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes hero-kenburns {
+  from {
+    transform: scale(1.1);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+@keyframes hero-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes hero-card-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes hero-live-dot {
+  0% {
+    box-shadow: 0 0 0 0 rgb(34 197 94 / 0.55);
+  }
+  100% {
+    box-shadow: 0 0 0 10px rgb(34 197 94 / 0);
+  }
+}
+
+@keyframes hero-drift {
+  from {
+    transform: translate3d(-4%, -3%, 0) scale(1);
+  }
+  to {
+    transform: translate3d(5%, 4%, 0) scale(1.12);
+  }
+}
+
+/*
+ * Baseline normalization. Component styling lives with its component;
+ * this block stays limited to document-level defaults.
+ */
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    /* Respect the user's root font size; no px lock-in. */
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100svh;
+    /* Smoother type rendering for the light-on-dark hero copy to come. */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /*
+   * Image defaults that matter for this project specifically.
+   *
+   * `max-width: 100%` + `height: auto` keeps aspect ratio intact when a
+   * component sets only a width — docs/IMAGE_PIPELINE.md treats a distorted
+   * aspect ratio as a QA failure. `display: block` removes the inline
+   * baseline gap that otherwise shows up under device mockups.
+   */
+  img,
+  picture,
+  video,
+  canvas,
+  svg {
+    display: block;
+    max-width: 100%;
+  }
+
+  img,
+  video {
+    height: auto;
+  }
+
+  /* Inputs do not inherit type styles by default; make them behave. */
+  input,
+  button,
+  textarea,
+  select {
+    font: inherit;
+    color: inherit;
+  }
+
+  /* Long Turkish compounds should break rather than force a scrollbar. */
+  h1,
+  h2,
+  h3,
+  h4,
+  p {
+    overflow-wrap: break-word;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
