@@ -7,13 +7,15 @@ yayınlar: modemde port açmanız gerekmez, SSL sertifikasını Cloudflare verir
 ```
 İnternet ──► Cloudflare ──► cloudflared (tünel) ──► web:3000 (Next.js)
                                                      ▲
-                        Ev ağı: http://<sunucu-ip>:3000
+                        Ev ağı: http://<sunucu-ip>:3080
 ```
 
 ## 1. Cloudflare Tunnel oluşturun (bir kez)
 
 1. <https://one.dash.cloudflare.com> → **Networks → Tunnels → Create a tunnel**.
-2. Tür olarak **Cloudflared** seçin, tünele bir ad verin (ör. `kerinti-web`).
+2. Tür olarak **Cloudflared** seçin, tünele bir ad verin (ör. `web-design-react`).
+   Sunucuda başka bir site de yayındaysa bu site için **ayrı bir tünel**
+   oluşturun; her sitenin kendi token'ı olsun.
 3. Kurulum ekranında gösterilen komuttaki `--token` sonrasındaki uzun metni
    kopyalayın. Bu sizin **tünel token**'ınızdır (komutu çalıştırmanıza gerek
    yok, token'ı `.env` dosyasına koyacağız).
@@ -46,7 +48,7 @@ docker compose ps          # web: healthy, cloudflared: running olmalı
 docker compose logs -f     # canlı loglar (Ctrl+C ile çıkış)
 ```
 
-- Ev ağından: `http://<sunucu-ip>:3000`
+- Ev ağından: `http://<sunucu-ip>:3080`
 - İnternetten: Cloudflare'de tanımladığınız alan adı
 
 Cloudflare panelinde tünelin durumu **Healthy** görünmelidir.
@@ -66,7 +68,7 @@ temizlemek için ara sıra: `docker image prune -f`
 
 | Değişken | Açıklama |
 | --- | --- |
-| `WEB_PORT` | Ev ağındaki port (varsayılan `3000`). Doluysa ör. `3080` yapın. |
+| `WEB_PORT` | Ev ağındaki port (varsayılan `3080`). Sunucudaki başka bir sitenin kullandığı portu seçmeyin. |
 | `COMPOSE_PROFILES` | `tunnel` → Cloudflare tüneli de başlar. Boş bırakırsanız yalnızca site çalışır. |
 | `CLOUDFLARE_TUNNEL_TOKEN` | Cloudflare tünel token'ı. **Gizlidir, GitHub'a gönderilmez** (`.env` git'e dahil değil). |
 | `NEXT_PUBLIC_CONTACT_ENDPOINT` | İletişim formunun gönderileceği adres (isteğe bağlı). Değiştirince `docker compose up -d --build` gerekir. |
@@ -83,18 +85,12 @@ durdurulup başlatılabilir.
 
 ## Sorun giderme
 
-- **`The container name "/kerinti-web" is already in use`** → Önceki bir
-  kurulumdan (ör. CasaOS arayüzünden yapılan kurulum) kalan konteyner var.
-  Eskisini kaldırıp yeniden başlatın:
-
-  ```bash
-  docker ps -a --filter name=kerinti      # eski konteynerleri listeler
-  docker rm -f kerinti-web kerinti-cloudflared
-  docker compose up -d --remove-orphans
-  ```
-
-  Siteyi hem CasaOS arayüzünden hem terminalden kurduysanız CasaOS'taki
-  kopyayı panelden kaldırın; tek kurulum yeterlidir.
+- **Aynı sunucuda başka siteler de var** → Bu projenin bütün adları kendine
+  özgüdür: proje ve konteyner `web-design-react`, tünel konteyneri
+  `web-design-react-tunnel`, ağ `web-design-react`. Böylece diğer
+  sitelerle karışmaz. Bu projeyi yönetirken komutları her zaman bu klasörün
+  içinde `docker compose ...` ile çalıştırın; başka bir sitenin
+  konteynerini `docker rm` ile **silmeyin**.
 - **`port is already allocated`** → `.env` içinde `WEB_PORT` değerini değiştirin.
 - **Tünel bağlanıyor ama site açılmıyor (502)** → Cloudflare'deki Public
   Hostname URL'si `web:3000` olmalı; `docker compose ps` ile `web`
