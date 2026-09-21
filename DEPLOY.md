@@ -83,6 +83,18 @@ durdurulup başlatılabilir.
 
 ## Sorun giderme
 
+- **`The container name "/kerinti-web" is already in use`** → Önceki bir
+  kurulumdan (ör. CasaOS arayüzünden yapılan kurulum) kalan konteyner var.
+  Eskisini kaldırıp yeniden başlatın:
+
+  ```bash
+  docker ps -a --filter name=kerinti      # eski konteynerleri listeler
+  docker rm -f kerinti-web kerinti-cloudflared
+  docker compose up -d --remove-orphans
+  ```
+
+  Siteyi hem CasaOS arayüzünden hem terminalden kurduysanız CasaOS'taki
+  kopyayı panelden kaldırın; tek kurulum yeterlidir.
 - **`port is already allocated`** → `.env` içinde `WEB_PORT` değerini değiştirin.
 - **Tünel bağlanıyor ama site açılmıyor (502)** → Cloudflare'deki Public
   Hostname URL'si `web:3000` olmalı; `docker compose ps` ile `web`
