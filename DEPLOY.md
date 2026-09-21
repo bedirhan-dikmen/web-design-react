@@ -10,6 +10,28 @@ yayınlar: modemde port açmanız gerekmez, SSL sertifikasını Cloudflare verir
                         Ev ağı: http://<sunucu-ip>:3080
 ```
 
+## Sunucuda zaten bir Cloudflare tüneli varsa (önerilen)
+
+Sunucuda başka siteler için çalışan bir Cloudflare tüneli zaten varsa yeni
+tünel ya da token gerekmez; bu siteyi o tünele eklemek yeterlidir:
+
+1. `.env` içinde tünel satırlarını **boş** bırakın:
+
+   ```
+   COMPOSE_PROFILES=
+   CLOUDFLARE_TUNNEL_TOKEN=
+   ```
+
+   `CLOUDFLARE_TUNNEL_TOKEN` alanına IP adresi **yazılmaz**; o alan yalnızca
+   Cloudflare'in verdiği uzun token içindir.
+2. Siteyi başlatın: `docker compose up -d --build --remove-orphans`
+3. Cloudflare Zero Trust → Networks → Tunnels → **mevcut tünel** → Public
+   Hostname ekleyin: `kerinti2` + `bodor.com.tr`, Type `HTTP`,
+   URL `<sunucu-ip>:3080` (ör. `192.168.1.111:3080`).
+
+Aşağıdaki "Cloudflare Tunnel" bölümü yalnızca sunucuda hiç tünel yoksa ve bu
+proje kendi tünelini çalıştıracaksa gereklidir.
+
 ## 1. Cloudflare Tunnel oluşturun (bir kez)
 
 1. <https://one.dash.cloudflare.com> → **Networks → Tunnels → Create a tunnel**.
