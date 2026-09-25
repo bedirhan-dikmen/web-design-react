@@ -11,13 +11,17 @@ import { ArrowRight } from "lucide-react";
 
 export function Container({
   className = "",
+  width = "content",
   children,
 }: {
   className?: string;
+  /** "page" is the 1240px reading width used by the redesigned sections. */
+  width?: "content" | "page";
   children: React.ReactNode;
 }) {
+  const max = width === "page" ? "max-w-page-max" : "max-w-content-max";
   return (
-    <div className={`mx-auto w-full max-w-content-max px-5 sm:px-6 lg:px-10 ${className}`}>
+    <div className={`mx-auto w-full ${max} px-5 sm:px-6 lg:px-10 ${className}`}>
       {children}
     </div>
   );
