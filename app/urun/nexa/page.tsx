@@ -131,7 +131,6 @@ export default function NexaPage() {
             Hepsi aynı sistemde.
           </>
         }
-        detail="neXa, restoranların tüm operasyonlarını tek platformda birleştiren, modüler ve ölçeklenebilir bir restoran yönetim sistemidir."
         primary={{ label: "Demo talep edin", href: DEMO_HREF }}
         secondary={{ label: "Modülleri inceleyin", href: "/moduller" }}
         aside={{

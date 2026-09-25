@@ -77,7 +77,6 @@ export default function ContactPage() {
             Doğru ekibe ulaşın.
           </>
         }
-        detail={`Restoran ve yeme-içme işletmelerinin dijital dönüşüm yolculuğunda yanınızdayız. ${SITE.contact.hours} arasında ulaşabilirsiniz.`}
         primary={{ label: "Mesaj gönderin", href: CONTACT_FORM_HREF }}
         secondary={{ label: "Bizi arayın", href: SITE.contact.phoneHref }}
         aside={{
@@ -268,10 +267,7 @@ export default function ContactPage() {
       </div>
 
       <CtaBand
-        badge="Kerinti Soft"
-        badgeNote="Bize Ulaşın"
         title="Kerinti Soft ile iletişime geçin."
-        lead="İşletmenizin dijital dönüşümünü birlikte planlayalım."
         secondary="call"
       />
     </>

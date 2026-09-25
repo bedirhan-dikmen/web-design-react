@@ -25,7 +25,8 @@ export type EditorialHeroProps = {
   /** Headline; wrap the accent word in <em>. */
   headline: React.ReactNode;
   description: React.ReactNode;
-  detail: React.ReactNode;
+  /** Optional supporting line (unused since the minimal pass). */
+  detail?: React.ReactNode;
   primary: LinkItem;
   secondary: LinkItem;
   aside?: { lead: string; label: string; href: string };
@@ -82,7 +83,7 @@ export function EditorialHero(props: EditorialHeroProps) {
           </p>
           <h1 className={styles.headline}>{headline}</h1>
           <p className={styles.description}>{description}</p>
-          <p className={styles.detail}>{detail}</p>
+          {detail && <p className={styles.detail}>{detail}</p>}
           <div className={styles.actions}>
             <SmartLink href={primary.href} className={styles.primary}>
               {primary.label} <ArrowUpRight size={20} aria-hidden="true" />

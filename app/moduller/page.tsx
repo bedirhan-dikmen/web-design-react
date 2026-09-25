@@ -33,7 +33,6 @@ export default function ModulesPage() {
             Hepsi birlikte çalışır.
           </>
         }
-        detail="QR menü, kasa, mutfak ekranı, stok, e-fatura ve raporlama; hepsi aynı ekosistemde, birbirinden haberdar."
         primary={{ label: "Demo talep edin", href: DEMO_HREF }}
         secondary={{ label: "neXa’yı keşfedin", href: "/urun/nexa" }}
         aside={{
@@ -95,7 +94,6 @@ export default function ModulesPage() {
 
       <CtaBand
         title="İşletmenize uygun modülleri birlikte seçelim."
-        lead="İhtiyaçlarınızı dinleyelim, size en uygun kurguyu planlayalım."
       />
     </>
   );

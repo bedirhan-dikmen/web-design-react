@@ -58,9 +58,9 @@ export function ButtonLink({
   children: React.ReactNode;
 }) {
   const sizing =
-    size === "lg" ? "px-7 py-3.5 text-base sm:px-8 sm:py-4" : "px-5 py-2.5 text-[0.9375rem]";
+    size === "lg" ? "px-5 py-3 text-[0.9375rem]" : "px-4 py-2.5 text-sm";
   const external = /^(https?:|tel:|mailto:)/.test(href);
-  const classes = `inline-flex items-center justify-center gap-2 rounded-lg font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red ${sizing} ${BUTTON_VARIANTS[variant]} ${className}`;
+  const classes = `inline-flex items-center justify-center gap-2 rounded-full font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red ${sizing} ${BUTTON_VARIANTS[variant]} ${className}`;
   const content = (
     <>
       {icon}
@@ -126,22 +126,23 @@ export function SectionHeader({
 }) {
   return (
     <div
+      data-reveal
       className={`flex flex-col gap-4 md:flex-row md:items-end md:justify-between md:gap-10 ${className}`}
     >
       <div className="max-w-5xl">
         {eyebrow && (
-          <p className="mb-2 border-l-2 border-brand-red pl-2.5 text-xs font-semibold uppercase tracking-[0.12em] text-red">
+          <p className="mb-2 text-sm font-semibold text-red">
             {eyebrow}
           </p>
         )}
         <h2
           id={id}
-          className="text-balance text-[clamp(1.75rem,2.4vw,2.5rem)] font-bold leading-tight tracking-tight text-ink"
+          className="text-balance text-[clamp(1.5rem,2.2vw,2rem)] font-extrabold leading-tight tracking-[-0.03em] text-ink"
         >
           {title}
         </h2>
         {lead && (
-          <p className="mt-2 text-pretty text-base text-slate-600 lg:text-[1.0625rem]">{lead}</p>
+          <p className="mt-2 max-w-2xl text-pretty text-ink-2">{lead}</p>
         )}
       </div>
       {action && <div className="shrink-0">{action}</div>}

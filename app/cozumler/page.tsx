@@ -96,7 +96,6 @@ export default function SolutionsPage() {
             neXa işletmenize göre kurulur.
           </>
         }
-        detail="Farklı konsept ve ölçeklerdeki yeme-içme işletmelerinin dijital dönüşüm yolculuğuna eşlik ediyoruz."
         primary={{ label: "Demo talep edin", href: DEMO_HREF }}
         secondary={{ label: "Modülleri inceleyin", href: "/moduller" }}
         aside={{
@@ -143,7 +142,6 @@ export default function SolutionsPage() {
 
       <CtaBand
         title="İşletmenize özel çözümü birlikte planlayalım."
-        lead="Konseptinizi ve hedeflerinizi dinleyelim, size en uygun neXa kurgusunu hazırlayalım."
       />
     </>
   );

@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Caveat, Manrope } from "next/font/google";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
+import { PageMotion } from "@/components/motion/page-motion";
 import { THEME_INIT_SCRIPT } from "@/lib/theme";
 import "./globals.css";
 
@@ -60,6 +61,7 @@ export default function RootLayout({
           {children}
         </main>
         <SiteFooter />
+        <PageMotion />
       </body>
     </html>
   );

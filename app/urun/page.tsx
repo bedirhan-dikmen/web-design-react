@@ -1,26 +1,20 @@
 import type { Metadata } from "next";
-import { PageIntro } from "@/components/layout/page-intro";
 import { CtaBand } from "@/components/sections/cta-band";
 import { DesignGallery } from "@/components/sections/design-gallery";
-import { ProductComparison } from "@/components/sections/product-sections";
+import { ProductBento } from "@/components/sections/product-sections";
 
 export const metadata: Metadata = {
-  title: "Programlarımız",
+  title: "Ürünler",
   description: "neXa sys sipariş yönetim sistemi ve nexus iş yönetim platformu.",
 };
 
-/** Product overview: both products side by side, then the design gallery. */
+/** Product overview: the two products (page heading), the gallery, a CTA. */
 export default function ProductsPage() {
   return (
     <>
-      <PageIntro
-        eyebrow="Ürünler"
-        title="İşinizi büyüten iki güçlü çözüm."
-        lead="Siparişin hızına neXa sys, işletmenin bütününe nexus. Aynı ekip, aynı kalite anlayışı."
-      />
-      <ProductComparison />
+      <ProductBento headingAs="h1" />
       <DesignGallery />
-      <CtaBand badge="Kerinti" badgeNote="neXa sys · nexus" title="Hangisi size uygun? Birlikte karar verelim." lead="İşletmenizi dinleyip size uygun ürünü canlı bir demoyla gösterelim." image={false} />
+      <CtaBand title="Hangisi size uygun? Birlikte karar verelim." />
     </>
   );
 }

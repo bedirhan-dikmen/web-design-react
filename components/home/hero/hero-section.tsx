@@ -22,7 +22,6 @@ export function HeroSection() {
           neXa ile hepsi aynı ritimde.
         </>
       }
-      detail="QR menüden siparişe, kasadan mutfağa. Restoranınızın ihtiyaç duyduğu araçlar, birlikte çalışan tek bir sistemde."
       primary={{ label: "Demo talep edin", href: DEMO_HREF }}
       secondary={{ label: "neXa’yı keşfedin", href: "/urun" }}
       aside={{

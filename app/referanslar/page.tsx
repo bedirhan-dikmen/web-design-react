@@ -42,7 +42,6 @@ export default function ReferencesPage() {
             İşletmelerle birlikte büyüyoruz.
           </>
         }
-        detail="Farklı konsept ve ölçeklerdeki yeme-içme işletmelerinin dijital dönüşüm yolculuğuna eşlik ediyoruz."
         primary={{ label: "Demo talep edin", href: DEMO_HREF }}
         secondary={{ label: "Bizi tanıyın", href: "/hakkimizda" }}
         aside={{

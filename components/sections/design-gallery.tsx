@@ -1,6 +1,3 @@
-import { StageFrame } from "@/components/motion/stage-motion";
-import { OrderFlowBoard } from "@/components/stages/order-flow-board";
-import { ModuleConsoleBoard } from "@/components/stages/module-console-board";
 import { NexusWorkspaceBoard } from "@/components/stages/nexus-workspace-board";
 import { PhoneScreenshot, ScreenshotFrame } from "@/components/ui/screenshot";
 import { Container } from "@/components/ui/primitives";
@@ -8,116 +5,39 @@ import { GALLERY } from "@/lib/content/products";
 import { SectionTitle } from "./product-sections";
 
 /**
- * "İşlerimiz / Tasarım Örnekleri" — a gallery built from live product UI.
+ * "İşlerimiz" — a compact bento of real product UI.
  *
- * Nothing here is a flattened composite: the neXa tiles are the flat
- * captures from /public/images/product at or below their 2x-safe width, the
- * two stage boards are the existing animated components (inside StageFrame,
- * so each has its pause button), and the nexus tile
- * is the code-drawn workspace. The stage boards were designed on the navy
- * hero ground, so their tiles keep that ground.
+ * Nothing here is a flattened composite: the neXa tiles are flat captures
+ * from /public/images/product rendered well below their 2x-safe width, and
+ * the nexus tile is the code-drawn workspace. Titles only; the UI speaks.
  */
 
-type Tile = {
-  title: string;
-  product: "neXa sys" | "nexus";
-  note: string;
-  span: string;
-  ground: "light" | "dark";
-  body: React.ReactNode;
-};
+type Tile = { title: string; product: "neXa sys" | "nexus"; span: string; body: React.ReactNode };
 
 const TILES: Tile[] = [
-  {
-    title: "Yönetim paneli",
-    product: "neXa sys",
-    note: "Günlük ciro, sipariş dağılımı ve satış grafiği tek bakışta.",
-    span: "lg:col-span-7",
-    ground: "light",
-    // 1442px source; tile content is ≤ 640 CSS px.
-    body: <ScreenshotFrame shot="dashboard" maxWidth={640} />,
-  },
-  {
-    title: "QR menü",
-    product: "neXa sys",
-    note: "Misafirin telefonunda, uygulama indirmeden.",
-    span: "lg:col-span-5",
-    ground: "light",
-    body: <PhoneScreenshot width={220} />,
-  },
-  {
-    title: "Görev panosu",
-    product: "nexus",
-    note: "Ekiplerin işi, onayları ve tahsilatları aynı ekranda.",
-    span: "lg:col-span-5",
-    ground: "light",
-    body: <NexusWorkspaceBoard />,
-  },
-  {
-    title: "Mutfak ekranı",
-    product: "neXa sys",
-    note: "Siparişler hazırlık sırasına göre sütunlara akar.",
-    span: "lg:col-span-7",
-    ground: "light",
-    body: <ScreenshotFrame shot="kitchen" maxWidth={640} />,
-  },
-  {
-    title: "Sipariş akışı",
-    product: "neXa sys",
-    note: "Bir siparişin QR menüden rapora yolculuğu, canlı bileşen olarak.",
-    span: "lg:col-span-6",
-    ground: "dark",
-    body: (
-      <StageFrame caption="Tek sipariş, dört durak." description="Örnek bir siparişin QR menü, kasa, mutfak ve rapor adımlarından geçişini gösteren animasyon.">
-        <OrderFlowBoard />
-      </StageFrame>
-    ),
-  },
-  {
-    title: "Modül paneli",
-    product: "neXa sys",
-    note: "İhtiyacınız olan modülleri seçin, gerisini sonra ekleyin.",
-    span: "lg:col-span-6",
-    ground: "dark",
-    body: (
-      <StageFrame caption="Her modül, tek panelde." description="neXa modüllerinin sırayla vurgulandığı ve her birinin özelliklerinin gösterildiği animasyon.">
-        <ModuleConsoleBoard />
-      </StageFrame>
-    ),
-  },
+  // 1442px source → ≤ 560 CSS px.
+  { title: "Yönetim paneli", product: "neXa sys", span: "lg:col-span-7", body: <ScreenshotFrame shot="dashboard" maxWidth={560} /> },
+  // 941px source → 180 CSS px.
+  { title: "QR menü", product: "neXa sys", span: "lg:col-span-5", body: <PhoneScreenshot width={180} /> },
+  { title: "Görev panosu", product: "nexus", span: "lg:col-span-5", body: <div className="w-full max-w-[440px]"><NexusWorkspaceBoard /></div> },
+  // 1672px source → ≤ 560 CSS px.
+  { title: "Mutfak ekranı", product: "neXa sys", span: "lg:col-span-7", body: <ScreenshotFrame shot="kitchen" maxWidth={560} /> },
 ];
 
 export function DesignGallery() {
   return (
-    <section id="islerimiz" aria-labelledby="galeri-baslik" className="bg-surface py-20 lg:py-28">
+    <section id="islerimiz" aria-labelledby="galeri-baslik" className="scroll-mt-[calc(var(--header-h)+16px)] py-16 lg:py-24">
       <Container width="page">
-        <SectionTitle id="galeri-baslik" eyebrow={GALLERY.eyebrow} title={GALLERY.title} lead={GALLERY.lead} />
-        <ul className="mt-12 grid gap-5 lg:grid-cols-12">
+        <SectionTitle id="galeri-baslik" eyebrow={GALLERY.eyebrow} title={GALLERY.title} />
+        <ul data-reveal-group className="mt-10 grid gap-5 lg:grid-cols-12">
           {TILES.map((t) => (
-            <li
-              key={t.title}
-              className={`flex flex-col overflow-hidden rounded-[var(--radius-lg)] border border-line ${t.span}`}
-            >
-              {/* Stage tiles are graphite "screens" in both themes; scoping them
-                  to the dark theme keeps the StageFrame caption legible. */}
-              <div
-                data-theme={t.ground === "dark" ? "dark" : undefined}
-                className={`flex flex-1 items-center justify-center p-6 sm:p-8 ${
-                  t.ground === "dark" ? "bg-[linear-gradient(160deg,#1c1c22,#0c0c10)]" : "bg-surface-2"
-                }`}
-              >
+            <li key={t.title} data-spotlight className={`group flex flex-col overflow-hidden rounded-[var(--radius-lg)] border border-line bg-surface-2 ${t.span}`}>
+              <div className="flex flex-1 items-center justify-center p-6 transition-transform duration-500 ease-out group-hover:scale-[1.015] sm:p-8">
                 {t.body}
               </div>
-              <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 border-t border-line bg-surface p-5">
-                <h3 className="font-bold text-ink">{t.title}</h3>
-                <span
-                  className={`rounded-full px-2.5 py-0.5 text-xs font-semibold ${
-                    t.product === "nexus" ? "bg-nexus-soft text-nexus" : "bg-nexa-soft text-nexa"
-                  }`}
-                >
-                  {t.product}
-                </span>
-                <p className="w-full text-sm text-ink-2">{t.note}</p>
+              <div className="flex items-center justify-between gap-4 border-t border-line bg-surface px-5 py-3.5">
+                <h3 className="text-sm font-semibold text-ink">{t.title}</h3>
+                <span className="text-xs font-medium text-ink-3">{t.product}</span>
               </div>
             </li>
           ))}

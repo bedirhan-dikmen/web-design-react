@@ -256,6 +256,41 @@
   --header-h: 72px;
 }
 
+/*
+ * Motion primitives driven by components/motion/page-motion.tsx. Nothing is
+ * hidden unless <html> has the "motion" class, which is only set when JS runs
+ * and the visitor has not asked for reduced motion.
+ */
+.motion [data-reveal]:not([data-shown]) {
+  opacity: 0;
+  transform: translateY(14px);
+}
+.motion [data-reveal] {
+  transition:
+    opacity 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) var(--reveal-delay, 0ms),
+    transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) var(--reveal-delay, 0ms);
+}
+
+/* Pointer-following light for cards. */
+[data-spotlight] {
+  position: relative;
+  isolation: isolate;
+}
+[data-spotlight]::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity 0.3s;
+  background: radial-gradient(360px circle at var(--mx, 50%) var(--my, 50%), var(--k-glow-red), transparent 70%);
+  pointer-events: none;
+}
+.motion [data-spotlight]:hover::before {
+  opacity: 1;
+}
+
 /* Headline gradient text (hero). */
 .text-hero-gradient {
   background-image: linear-gradient(90deg, var(--k-grad-a), var(--k-grad-b) 55%, var(--k-grad-c));

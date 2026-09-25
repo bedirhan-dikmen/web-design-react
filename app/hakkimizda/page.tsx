@@ -46,7 +46,6 @@ export default function AboutPage() {
             Uzun vadeli bir iş ortağı.
           </>
         }
-        detail="Kerinti Soft; restoran, kafe, pastane, fast food zincirleri, oteller ve çok şubeli yeme-içme işletmeleri için yazılım geliştiren bir teknoloji şirketidir."
         primary={{ label: "Demo talep edin", href: DEMO_HREF }}
         secondary={{ label: "İletişime geçin", href: CONTACT_FORM_HREF }}
         aside={{
@@ -207,10 +206,7 @@ export default function AboutPage() {
       </div>
 
       <CtaBand
-        badge="Kerinti Soft"
-        badgeNote="Daha iyi işletmeler, daha lezzetli yarınlar."
         title="Kerinti Soft ile tanışın."
-        lead="İşletmenizin dijital dönüşümünü birlikte planlayalım."
       />
     </>
   );
