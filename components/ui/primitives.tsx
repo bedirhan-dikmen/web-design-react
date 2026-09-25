@@ -32,10 +32,11 @@ type ButtonVariant = "primary" | "outline-light" | "outline-dark" | "light";
 const BUTTON_VARIANTS: Record<ButtonVariant, string> = {
   primary:
     "bg-brand-red text-white shadow-lg shadow-brand-red/20 hover:bg-brand-red-strong",
-  "outline-light": "border border-white/40 text-white hover:bg-white/10",
+  // Both outline variants follow the theme now that every surface does.
+  "outline-light": "border border-line-2 text-ink hover:border-ink-3 hover:bg-surface-2",
   "outline-dark":
-    "border border-brand-navy/25 text-brand-navy-deep hover:border-brand-navy/50 hover:bg-brand-navy/5",
-  light: "bg-white text-brand-navy-deep hover:bg-slate-100",
+    "border border-line-2 text-ink hover:border-ink-3 hover:bg-surface-2",
+  light: "bg-surface text-ink ring-1 ring-line hover:bg-surface-2",
 };
 
 /** A link styled as a button. Every call to action on the site is navigation. */
@@ -59,7 +60,7 @@ export function ButtonLink({
   const sizing =
     size === "lg" ? "px-7 py-3.5 text-base sm:px-8 sm:py-4" : "px-5 py-2.5 text-[0.9375rem]";
   const external = /^(https?:|tel:|mailto:)/.test(href);
-  const classes = `inline-flex items-center justify-center gap-2 rounded-lg font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-red ${sizing} ${BUTTON_VARIANTS[variant]} ${className}`;
+  const classes = `inline-flex items-center justify-center gap-2 rounded-lg font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red ${sizing} ${BUTTON_VARIANTS[variant]} ${className}`;
   const content = (
     <>
       {icon}
@@ -92,7 +93,7 @@ export function ArrowLink({ href, children }: { href: string; children: React.Re
   return (
     <Link
       href={href}
-      className="group inline-flex items-center gap-2 text-[0.9375rem] font-semibold text-brand-red hover:text-brand-red-strong focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-red"
+      className="group inline-flex items-center gap-2 text-[0.9375rem] font-semibold text-red hover:text-red-strong focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red"
     >
       {children}
       <ArrowRight
@@ -129,13 +130,13 @@ export function SectionHeader({
     >
       <div className="max-w-5xl">
         {eyebrow && (
-          <p className="mb-2 border-l-2 border-brand-red pl-2.5 text-xs font-semibold uppercase tracking-[0.12em] text-brand-red">
+          <p className="mb-2 border-l-2 border-brand-red pl-2.5 text-xs font-semibold uppercase tracking-[0.12em] text-red">
             {eyebrow}
           </p>
         )}
         <h2
           id={id}
-          className="text-balance text-[clamp(1.75rem,2.4vw,2.5rem)] font-bold leading-tight tracking-tight text-brand-navy-deep"
+          className="text-balance text-[clamp(1.75rem,2.4vw,2.5rem)] font-bold leading-tight tracking-tight text-ink"
         >
           {title}
         </h2>
@@ -159,7 +160,7 @@ export function IconTile({
   return (
     <span
       aria-hidden="true"
-      className={`flex size-11 shrink-0 items-center justify-center rounded-xl text-brand-red ${
+      className={`flex size-11 shrink-0 items-center justify-center rounded-xl text-red ${
         tone === "tint" ? "bg-brand-red/8" : ""
       }`}
     >

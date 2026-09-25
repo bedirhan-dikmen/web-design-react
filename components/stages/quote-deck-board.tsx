@@ -35,15 +35,15 @@ export function QuoteDeckBoard() {
           <div className="flex items-center justify-between">
             <Quote className="size-7 text-brand-red" />
             {current.demo && (
-              <span className="rounded-full bg-slate-100 px-2.5 py-0.5 text-[0.7rem] font-medium text-slate-500">
+              <span className="rounded-full bg-board-100 px-2.5 py-0.5 text-[0.7rem] font-medium text-board-500">
                 Örnek yorum
               </span>
             )}
           </div>
           <blockquote className="mt-4 flex-1 text-lg leading-snug tracking-tight">“{current.quote}”</blockquote>
-          <figcaption className="border-t border-slate-100 pt-3 text-sm">
+          <figcaption className="border-t border-board-100 pt-3 text-sm">
             <span className="font-semibold">{current.author}</span>
-            <span className="text-slate-500"> · {current.context}</span>
+            <span className="text-board-500"> · {current.context}</span>
           </figcaption>
         </figure>
       </div>

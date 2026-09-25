@@ -13,6 +13,7 @@ const NEXUS: MarkSpec = {
   defaultTitle: "nexus",
   gradient: ["#4338ca", "#8b5cf6"],
   accent: { light: "#4338ca", dark: "#a5b4fc" },
+  accentVar: "--k-nexus",
   glyph: (
     <g stroke="currentColor" strokeWidth={MARK_STROKE} strokeLinecap="round">
       <circle cx="16" cy="16" r="3.75" fill="none" />

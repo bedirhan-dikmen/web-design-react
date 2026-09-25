@@ -11,6 +11,7 @@ const NEXA: MarkSpec = {
   defaultTitle: "neXa sys",
   gradient: ["#0f766e", "#22d3ee"],
   accent: { light: "#0f766e", dark: "#5eead4" },
+  accentVar: "--k-nexa",
   glyph: (
     <g fill="none" stroke="currentColor" strokeWidth={MARK_STROKE} strokeLinecap="round" strokeLinejoin="round">
       <path d="M9 9 23 23" />

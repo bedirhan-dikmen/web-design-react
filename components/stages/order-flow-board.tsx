@@ -78,7 +78,7 @@ export function OrderFlowBoard() {
         </span>
         <div className="min-w-0">
           <p className="text-sm font-bold text-brand-navy-deep">{copy.title}</p>
-          <p className="mt-0.5 text-xs leading-relaxed text-slate-500">{copy.body}</p>
+          <p className="mt-0.5 text-xs leading-relaxed text-board-500">{copy.body}</p>
         </div>
       </div>
 

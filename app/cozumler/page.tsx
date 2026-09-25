@@ -27,7 +27,7 @@ function SectorSolution({ sector }: { sector: Sector }) {
     <article
       id={sector.slug}
       aria-labelledby={`${sector.slug}-baslik`}
-      className="grid scroll-mt-6 overflow-hidden rounded-2xl border border-slate-200 bg-white sm:grid-cols-[minmax(0,2fr)_minmax(0,3fr)]"
+      className="grid scroll-mt-6 overflow-hidden rounded-2xl border border-slate-200 bg-surface sm:grid-cols-[minmax(0,2fr)_minmax(0,3fr)]"
     >
       <Image
         src={sector.image}
@@ -40,18 +40,18 @@ function SectorSolution({ sector }: { sector: Sector }) {
       <div className="p-6 lg:p-7">
         <h3
           id={`${sector.slug}-baslik`}
-          className="text-xl font-bold text-brand-navy-deep"
+          className="text-xl font-bold text-ink"
         >
           {sector.title}
         </h3>
-        <p className="mt-1 text-sm font-medium text-brand-red">{sector.tagline}</p>
+        <p className="mt-1 text-sm font-medium text-red">{sector.tagline}</p>
         <p className="mt-3 text-[0.9375rem] leading-relaxed text-slate-600">
           {sector.description}
         </p>
         <ul className="mt-4 space-y-1.5 text-sm text-slate-700">
           {sector.focus.map((f) => (
             <li key={f} className="flex gap-2.5">
-              <Check aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-brand-red" strokeWidth={2.5} />
+              <Check aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-red" strokeWidth={2.5} />
               {f}
             </li>
           ))}
@@ -64,7 +64,7 @@ function SectorSolution({ sector }: { sector: Sector }) {
             <li key={m.slug}>
               <Link
                 href={`/moduller#${m.slug}`}
-                className="inline-block rounded-full bg-brand-navy/[0.06] px-3 py-1 text-xs font-medium text-brand-navy-deep transition-colors hover:bg-brand-red/10 hover:text-brand-red focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-red"
+                className="inline-block rounded-full bg-surface-3 px-3 py-1 text-xs font-medium text-ink transition-colors hover:bg-brand-red/10 hover:text-red focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red"
               >
                 {m.title}
               </Link>

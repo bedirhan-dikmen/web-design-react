@@ -66,10 +66,10 @@ export function ModuleConsoleBoard() {
           </span>
           <p className="text-sm font-bold text-brand-navy-deep">{current.title}</p>
         </div>
-        <p className="mt-2 text-xs leading-relaxed text-slate-500">{current.summary}</p>
-        <ul className="mt-2.5 space-y-1 border-t border-slate-100 pt-2.5">
+        <p className="mt-2 text-xs leading-relaxed text-board-500">{current.summary}</p>
+        <ul className="mt-2.5 space-y-1 border-t border-board-100 pt-2.5">
           {current.points.slice(0, 3).map((p) => (
-            <li key={p} className="flex gap-2 text-xs text-slate-700">
+            <li key={p} className="flex gap-2 text-xs text-board-700">
               <Check className="mt-0.5 size-3.5 shrink-0 text-brand-red" strokeWidth={2.5} />
               {p}
             </li>

@@ -40,9 +40,9 @@ export function RequestFlowBoard() {
             </span>
             {topic.title}
           </p>
-          <Send className="size-4 text-slate-400" />
+          <Send className="size-4 text-board-400" />
         </div>
-        <p className="mt-3 rounded-xl bg-slate-50 p-3 text-sm leading-relaxed text-slate-600">{topic.text}</p>
+        <p className="mt-3 rounded-xl bg-board-50 p-3 text-sm leading-relaxed text-board-600">{topic.text}</p>
 
         <ol className="mt-4 space-y-2">
           {STATES.map((label, i) => {
@@ -50,10 +50,10 @@ export function RequestFlowBoard() {
             return (
               <li key={label} className="flex items-center gap-2.5 text-sm">
                 <CircleCheck
-                  className={`size-5 transition-colors duration-500 ${done ? "text-emerald-500" : "text-slate-200"}`}
+                  className={`size-5 transition-colors duration-500 ${done ? "text-emerald-500" : "text-board-200"}`}
                   strokeWidth={2.2}
                 />
-                <span className={`transition-colors duration-500 ${done ? "font-medium text-brand-navy-deep" : "text-slate-400"}`}>
+                <span className={`transition-colors duration-500 ${done ? "font-medium text-brand-navy-deep" : "text-board-400"}`}>
                   {label}
                 </span>
                 {i === reached && (

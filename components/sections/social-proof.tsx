@@ -13,7 +13,7 @@ export function Testimonials() {
       {TESTIMONIALS.map((t) => (
         <figure
           key={t.quote}
-          className="flex flex-col rounded-xl border border-slate-200 bg-white p-6"
+          className="flex flex-col rounded-xl border border-slate-200 bg-surface p-6"
         >
           {t.demo && (
             <span className="mb-3 self-start rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-medium text-slate-500">
@@ -24,13 +24,13 @@ export function Testimonials() {
             “{t.quote}”
           </blockquote>
           <figcaption className="mt-5 border-t border-slate-100 pt-4 text-sm">
-            <span className="block font-semibold text-brand-navy-deep">{t.author}</span>
+            <span className="block font-semibold text-ink">{t.author}</span>
             <span className="text-slate-500">{t.context}</span>
           </figcaption>
         </figure>
       ))}
 
-      <div className="flex flex-col justify-center rounded-xl bg-[linear-gradient(135deg,#0a3a8c,#001f52)] p-7 text-white">
+      <div className="flex flex-col justify-center rounded-xl bg-[radial-gradient(120%_120%_at_0%_0%,#4a0d17,#111116_70%)] p-7 text-white">
         <Quote aria-hidden="true" className="size-9 text-white/40" />
         <p className="mt-3 text-2xl font-bold leading-snug">
           Daha iyi restoranlar için teknoloji.

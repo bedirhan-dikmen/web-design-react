@@ -107,7 +107,7 @@ export default function ContactPage() {
         }}
       />
 
-      <div className="bg-white">
+      <div className="bg-surface">
         {/* İletişim Kanalları */}
         <section aria-labelledby="kanallar" className="pt-14 pb-10 lg:pt-16">
           <Container>
@@ -125,19 +125,19 @@ export default function ContactPage() {
                       <Icon className="size-8" strokeWidth={1.5} />
                     </IconTile>
                     <div className="min-w-0">
-                      <h3 className="font-bold text-brand-navy-deep">{c.title}</h3>
+                      <h3 className="font-bold text-ink">{c.title}</h3>
                       {c.href ? (
                         <a
                           href={c.href}
                           {...(c.href.startsWith("http")
                             ? { target: "_blank", rel: "noopener noreferrer" }
                             : {})}
-                          className="mt-0.5 block break-words font-semibold text-brand-navy hover:text-brand-red focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-red"
+                          className="mt-0.5 block break-words font-semibold text-ink hover:text-red focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red"
                         >
                           {c.value}
                         </a>
                       ) : (
-                        <p className="mt-0.5 font-semibold text-brand-navy">{c.value}</p>
+                        <p className="mt-0.5 font-semibold text-ink">{c.value}</p>
                       )}
                       <p className="mt-1.5 text-sm leading-relaxed text-slate-600">{c.note}</p>
                     </div>
@@ -155,7 +155,7 @@ export default function ContactPage() {
               id="iletisim-formu"
               className="scroll-mt-6 rounded-2xl border border-slate-200 p-6 sm:p-8"
             >
-              <h2 className="text-2xl font-bold text-brand-navy-deep">Bize Mesaj Gönderin</h2>
+              <h2 className="text-2xl font-bold text-ink">Bize Mesaj Gönderin</h2>
               <p className="mt-1 text-slate-600">
                 Formu doldurun, ekibimiz en kısa sürede sizinle iletişime geçsin.
               </p>
@@ -169,13 +169,13 @@ export default function ContactPage() {
             </div>
 
             <div className="rounded-2xl border border-slate-200 p-6 sm:p-8">
-              <h2 className="text-2xl font-bold text-brand-navy-deep">Ofisimiz &amp; Konum</h2>
+              <h2 className="text-2xl font-bold text-ink">Ofisimiz &amp; Konum</h2>
               <p className="mt-1 text-slate-600">
                 Bizi ziyaret edebilir veya harita üzerinden yol tarifi alabilirsiniz.
               </p>
 
-              <div className="mt-6 rounded-xl bg-[radial-gradient(120%_120%_at_0%_0%,#0b4bb3,#001f52)] p-6 text-white">
-                <MapPin aria-hidden="true" className="size-8 text-brand-red" strokeWidth={1.8} />
+              <div className="mt-6 rounded-xl bg-[radial-gradient(120%_120%_at_0%_0%,#4a0d17,#111116_70%)] p-6 text-white">
+                <MapPin aria-hidden="true" className="size-8 text-red" strokeWidth={1.8} />
                 <p className="mt-3 text-lg font-semibold">Kerinti Soft</p>
                 <address className="mt-1 text-sm not-italic leading-relaxed text-white/80">
                   {contact.address.lines.map((line) => (
@@ -197,8 +197,8 @@ export default function ContactPage() {
 
               <dl className="mt-6 divide-y divide-slate-100 text-sm">
                 {[
-                  { icon: Phone, term: "Telefon", detail: <a href={contact.phoneHref} className="hover:text-brand-red">{contact.phoneDisplay}</a> },
-                  { icon: Mail, term: "E-posta", detail: <a href={`mailto:${contact.email}`} className="break-all hover:text-brand-red">{contact.email}</a> },
+                  { icon: Phone, term: "Telefon", detail: <a href={contact.phoneHref} className="hover:text-red">{contact.phoneDisplay}</a> },
+                  { icon: Mail, term: "E-posta", detail: <a href={`mailto:${contact.email}`} className="break-all hover:text-red">{contact.email}</a> },
                   { icon: Clock, term: "Çalışma Saatleri", detail: contact.hours },
                   {
                     icon: CalendarClock,
@@ -208,8 +208,8 @@ export default function ContactPage() {
                   },
                 ].map(({ icon: Icon, term, detail }) => (
                   <div key={term} className="grid grid-cols-[1.5rem_7.5rem_minmax(0,1fr)] items-start gap-2 py-3.5 max-sm:grid-cols-[1.5rem_minmax(0,1fr)]">
-                    <Icon aria-hidden="true" className="size-5 text-brand-red" strokeWidth={1.8} />
-                    <dt className="font-semibold text-brand-navy-deep">{term}</dt>
+                    <Icon aria-hidden="true" className="size-5 text-red" strokeWidth={1.8} />
+                    <dt className="font-semibold text-ink">{term}</dt>
                     <dd className="text-slate-600 max-sm:col-start-2">{detail}</dd>
                   </div>
                 ))}
@@ -233,20 +233,20 @@ export default function ContactPage() {
                   <li key={t.value}>
                     <Link
                       href={`/iletisim?konu=${t.value}#iletisim-formu`}
-                      className="group flex h-full items-center gap-4 rounded-xl border border-slate-200 p-5 transition-colors hover:border-brand-red/40 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-red"
+                      className="group flex h-full items-center gap-4 rounded-xl border border-slate-200 p-5 transition-colors hover:border-brand-red/40 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red"
                     >
                       <IconTile>
                         <Icon className="size-8" strokeWidth={1.5} />
                       </IconTile>
                       <span className="min-w-0 flex-1">
-                        <span className="block font-bold text-brand-navy-deep">{t.title}</span>
+                        <span className="block font-bold text-ink">{t.title}</span>
                         <span className="mt-1 block text-sm leading-relaxed text-slate-600">
                           {t.text}
                         </span>
                       </span>
                       <ChevronRight
                         aria-hidden="true"
-                        className="size-5 shrink-0 text-brand-red transition-transform group-hover:translate-x-0.5"
+                        className="size-5 shrink-0 text-red transition-transform group-hover:translate-x-0.5"
                       />
                     </Link>
                   </li>

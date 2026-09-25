@@ -30,7 +30,7 @@ export function SectorCard({
           className="aspect-[4/3] w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
         />
       </div>
-      <h3 className="mt-3 text-[0.9375rem] font-bold text-brand-navy-deep">{sector.title}</h3>
+      <h3 className="mt-3 text-[0.9375rem] font-bold text-ink">{sector.title}</h3>
       {showTagline && <p className="mt-0.5 text-sm text-slate-600">{sector.tagline}</p>}
     </>
   );
@@ -40,7 +40,7 @@ export function SectorCard({
       {href ? (
         <Link
           href={href}
-          className="group block rounded-xl focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-red"
+          className="group block rounded-xl focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red"
         >
           {body}
         </Link>

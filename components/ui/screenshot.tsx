@@ -60,7 +60,7 @@ export function ScreenshotFrame({
   return (
     <div
       className={`w-full overflow-hidden rounded-xl shadow-[0_24px_60px_-24px_rgba(0,20,60,0.55)] ring-1 ${
-        dark ? "ring-white/15" : "ring-slate-200"
+        dark ? "ring-white/15" : "ring-line"
       }`}
       style={{ maxWidth: cap }}
     >
@@ -84,7 +84,7 @@ export function PhoneScreenshot({ width = 280 }: { width?: number }) {
   const cap = Math.min(width, s.maxCss);
   return (
     <div
-      className="w-full rounded-[2.2rem] bg-slate-900 p-2.5 shadow-[0_24px_60px_-24px_rgba(0,20,60,0.6)] ring-1 ring-slate-700"
+      className="w-full rounded-[2.2rem] bg-board-900 p-2.5 shadow-[0_24px_60px_-24px_rgba(0,20,60,0.6)] ring-1 ring-board-700"
       style={{ maxWidth: cap }}
     >
       <Image

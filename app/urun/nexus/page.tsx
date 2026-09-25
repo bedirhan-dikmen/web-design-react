@@ -23,7 +23,7 @@ export default function NexusPage() {
         eyebrow={NEXUS.category}
         title={
           <>
-            {NEXUS.headline[0]} <span className="text-[#c4b5fd]">{NEXUS.headline[1]}</span>
+            {NEXUS.headline[0]} <span className="text-nexus">{NEXUS.headline[1]}</span>
           </>
         }
         lead={NEXUS.lead}
@@ -35,7 +35,7 @@ export default function NexusPage() {
           <ButtonLink href={CONTACT_FORM_HREF} size="lg" variant="outline-light">
             Bize Ulaşın
           </ButtonLink>
-          <NexusMark size={26} variant="on-dark" className="ml-auto hidden md:block" />
+          <NexusMark size={26} className="ml-auto hidden md:block" />
         </div>
       </PageIntro>
 

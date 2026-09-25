@@ -30,7 +30,7 @@ export function FaqAccordion({ items }: { items: { question: string; answer: str
         const buttonId = `${baseId}-q${i}`;
         const panelId = `${baseId}-a${i}`;
         return (
-          <div key={item.question} className="rounded-xl border border-slate-200 bg-white">
+          <div key={item.question} className="rounded-xl border border-slate-200 bg-surface">
             <h3>
               <button
                 id={buttonId}
@@ -38,12 +38,12 @@ export function FaqAccordion({ items }: { items: { question: string; answer: str
                 aria-expanded={expanded}
                 aria-controls={panelId}
                 onClick={() => toggle(i)}
-                className="flex w-full items-center justify-between gap-4 rounded-xl px-5 py-4 text-left text-[0.9375rem] font-semibold text-brand-navy-deep hover:bg-slate-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-red"
+                className="flex w-full items-center justify-between gap-4 rounded-xl px-5 py-4 text-left text-[0.9375rem] font-semibold text-ink hover:bg-slate-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red"
               >
                 {item.question}
                 <Plus
                   aria-hidden="true"
-                  className={`size-5 shrink-0 text-brand-navy-deep transition-transform ${expanded ? "rotate-45" : ""}`}
+                  className={`size-5 shrink-0 text-ink transition-transform ${expanded ? "rotate-45" : ""}`}
                 />
               </button>
             </h3>

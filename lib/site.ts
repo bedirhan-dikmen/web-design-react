@@ -41,15 +41,59 @@ export const DIRECTIONS_HREF = `https://www.google.com/maps/search/?api=1&query=
 
 export type NavItem = { label: string; href: string };
 
-/** Primary navigation, in the order the approved header shows it. */
-export const NAV_ITEMS: NavItem[] = [
-  { label: "Ana Sayfa", href: "/" },
-  { label: "Ürünler", href: "/urun" },
-  { label: "Modüller", href: "/moduller" },
-  { label: "Çözümler", href: "/cozumler" },
-  { label: "Referanslar", href: "/referanslar" },
-  { label: "Hakkımızda", href: "/hakkimizda" },
-  { label: "İletişim", href: "/iletisim" },
+/** A link inside a header dropdown. */
+export type NavMenuLink = NavItem & { description?: string };
+
+/** Header entries: a direct link, or a dropdown group. */
+export type NavEntry =
+  | ({ kind: "link" } & NavItem)
+  | {
+      kind: "menu";
+      id: string;
+      label: string;
+      /** Product cards shown in the dropdown's main column (Ürünler only). */
+      products?: { slug: "nexa" | "nexus"; href: string; description: string }[];
+      links: NavMenuLink[];
+      /** Paths that mark the trigger as active. */
+      match: string[];
+    };
+
+/**
+ * Header navigation (2026-09 redesign). Five top-level entries instead of
+ * seven flat links: the two products and the company pages sit in
+ * dropdowns, the most visited pages stay one click away. "Ana Sayfa" is the
+ * logo.
+ */
+export const HEADER_NAV: NavEntry[] = [
+  {
+    kind: "menu",
+    id: "urunler",
+    label: "Ürünler",
+    match: ["/urun", "/moduller"],
+    products: [
+      { slug: "nexa", href: "/urun/nexa", description: "Siparişten teslimata, her adım kontrolünüzde." },
+      { slug: "nexus", href: "/urun/nexus", description: "Tüm iş süreçleriniz tek ekranda." },
+    ],
+    links: [
+      { label: "neXa modülleri", href: "/moduller", description: "QR menüden e-faturaya tüm modüller" },
+      { label: "Ürünleri karşılaştır", href: "/urun#programlar", description: "Hangisi işinize uygun?" },
+      { label: "Tasarım örnekleri", href: "/urun#islerimiz", description: "Gerçek arayüzlerden örnekler" },
+    ],
+  },
+  { kind: "link", label: "Çözümler", href: "/cozumler" },
+  { kind: "link", label: "Referanslar", href: "/referanslar" },
+  {
+    kind: "menu",
+    id: "kurumsal",
+    label: "Kurumsal",
+    match: ["/hakkimizda", "/marka"],
+    links: [
+      { label: "Hakkımızda", href: "/hakkimizda", description: "Ekibimiz ve yaklaşımımız" },
+      { label: "Marka rehberi", href: "/marka", description: "Logolar, renkler ve kullanım" },
+      { label: "Bayilik başvurusu", href: "/iletisim?konu=is-ortakligi#iletisim-formu", description: "İş ortağımız olun" },
+    ],
+  },
+  { kind: "link", label: "İletişim", href: "/iletisim" },
 ];
 
 /** Every "Demo Talep Et" on the site lands on the contact form, topic preset. */

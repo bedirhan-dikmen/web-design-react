@@ -24,7 +24,7 @@ export const ACCENT: Record<
   nexa: {
     text: "text-nexa",
     soft: "bg-nexa-soft",
-    button: "bg-nexa text-white hover:bg-nexa-strong focus-visible:outline-nexa",
+    button: "bg-nexa-fill text-white hover:bg-nexa-fill-strong focus-visible:outline-nexa",
     ring: "hover:border-nexa/40",
     rule: "bg-nexa",
     glow: "rgb(34 211 238 / 0.18)",
@@ -33,7 +33,7 @@ export const ACCENT: Record<
   nexus: {
     text: "text-nexus",
     soft: "bg-nexus-soft",
-    button: "bg-nexus text-white hover:bg-nexus-strong focus-visible:outline-nexus",
+    button: "bg-nexus-fill text-white hover:bg-nexus-fill-strong focus-visible:outline-nexus",
     ring: "hover:border-nexus/40",
     rule: "bg-nexus",
     glow: "rgb(139 92 246 / 0.16)",

@@ -113,16 +113,16 @@ export function ContactForm({ initialTopic = "" }: { initialTopic?: string }) {
     CONTACT_TOPICS.find((t) => t.value === (sentPayload?.topic ?? values.topic))?.title ?? "İletişim";
 
   const inputBase =
-    "mt-1.5 block w-full rounded-lg border bg-white px-3.5 py-2.5 text-[0.9375rem] text-slate-900 placeholder:text-slate-400 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-red/40 disabled:bg-slate-50";
+    "mt-1.5 block w-full rounded-lg border bg-surface px-3.5 py-2.5 text-[0.9375rem] text-slate-900 placeholder:text-slate-400 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-red/40 disabled:bg-slate-50";
   const inputClass = (f: Field) =>
-    `${inputBase} ${visibleError(f) ? "border-brand-red" : "border-slate-300 focus:border-brand-navy"}`;
+    `${inputBase} ${visibleError(f) ? "border-brand-red" : "border-slate-300 focus:border-ink"}`;
 
   const label = (f: Field, text: string, required = false) => (
-    <label htmlFor={id(f)} className="text-sm font-medium text-brand-navy-deep">
+    <label htmlFor={id(f)} className="text-sm font-medium text-ink">
       {text}
       {required && (
         <>
-          <span aria-hidden="true" className="text-brand-red"> *</span>
+          <span aria-hidden="true" className="text-red"> *</span>
           <span className="sr-only"> (zorunlu)</span>
         </>
       )}
@@ -131,7 +131,7 @@ export function ContactForm({ initialTopic = "" }: { initialTopic?: string }) {
 
   const error = (f: Field) =>
     visibleError(f) ? (
-      <p id={`${id(f)}-hata`} className="mt-1.5 flex items-center gap-1.5 text-sm text-brand-red-strong">
+      <p id={`${id(f)}-hata`} className="mt-1.5 flex items-center gap-1.5 text-sm text-red-strong">
         <CircleAlert aria-hidden="true" className="size-4 shrink-0" />
         {visibleError(f)}
       </p>
@@ -147,7 +147,7 @@ export function ContactForm({ initialTopic = "" }: { initialTopic?: string }) {
   return (
     <form ref={formRef} onSubmit={onSubmit} noValidate aria-describedby={`${uid}-not`}>
       <p id={`${uid}-not`} className="text-sm text-slate-500">
-        <span aria-hidden="true" className="text-brand-red">*</span> ile işaretli alanlar zorunludur.
+        <span aria-hidden="true" className="text-red">*</span> ile işaretli alanlar zorunludur.
       </p>
 
       {/* Announces the error count once, after a failed submit. */}
@@ -292,7 +292,7 @@ export function ContactForm({ initialTopic = "" }: { initialTopic?: string }) {
                 it exists this stays plain text rather than a dead link. */}
             <label htmlFor={id("consent")} className="text-sm text-slate-600">
               Kişisel verilerimin işlenmesine ilişkin aydınlatma metnini okudum, kabul ediyorum.
-              <span aria-hidden="true" className="text-brand-red"> *</span>
+              <span aria-hidden="true" className="text-red"> *</span>
             </label>
           </div>
           {error("consent")}
@@ -303,7 +303,7 @@ export function ContactForm({ initialTopic = "" }: { initialTopic?: string }) {
         type="submit"
         disabled={busy}
         aria-disabled={busy}
-        className="mt-6 flex w-full items-center justify-center gap-2 rounded-lg bg-brand-red px-6 py-3.5 text-base font-semibold text-white transition-colors hover:bg-brand-red-strong focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-red disabled:cursor-wait disabled:opacity-75"
+        className="mt-6 flex w-full items-center justify-center gap-2 rounded-lg bg-brand-red px-6 py-3.5 text-base font-semibold text-white transition-colors hover:bg-brand-red-strong focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red disabled:cursor-wait disabled:opacity-75"
       >
         {busy ? (
           <>
@@ -338,7 +338,7 @@ export function ContactForm({ initialTopic = "" }: { initialTopic?: string }) {
             <div className="mt-3 flex flex-wrap gap-2 pl-7.5">
               <a
                 href={buildMailto(sentPayload, topicLabel)}
-                className="inline-flex items-center gap-2 rounded-lg bg-brand-navy px-4 py-2 font-semibold text-white hover:bg-brand-navy-deep"
+                className="inline-flex items-center gap-2 rounded-lg bg-ink px-4 py-2 font-semibold text-surface hover:bg-ink-2"
               >
                 <Mail aria-hidden="true" className="size-4" />
                 E-posta ile gönder

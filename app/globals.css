@@ -17,10 +17,46 @@
    * the 4.5 threshold. --color-brand-red is the nearest value that clears it
    * (4.58:1) while staying faithful to the reference hue.
    */
-  --color-brand-red: var(--k-red);
-  --color-brand-red-strong: var(--k-red-strong);
+  /* Legacy names. brand-red is a FILL (white text on it) in both themes;
+     text accents use --color-red. brand-navy stays fixed: it is only used
+     for the product stage panels, which are "screens" in either theme. */
+  --color-brand-red: var(--color-red-fill);
+  --color-brand-red-strong: var(--color-red-fill-strong);
   --color-brand-navy: #002f77;
   --color-brand-navy-deep: #001f52;
+
+  /* Theme-aware slate: legacy inner-page classes follow the theme. */
+  --color-slate-50: var(--k-slate-50);
+  --color-slate-100: var(--k-slate-100);
+  --color-slate-200: var(--k-slate-200);
+  --color-slate-300: var(--k-slate-300);
+  --color-slate-400: var(--k-slate-400);
+  --color-slate-500: var(--k-slate-500);
+  --color-slate-600: var(--k-slate-600);
+  --color-slate-700: var(--k-slate-700);
+  --color-slate-800: var(--k-slate-800);
+  --color-slate-900: var(--k-slate-900);
+
+  /* Fixed neutrals for product stage boards (white cards on navy); these
+     must not flip with the theme. Tailwind's original slate values. */
+  --color-board-50: #f8fafc;
+  --color-board-100: #f1f5f9;
+  --color-board-200: #e2e8f0;
+  --color-board-300: #cbd5e1;
+  --color-board-400: #94a3b8;
+  --color-board-500: #64748b;
+  --color-board-600: #475569;
+  --color-board-700: #334155;
+  --color-board-800: #1e293b;
+  --color-board-900: #0f172a;
+
+  /* Fills carry white text, so they keep AA in both themes (≥ 5.3:1). */
+  --color-red-fill: #d80017;
+  --color-red-fill-strong: #b00013;
+  --color-nexa-fill: #0f766e;
+  --color-nexa-fill-strong: #115e59;
+  --color-nexus-fill: #4338ca;
+  --color-nexus-fill-strong: #3730a3;
 
   /*
    * Unified palette (redesign, 2026-09). Base values come from the live
@@ -63,6 +99,7 @@
   --radius-md: 14px;
   --radius-lg: 22px;
   --spacing-page-max: 1240px;
+  --spacing-header: 72px;
 
   /*
    * Bounds from docs/HERO_RESPONSIVE_SPEC.md and the Phase 01 brief.
@@ -89,9 +126,19 @@
   --animate-kenburns: hero-kenburns 7s ease-out both;
 }
 
-/* Runtime layer for the tokens above. Light is the default and only shipped
-   theme; the dark block is ready but nothing sets data-theme yet. */
-:root {
+/*
+ * Theme switching: <html data-theme="light|dark">. Light is the default; the
+ * visitor's choice is applied before first paint by the inline script in
+ * app/layout.tsx. `dark:` utilities follow the attribute, not the OS, and
+ * any subtree can opt into a theme with its own data-theme (the gallery's
+ * stage tiles do this).
+ */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+/* Runtime layer for the tokens above — light theme. */
+:root,
+[data-theme="light"] {
+  color-scheme: light;
   --k-red: #d80017;
   --k-red-strong: #b00013;
   --k-red-soft: #fdecee;
@@ -115,30 +162,99 @@
   --k-nexus-strong: #3730a3;
   --k-nexus-glow: #8b5cf6;
   --k-nexus-soft: #eeedfc;
+
+  /* Chrome */
+  --k-header-bg: rgb(255 255 255 / 0.82);
+  --k-header-line: rgb(22 22 26 / 0.08);
+  --k-footer-bg: #f6f6f8;
+  --k-hero-bg: linear-gradient(180deg, #fafafc 0%, #f1f1f5 100%);
+  --k-hero-grid: rgb(22 22 26 / 0.06);
+  --k-glow-red: rgb(216 0 23 / 0.1);
+  --k-glow-nexa: rgb(34 211 238 / 0.16);
+  --k-glow-nexus: rgb(139 92 246 / 0.14);
+  /* Headline gradient; every stop clears 4.5:1 on the light hero. */
+  --k-grad-a: #0f766e;
+  --k-grad-b: #3a4fc4;
+  --k-grad-c: #6d28d9;
+  /* Serif accent in editorial headlines. */
+  --k-em: #b00013;
+  --k-shadow-lg: 0 30px 80px -30px rgb(20 20 40 / 0.35);
+
+  /* Legacy slate scale (inner pages), Tailwind's own values in light. */
+  --k-slate-50: #f8fafc;
+  --k-slate-100: #f1f5f9;
+  --k-slate-200: #e2e8f0;
+  --k-slate-300: #cbd5e1;
+  --k-slate-400: #94a3b8;
+  --k-slate-500: #64748b;
+  --k-slate-600: #475569;
+  --k-slate-700: #334155;
+  --k-slate-800: #1e293b;
+  --k-slate-900: #0f172a;
 }
 
+/* Dark theme. Text accents get lighter; fills (the -fill tokens) do not. */
 [data-theme="dark"] {
-  --k-red: #ff4d5c;
-  --k-red-strong: #ff6b78;
+  color-scheme: dark;
+  --k-red: #ff6b78;
+  --k-red-strong: #ff8a94;
   --k-red-soft: #3a1418;
-  --k-surface: #1b1b1f;
-  --k-surface-2: #212126;
-  --k-surface-3: #26262c;
+  --k-surface: #151519;
+  --k-surface-2: #1c1c21;
+  --k-surface-3: #24242a;
   --k-ink: #f4f4f7;
-  --k-ink-2: #b4b4c0;
+  --k-ink-2: #b9b9c4;
   --k-ink-3: #9a9aa8;
-  --k-line: #32323b;
-  --k-line-2: #3d3d48;
+  --k-line: #2c2c34;
+  --k-line-2: #3a3a45;
   --k-night: #0c0c10;
   --k-success: #3ecf85;
   --k-warning: #f0b35a;
-  --k-danger: #ff6b78;
+  --k-danger: #ff7a85;
   --k-nexa: #2dd4bf;
   --k-nexa-strong: #5eead4;
-  --k-nexa-soft: #0f2e2c;
+  --k-nexa-soft: #0f2a28;
   --k-nexus: #a5b4fc;
   --k-nexus-strong: #c7d2fe;
-  --k-nexus-soft: #1f1d3d;
+  --k-nexus-soft: #1e1c3a;
+
+  --k-header-bg: rgb(16 16 20 / 0.78);
+  --k-header-line: rgb(255 255 255 / 0.08);
+  --k-footer-bg: #0c0c10;
+  --k-hero-bg: linear-gradient(180deg, #15151b 0%, #0c0c10 100%);
+  --k-hero-grid: rgb(255 255 255 / 0.06);
+  --k-glow-red: rgb(216 0 23 / 0.22);
+  --k-glow-nexa: rgb(34 211 238 / 0.16);
+  --k-glow-nexus: rgb(139 92 246 / 0.2);
+  --k-grad-a: #5eead4;
+  --k-grad-b: #a5b4fc;
+  --k-grad-c: #c4b5fd;
+  --k-em: #ff9aa3;
+  --k-shadow-lg: 0 40px 100px -30px rgb(0 0 0 / 0.7);
+
+  --k-slate-50: #1c1c21;
+  --k-slate-100: #24242a;
+  --k-slate-200: #2c2c34;
+  --k-slate-300: #3a3a45;
+  --k-slate-400: #8a8a98;
+  --k-slate-500: #9a9aa8;
+  --k-slate-600: #b9b9c4;
+  --k-slate-700: #d0d0d8;
+  --k-slate-800: #e4e4ea;
+  --k-slate-900: #f4f4f7;
+}
+
+/* Sticky header height; heroes subtract it to fill the first screen. */
+:root {
+  --header-h: 72px;
+}
+
+/* Headline gradient text (hero). */
+.text-hero-gradient {
+  background-image: linear-gradient(90deg, var(--k-grad-a), var(--k-grad-b) 55%, var(--k-grad-c));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 @keyframes hero-marquee {

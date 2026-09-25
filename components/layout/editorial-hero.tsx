@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { ArrowDown, ArrowUpRight } from "lucide-react";
-import { SiteHeader } from "./site-header";
 import { StageFrame } from "@/components/motion/stage-motion";
 import styles from "./editorial-hero.module.css";
 
@@ -76,7 +75,6 @@ export function EditorialHero(props: EditorialHeroProps) {
 
   return (
     <section className={styles.hero} aria-label={ariaLabel}>
-      <SiteHeader />
       <div className={styles.layout}>
         <div className={styles.copy}>
           <p className={styles.eyebrow}>

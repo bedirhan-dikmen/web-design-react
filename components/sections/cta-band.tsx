@@ -10,8 +10,8 @@ const DISH = {
 };
 
 /**
- * The dark call-to-action band above the footer (night palette since the
- * 2026-09 redesign; it was navy before).
+ * The call-to-action band above the footer. Follows the theme: a soft
+ * red-lit light band, or night in dark mode.
  *
  * The plated-dish photograph (1448x1086) sits on the right and dissolves into
  * the navy through a mask, as in the references. It renders at most ~560 CSS
@@ -39,11 +39,12 @@ export function CtaBand({
   return (
     <section
       aria-labelledby="cta-band-title"
-      className="relative isolate overflow-hidden bg-night text-white"
+      className="relative isolate overflow-hidden border-y border-line text-ink"
     >
       <div
         aria-hidden="true"
-        className="absolute inset-0 -z-20 bg-[radial-gradient(50%_120%_at_0%_0%,rgb(216_0_23/0.28),transparent_70%),linear-gradient(100deg,#111116_0%,#1b1b22_100%)]"
+        className="absolute inset-0 -z-20"
+        style={{ background: "radial-gradient(50% 120% at 0% 0%, var(--k-glow-red), transparent 70%), var(--k-hero-bg)" }}
       />
       {image && (
       <div
@@ -76,10 +77,10 @@ export function CtaBand({
       <Container className={`grid items-center gap-7 py-12 md:grid-cols-[minmax(0,1fr)_auto] lg:py-14 ${image ? "md:pr-[42%] xl:pr-[36%]" : ""}`}>
         <div>
           <div className="flex flex-wrap items-center gap-3">
-            <span className="rounded-full border border-white/35 px-3 py-0.5 text-sm font-semibold">
+            <span className="rounded-full border border-line-2 px-3 py-0.5 text-sm font-semibold">
               {badge}
             </span>
-            <span className="text-sm text-white/75">{badgeNote}</span>
+            <span className="text-sm text-ink-2">{badgeNote}</span>
           </div>
           <h2
             id="cta-band-title"
@@ -87,7 +88,7 @@ export function CtaBand({
           >
             {title}
           </h2>
-          <p className="mt-2 text-white/80 lg:text-[1.0625rem]">{lead}</p>
+          <p className="mt-2 text-ink-2 lg:text-[1.0625rem]">{lead}</p>
         </div>
         <div className="flex flex-wrap gap-3">
           <ButtonLink href={DEMO_HREF} size="lg" arrow>

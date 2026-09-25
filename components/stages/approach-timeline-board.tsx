@@ -49,7 +49,7 @@ export function ApproachTimelineBoard() {
                   }`}
                 >
                   <p className="text-sm font-semibold">{s.title}</p>
-                  {on && <p key={`t-${step}`} className="mt-1 animate-card-in text-xs leading-relaxed text-slate-500">{s.text}</p>}
+                  {on && <p key={`t-${step}`} className="mt-1 animate-card-in text-xs leading-relaxed text-board-500">{s.text}</p>}
                 </div>
               </li>
             );
@@ -63,7 +63,7 @@ export function ApproachTimelineBoard() {
       >
         <ValueIcon className="size-7 text-brand-red" strokeWidth={1.6} />
         <p className="mt-2 text-sm font-bold text-brand-navy-deep">{value.title}</p>
-        <p className="mt-1 text-xs leading-relaxed text-slate-500">{value.text}</p>
+        <p className="mt-1 text-xs leading-relaxed text-board-500">{value.text}</p>
       </div>
     </div>
   );

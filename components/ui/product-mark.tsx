@@ -30,6 +30,8 @@ export type MarkSpec = {
   gradient: [string, string];
   /** Accent used for the highlighted letter on light and dark grounds. */
   accent: { light: string; dark: string };
+  /** Theme token for the accent; lets the "full" variant follow the site theme. */
+  accentVar: string;
   /** Glyph strokes/fills in the 32-unit grid; drawn in `currentColor`. */
   glyph: React.ReactNode;
   /** Wordmark pieces: [before, highlighted, after]. */
@@ -64,7 +66,8 @@ export function ProductMark({ spec, size = 32, variant = "full", title, classNam
       : wordX + spec.wordLength;
 
   const inkColor = mono ? "currentColor" : dark ? "#ffffff" : "var(--k-ink, #16161a)";
-  const accentColor = mono ? "currentColor" : dark ? spec.accent.dark : spec.accent.light;
+  // "full" follows the site theme through CSS variables (fallbacks = light).
+  const accentColor = mono ? "currentColor" : dark ? spec.accent.dark : `var(${spec.accentVar}, ${spec.accent.light})`;
   const suffixColor = mono ? "currentColor" : dark ? "rgb(255 255 255 / 0.7)" : "var(--k-ink-2, #4a4a55)";
 
   return (

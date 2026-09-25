@@ -180,7 +180,7 @@ export function DealerLoginForm() {
         type="submit"
         disabled={pending}
         aria-disabled={pending}
-        className="flex w-full items-center justify-center gap-2 rounded-[var(--radius-sm)] bg-red px-5 py-3.5 font-semibold text-white shadow-lg shadow-red/20 transition-colors hover:bg-red-strong focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red disabled:cursor-wait disabled:opacity-80"
+        className="flex w-full items-center justify-center gap-2 rounded-[var(--radius-sm)] bg-red-fill px-5 py-3.5 font-semibold text-white shadow-lg shadow-red/20 transition-colors hover:bg-red-fill-strong focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red disabled:cursor-wait disabled:opacity-80"
       >
         {pending ? (
           <>

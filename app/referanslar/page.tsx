@@ -72,7 +72,7 @@ export default function ReferencesPage() {
         }}
       />
 
-      <div className="bg-white">
+      <div className="bg-surface">
         <section aria-labelledby="yorum-baslik" className="pt-14 pb-12 lg:pt-16">
           <Container>
             <SectionHeader

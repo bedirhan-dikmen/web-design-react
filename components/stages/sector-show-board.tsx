@@ -73,7 +73,7 @@ export function SectorShowBoard() {
         className="absolute -bottom-2 right-0 w-[15rem] animate-card-in rounded-2xl bg-white p-4 shadow-2xl shadow-black/35 sm:-right-6 sm:bottom-2"
       >
         <p className="text-xs font-medium text-brand-red">{sector.tagline}</p>
-        <p className="mt-2 text-[0.65rem] font-semibold uppercase tracking-[0.1em] text-slate-400">
+        <p className="mt-2 text-[0.65rem] font-semibold uppercase tracking-[0.1em] text-board-400">
           Önerilen modüller
         </p>
         <ul className="mt-1.5 flex flex-wrap gap-1">

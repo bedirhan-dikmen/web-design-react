@@ -98,7 +98,10 @@ export function DesignGallery() {
               key={t.title}
               className={`flex flex-col overflow-hidden rounded-[var(--radius-lg)] border border-line ${t.span}`}
             >
+              {/* Stage tiles are navy "screens" in both themes; scoping them
+                  to the dark theme keeps the StageFrame caption legible. */}
               <div
+                data-theme={t.ground === "dark" ? "dark" : undefined}
                 className={`flex flex-1 items-center justify-center p-6 sm:p-8 ${
                   t.ground === "dark" ? "bg-[linear-gradient(160deg,#002f77,#001f52)]" : "bg-surface-2"
                 }`}

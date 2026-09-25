@@ -62,11 +62,11 @@ function FeatureCopy({ module, eyebrow }: { module: Module; eyebrow: string }) {
   const Icon = module.icon;
   return (
     <div className="max-w-xl">
-      <p className="flex items-center gap-2 text-sm font-semibold text-brand-red">
+      <p className="flex items-center gap-2 text-sm font-semibold text-red">
         <Icon aria-hidden="true" className="size-5" strokeWidth={1.8} />
         {eyebrow}
       </p>
-      <h3 className="mt-3 text-[clamp(1.5rem,2vw,2rem)] font-bold leading-tight tracking-tight text-brand-navy-deep">
+      <h3 className="mt-3 text-[clamp(1.5rem,2vw,2rem)] font-bold leading-tight tracking-tight text-ink">
         {module.title}
       </h3>
       <p className="mt-3 text-base leading-relaxed text-slate-600 lg:text-[1.0625rem]">
@@ -75,7 +75,7 @@ function FeatureCopy({ module, eyebrow }: { module: Module; eyebrow: string }) {
       <ul className="mt-5 space-y-2.5">
         {module.points.map((p) => (
           <li key={p} className="flex gap-3 text-[0.9375rem] text-slate-700">
-            <Check aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-brand-red" strokeWidth={2.5} />
+            <Check aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-red" strokeWidth={2.5} />
             {p}
           </li>
         ))}
@@ -96,7 +96,7 @@ function FeatureRow({
   tinted?: boolean;
 }) {
   return (
-    <div className={tinted ? "bg-slate-50" : "bg-white"}>
+    <div className={tinted ? "bg-slate-50" : "bg-surface"}>
       <Container>
         {/* Capped narrower than the page: at 1920 a full-width row put the
             screenshot and its copy ~200px apart with nothing between. */}
@@ -161,7 +161,7 @@ export default function NexaPage() {
         }}
       />
 
-      <section aria-labelledby="akis-baslik" className="bg-white py-14 lg:py-16">
+      <section aria-labelledby="akis-baslik" className="bg-surface py-14 lg:py-16">
         <Container>
           <SectionHeader
             id="akis-baslik"
@@ -189,7 +189,7 @@ export default function NexaPage() {
         </FeatureRow>
       </section>
 
-      <section aria-labelledby="diger-baslik" className="bg-white py-14 lg:py-16">
+      <section aria-labelledby="diger-baslik" className="bg-surface py-14 lg:py-16">
         <Container>
           <SectionHeader
             id="diger-baslik"

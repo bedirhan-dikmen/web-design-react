@@ -76,7 +76,7 @@ export default function AboutPage() {
         }}
       />
 
-      <div className="bg-white">
+      <div className="bg-surface">
         {/* Biz Kimiz? + values */}
         <section aria-labelledby="biz-kimiz" className="pt-14 pb-12 lg:pt-16">
           <Container>
@@ -84,7 +84,7 @@ export default function AboutPage() {
               <SectionHeader id="biz-kimiz" eyebrow="Hakkımızda" title="Biz Kimiz?" />
               <div className="mt-5 space-y-4 text-base leading-relaxed text-slate-600 lg:text-[1.0625rem]">
                 <p>
-                  <strong className="font-semibold text-brand-navy-deep">Kerinti Soft</strong>,
+                  <strong className="font-semibold text-ink">Kerinti Soft</strong>,
                   restoran, kafe, pastane, fast food zincirleri, oteller ve çok şubeli yeme-içme
                   işletmeleri için pratik, ölçeklenebilir ve kullanıcı dostu yazılım çözümleri
                   geliştiren bir teknoloji şirketidir.
@@ -109,7 +109,7 @@ export default function AboutPage() {
                     <IconTile>
                       <Icon className="size-9" strokeWidth={1.5} />
                     </IconTile>
-                    <h3 className="mt-3 text-lg font-bold text-brand-navy-deep">{v.title}</h3>
+                    <h3 className="mt-3 text-lg font-bold text-ink">{v.title}</h3>
                     <p className="mt-2 text-sm leading-relaxed text-slate-600">{v.text}</p>
                   </li>
                 );
@@ -165,9 +165,9 @@ export default function AboutPage() {
             <ul className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
               {REASONS.map((r) => (
                 <li key={r.title} className="flex gap-3 rounded-xl border border-slate-200 p-4">
-                  <CircleCheck aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-brand-red" strokeWidth={2.2} />
+                  <CircleCheck aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-red" strokeWidth={2.2} />
                   <div>
-                    <h3 className="text-[0.9375rem] font-semibold text-brand-navy-deep">{r.title}</h3>
+                    <h3 className="text-[0.9375rem] font-semibold text-ink">{r.title}</h3>
                     <p className="mt-0.5 text-sm text-slate-600">{r.text}</p>
                   </div>
                 </li>

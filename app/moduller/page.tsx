@@ -63,7 +63,7 @@ export default function ModulesPage() {
         }}
       />
 
-      <section aria-labelledby="modul-listesi" className="bg-white py-14 lg:py-16">
+      <section aria-labelledby="modul-listesi" className="bg-surface py-14 lg:py-16">
         <Container>
           <SectionHeader
             id="modul-listesi"
@@ -76,7 +76,7 @@ export default function ModulesPage() {
                 <li key={m.slug}>
                   <a
                     href={`#${m.slug}`}
-                    className="inline-block rounded-full border border-slate-200 px-3.5 py-1.5 text-sm text-slate-700 transition-colors hover:border-brand-red/40 hover:text-brand-red focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-red"
+                    className="inline-block rounded-full border border-slate-200 px-3.5 py-1.5 text-sm text-slate-700 transition-colors hover:border-brand-red/40 hover:text-red focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red"
                   >
                     {m.title}
                   </a>

@@ -66,7 +66,7 @@ export function NexusWorkspaceBoard({ className = "" }: { className?: string }) 
         <div className="min-w-0 flex-1 p-3 @lg:p-4">
           <div className="flex items-center justify-between">
             <p className="text-sm font-bold">Görevler</p>
-            <span className="rounded-md bg-nexus px-2 py-1 font-semibold text-white">+ Yeni görev</span>
+            <span className="rounded-md bg-nexus-fill px-2 py-1 font-semibold text-white">+ Yeni görev</span>
           </div>
 
           <div className="mt-3 grid grid-cols-3 gap-2">
@@ -93,7 +93,7 @@ export function NexusWorkspaceBoard({ className = "" }: { className?: string }) 
                         <span className="rounded bg-nexus-soft px-1.5 py-0.5 text-[10px] font-medium text-nexus">
                           {c.tag}
                         </span>
-                        <span className="flex size-5 items-center justify-center rounded-full bg-ink text-[9px] font-bold text-white">
+                        <span className="flex size-5 items-center justify-center rounded-full bg-ink text-[9px] font-bold text-surface">
                           {c.who}
                         </span>
                       </div>

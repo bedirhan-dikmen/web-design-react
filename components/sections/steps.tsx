@@ -29,15 +29,15 @@ export function Steps({
               {numbered && (
                 <span
                   aria-hidden="true"
-                  className="flex size-9 items-center justify-center rounded-full bg-brand-red/10 text-sm font-bold text-brand-red"
+                  className="flex size-9 items-center justify-center rounded-full bg-brand-red/10 text-sm font-bold text-red"
                 >
                   {i + 1}
                 </span>
               )}
-              <Icon aria-hidden="true" className="size-8 text-brand-red" strokeWidth={1.6} />
+              <Icon aria-hidden="true" className="size-8 text-red" strokeWidth={1.6} />
             </div>
             <div>
-              <h3 className="text-base font-bold text-brand-navy-deep">
+              <h3 className="text-base font-bold text-ink">
                 {numbered && <span className="sr-only">{i + 1}. adım: </span>}
                 {step.title}
               </h3>

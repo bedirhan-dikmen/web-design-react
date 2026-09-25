@@ -95,7 +95,7 @@ export function LiveBoard() {
 
       {/* Live revenue — top right. */}
       <div className="absolute -right-2 top-0 w-[13.5rem] animate-float rounded-2xl bg-white p-4 shadow-2xl shadow-black/30 sm:-right-4 lg:-right-10">
-        <div className="flex items-center justify-between text-xs font-medium text-slate-500">
+        <div className="flex items-center justify-between text-xs font-medium text-board-500">
           <span className="flex items-center gap-1.5">
             <span className="size-2 animate-live-dot rounded-full bg-emerald-500" />
             Canlı ciro
@@ -105,8 +105,8 @@ export function LiveBoard() {
         <p className="mt-1.5 text-2xl font-bold tabular-nums tracking-tight text-brand-navy-deep">
           ₺{tl.format(revenue)}
         </p>
-        <p className="text-xs text-slate-500">
-          Bugün <span className="font-semibold tabular-nums text-slate-700">{ordersToday}</span> sipariş
+        <p className="text-xs text-board-500">
+          Bugün <span className="font-semibold tabular-nums text-board-700">{ordersToday}</span> sipariş
         </p>
         <div className="mt-3 flex h-10 items-end gap-1">
           {bars.map((h, i) => (
@@ -132,16 +132,16 @@ export function LiveBoard() {
           </span>
           <div className="min-w-0">
             <p className="text-sm font-bold text-brand-navy-deep">Yeni sipariş · {order.table}</p>
-            <p className="text-xs text-slate-500">{order.source} üzerinden</p>
+            <p className="text-xs text-board-500">{order.source} üzerinden</p>
           </div>
         </div>
-        <ul className="mt-3 space-y-1 border-t border-slate-100 pt-2.5 text-xs text-slate-600">
+        <ul className="mt-3 space-y-1 border-t border-board-100 pt-2.5 text-xs text-board-600">
           {order.items.map((item) => (
             <li key={item}>{item}</li>
           ))}
         </ul>
         <p className="mt-2 flex items-center justify-between text-xs">
-          <span className="text-slate-500">Toplam</span>
+          <span className="text-board-500">Toplam</span>
           <span className="font-bold tabular-nums text-brand-navy-deep">₺{tl.format(order.total)}</span>
         </p>
       </div>
@@ -182,11 +182,11 @@ export function LiveBoard() {
           </span>
           <div className="text-xs">
             <p className="font-semibold text-brand-navy-deep">Ödeme alındı</p>
-            <p className="tabular-nums text-slate-500">
+            <p className="tabular-nums text-board-500">
               {paid.table} · ₺{tl.format(paid.total)}
             </p>
           </div>
-          <BellRing className="ml-1 size-4 text-slate-400" />
+          <BellRing className="ml-1 size-4 text-board-400" />
         </div>
       )}
     </div>

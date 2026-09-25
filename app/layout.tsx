@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { Caveat, Manrope } from "next/font/google";
 import { SiteFooter } from "@/components/layout/site-footer";
+import { SiteHeader } from "@/components/layout/site-header";
+import { THEME_INIT_SCRIPT } from "@/lib/theme";
 import "./globals.css";
 
 /*
@@ -46,9 +48,17 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="tr" className={`${manrope.variable} ${caveat.variable}`}>
+    // Light is the default theme. The inline script swaps in a saved choice
+    // before first paint, which is why hydration may see a different value.
+    <html lang="tr" data-theme="light" suppressHydrationWarning className={`${manrope.variable} ${caveat.variable}`}>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
+      </head>
       <body className="bg-surface font-sans text-ink">
-        <main id="icerik">{children}</main>
+        <SiteHeader />
+        <main id="icerik" tabIndex={-1} className="focus:outline-none">
+          {children}
+        </main>
         <SiteFooter />
       </body>
     </html>
