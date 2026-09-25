@@ -1,7 +1,7 @@
 import Link from "next/link";
-import { ArrowRight, ChevronDown } from "lucide-react";
+import { ArrowRight, ChevronDown, LogIn } from "lucide-react";
 import { KerintiWordmark } from "@/components/ui/kerinti-wordmark";
-import { DEMO_HREF } from "@/lib/site";
+import { DEALER_LOGIN_HREF, DEMO_HREF } from "@/lib/site";
 import { HeaderNav } from "./header-nav";
 
 /**
@@ -23,10 +23,19 @@ export function SiteHeader() {
 
         <HeaderNav />
 
-        <div className="ml-auto flex items-center gap-4 xl:ml-0">
+        <div className="ml-auto flex items-center gap-3 xl:ml-0">
+          {/* Secondary to "Demo Talep Et": outline, no fill. Below lg it lives
+              in the mobile menu instead. */}
+          <Link
+            href={DEALER_LOGIN_HREF}
+            className="hidden items-center gap-2 rounded-md border border-white/30 px-4 py-2.5 text-[0.9375rem] font-semibold text-white transition-colors hover:border-white/60 hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white lg:inline-flex"
+          >
+            <LogIn aria-hidden="true" className="size-4" />
+            Bayi Girişi
+          </Link>
           <Link
             href={DEMO_HREF}
-            className="hidden items-center gap-2 rounded-md bg-brand-red px-5 py-2.5 text-[0.9375rem] font-semibold text-white shadow-lg shadow-black/20 transition-colors hover:bg-brand-red-strong sm:inline-flex"
+            className="hidden items-center gap-2 rounded-md bg-brand-red px-5 py-2.5 text-[0.9375rem] font-semibold text-white shadow-lg shadow-black/20 transition-colors hover:bg-brand-red-strong focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:inline-flex"
           >
             Demo Talep Et
             <ArrowRight aria-hidden="true" className="size-4" strokeWidth={2.25} />

@@ -3,8 +3,8 @@
 import { useCallback, useEffect, useId, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ArrowRight, Menu, X } from "lucide-react";
-import { DEMO_HREF, NAV_ITEMS } from "@/lib/site";
+import { ArrowRight, LogIn, Menu, X } from "lucide-react";
+import { DEALER_LOGIN_HREF, DEMO_HREF, NAV_ITEMS } from "@/lib/site";
 
 function isActive(pathname: string, href: string) {
   return href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(`${href}/`);
@@ -95,7 +95,7 @@ export function HeaderNav() {
         ref={panelRef}
         id={panelId}
         hidden={!open}
-        className="absolute inset-x-0 top-full z-50 border-t border-white/10 bg-brand-navy-deep/98 shadow-2xl shadow-black/40 backdrop-blur xl:hidden"
+        className="absolute inset-x-0 top-full z-50 border-t border-white/10 bg-night/98 shadow-2xl shadow-black/40 backdrop-blur xl:hidden"
       >
         <nav aria-label="Mobil menü" className="mx-auto w-full max-w-content-max px-5 py-4 sm:px-6">
           <ul className="flex flex-col">
@@ -127,6 +127,15 @@ export function HeaderNav() {
           >
             Demo Talep Et
             <ArrowRight aria-hidden="true" className="size-4" strokeWidth={2.25} />
+          </Link>
+          <Link
+            href={DEALER_LOGIN_HREF}
+            aria-current={isActive(pathname, DEALER_LOGIN_HREF) ? "page" : undefined}
+            onClick={() => close(false)}
+            className="mt-3 flex items-center justify-center gap-2 rounded-lg border border-white/30 px-5 py-3.5 font-semibold text-white hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+          >
+            <LogIn aria-hidden="true" className="size-4" />
+            Bayi Girişi
           </Link>
         </nav>
       </div>
