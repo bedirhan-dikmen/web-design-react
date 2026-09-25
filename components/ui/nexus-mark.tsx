@@ -6,14 +6,14 @@ import { MARK_STROKE, ProductMark, type MarkProps, type MarkSpec } from "./produ
  * A hub: one ring in the centre with four nodes wired to it on the straight
  * axes. neXa's X runs on the diagonals and this runs on the orthogonals, so
  * the two glyphs share a grid and a stroke but never look alike, even at
- * favicon size. Indigo→violet tile; the "x" is the accented letter, echoing
- * neXa.
+ * favicon size. Graphite tile; the "x" is Kerinti red, the one colour the
+ * two products share.
  */
 const NEXUS: MarkSpec = {
   defaultTitle: "nexus",
-  gradient: ["#4338ca", "#8b5cf6"],
-  accent: { light: "#4338ca", dark: "#a5b4fc" },
-  accentVar: "--k-nexus",
+  gradient: ["#0c0c10", "#3a3a45"],
+  accent: { light: "#d80017", dark: "#ff6b78" },
+  accentVar: "--k-red",
   glyph: (
     <g stroke="currentColor" strokeWidth={MARK_STROKE} strokeLinecap="round">
       <circle cx="16" cy="16" r="3.75" fill="none" />

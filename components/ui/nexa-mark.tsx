@@ -5,13 +5,13 @@ import { MARK_STROKE, ProductMark, type MarkProps, type MarkSpec } from "./produ
  *
  * The X is the focal glyph: two orders crossing, and the rising stroke ends
  * in an arrowhead because every order is going somewhere (table → kitchen →
- * report). Teal→cyan tile; the capital X is the accented letter.
+ * report). Kerinti-red tile; the capital X is the accented letter.
  */
 const NEXA: MarkSpec = {
   defaultTitle: "neXa sys",
-  gradient: ["#0f766e", "#22d3ee"],
-  accent: { light: "#0f766e", dark: "#5eead4" },
-  accentVar: "--k-nexa",
+  gradient: ["#a30012", "#ff2d3f"],
+  accent: { light: "#d80017", dark: "#ff6b78" },
+  accentVar: "--k-red",
   glyph: (
     <g fill="none" stroke="currentColor" strokeWidth={MARK_STROKE} strokeLinecap="round" strokeLinejoin="round">
       <path d="M9 9 23 23" />

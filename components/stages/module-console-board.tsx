@@ -23,7 +23,7 @@ export function ModuleConsoleBoard() {
 
   return (
     <div ref={ref} data-board="console" aria-hidden="true" className="relative mx-auto w-full max-w-[640px] select-none pb-24 pt-4 sm:pb-8">
-      <div className="animate-float-slow rounded-2xl bg-[#0b3268] p-4 shadow-[0_40px_90px_-30px_rgba(0,8,30,0.85)] ring-1 ring-white/15 sm:p-5">
+      <div className="animate-float-slow rounded-2xl bg-[#1c1c22] p-4 shadow-[0_40px_90px_-30px_rgba(0,8,30,0.85)] ring-1 ring-white/15 sm:p-5">
         <div className="mb-3 flex items-center justify-between text-[0.7rem] font-medium tracking-wide text-white/60">
           <span>NEXA / MODÜLLER</span>
           <span className="tabular-nums">

@@ -320,7 +320,7 @@ export function ContactForm({ initialTopic = "" }: { initialTopic?: string }) {
 
       <div aria-live="polite" className="mt-4">
         {status === "sent" && (
-          <p role="status" className="flex gap-2.5 rounded-lg bg-emerald-50 p-4 text-sm text-emerald-800">
+          <p role="status" className="flex gap-2.5 rounded-lg border border-line bg-surface-2 p-4 text-sm text-ink">
             <CircleCheck aria-hidden="true" className="size-5 shrink-0" />
             Mesajınız bize ulaştı. Ekibimiz en kısa sürede sizinle iletişime geçecek.
           </p>

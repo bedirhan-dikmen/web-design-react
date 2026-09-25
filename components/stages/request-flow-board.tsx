@@ -50,14 +50,14 @@ export function RequestFlowBoard() {
             return (
               <li key={label} className="flex items-center gap-2.5 text-sm">
                 <CircleCheck
-                  className={`size-5 transition-colors duration-500 ${done ? "text-emerald-500" : "text-board-200"}`}
+                  className={`size-5 transition-colors duration-500 ${done ? "text-brand-red" : "text-board-200"}`}
                   strokeWidth={2.2}
                 />
                 <span className={`transition-colors duration-500 ${done ? "font-medium text-brand-navy-deep" : "text-board-400"}`}>
                   {label}
                 </span>
                 {i === reached && (
-                  <span key={`n-${step}`} className="ml-auto animate-card-in rounded-full bg-emerald-50 px-2 py-0.5 text-[0.7rem] font-medium text-emerald-700">
+                  <span key={`n-${step}`} className="ml-auto animate-card-in rounded-full bg-board-100 px-2 py-0.5 text-[0.7rem] font-medium text-board-800">
                     şimdi
                   </span>
                 )}

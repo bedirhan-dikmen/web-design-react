@@ -25,22 +25,22 @@ export const SWATCH_GROUPS: { title: string; lead: string; swatches: Swatch[] }[
   },
   {
     title: "neXa sys",
-    lead: "Sipariş enerjisi: derin camgöbeğinden turkuaza akan bir geçiş.",
+    lead: "Kerinti kırmızısının ürünü: enerji ve hız. Sembol kırmızı tonlarından oluşur.",
     swatches: [
-      { name: "neXa", token: "nexa", hex: "#0F766E", note: "Metin ve ikon, 5.5:1" },
-      { name: "neXa Koyu", token: "nexa-strong", hex: "#115E59", note: "Üzerine gelme" },
-      { name: "neXa Işıltı", token: "nexa-glow", hex: "#22D3EE", note: "Yalnızca dekoratif" },
-      { name: "neXa Açık", token: "nexa-soft", hex: "#E6F7F6", note: "Kart ve rozet zemini" },
+      { name: "neXa Kırmızı", token: "nexa", hex: "#D80017", note: "Metin ve ikon, 5.3:1" },
+      { name: "neXa Koyu", token: "nexa-strong", hex: "#B00013", note: "Üzerine gelme" },
+      { name: "neXa Işıltı", token: "nexa-glow", hex: "#FF3A4A", note: "Yalnızca dekoratif" },
+      { name: "neXa Açık", token: "nexa-soft", hex: "#FDECEE", note: "Kart ve rozet zemini" },
     ],
   },
   {
     title: "nexus",
-    lead: "Bağlı operasyonlar: çivit mavisinden mora uzanan sakin bir derinlik.",
+    lead: "Grafit ürün: sakin, kurumsal ve dengeli. Sembol siyah ve gri tonlarından oluşur.",
     swatches: [
-      { name: "nexus", token: "nexus", hex: "#4338CA", note: "Metin ve ikon, 7.9:1" },
-      { name: "nexus Koyu", token: "nexus-strong", hex: "#3730A3", note: "Üzerine gelme" },
-      { name: "nexus Işıltı", token: "nexus-glow", hex: "#8B5CF6", note: "Yalnızca dekoratif" },
-      { name: "nexus Açık", token: "nexus-soft", hex: "#EEEDFC", note: "Kart ve rozet zemini" },
+      { name: "nexus Grafit", token: "nexus", hex: "#16161A", note: "Metin ve ikon, 18:1" },
+      { name: "nexus Koyu Gri", token: "nexus-fill-strong", hex: "#2E2E36", note: "Üzerine gelme" },
+      { name: "nexus Gri", token: "nexus-glow", hex: "#6B6B76", note: "İkincil öğeler, 5.3:1" },
+      { name: "nexus Açık", token: "nexus-soft", hex: "#EEEEF1", note: "Kart ve rozet zemini" },
     ],
   },
 ];
@@ -54,8 +54,8 @@ export const LOGO_RULES = {
   ],
   dont: [
     "Logoyu esnetmeyin, döndürmeyin veya gölge eklemeyin.",
-    "neXa ve nexus renklerini birbirinin yerine kullanmayın.",
-    "Işıltı renklerini (turkuaz, mor) metin rengi olarak kullanmayın; AA kontrastını karşılamazlar.",
+    "neXa kırmızı, nexus grafittir; ürün renklerini birbirinin yerine kullanmayın.",
+    "Palette mavi, yeşil veya başka bir renk eklemeyin: yalnızca siyah, beyaz, gri tonları ve Kerinti kırmızısı.",
     "Logoyu fotoğraf üzerine, kontrastı düşük bir alana yerleştirmeyin.",
   ],
 };

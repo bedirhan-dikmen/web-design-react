@@ -18,12 +18,13 @@
    * (4.58:1) while staying faithful to the reference hue.
    */
   /* Legacy names. brand-red is a FILL (white text on it) in both themes;
-     text accents use --color-red. brand-navy stays fixed: it is only used
-     for the product stage panels, which are "screens" in either theme. */
+     text accents use --color-red. "brand-navy" is historical: since the
+     2026-09 palette decision (black, white, greys + Kerinti red only) it is
+     graphite, used for the product stage panels in both themes. */
+  --color-brand-navy: #1c1c22;
+  --color-brand-navy-deep: #0c0c10;
   --color-brand-red: var(--color-red-fill);
   --color-brand-red-strong: var(--color-red-fill-strong);
-  --color-brand-navy: #002f77;
-  --color-brand-navy-deep: #001f52;
 
   /* Theme-aware slate: legacy inner-page classes follow the theme. */
   --color-slate-50: var(--k-slate-50);
@@ -50,17 +51,18 @@
   --color-board-800: #1e293b;
   --color-board-900: #0f172a;
 
-  /* Fills carry white text, so they keep AA in both themes (≥ 5.3:1). */
-  --color-red-fill: #d80017;
+  /* Fills carry white text, so they keep AA in both themes. */
+  --color-red-fill: #d80017; /* 5.3:1 */
   --color-red-fill-strong: #b00013;
-  --color-nexa-fill: #0f766e;
-  --color-nexa-fill-strong: #115e59;
-  --color-nexus-fill: #4338ca;
-  --color-nexus-fill-strong: #3730a3;
+  --color-nexa-fill: #d80017;
+  --color-nexa-fill-strong: #b00013;
+  --color-nexus-fill: var(--k-nexus-fill); /* graphite, ≥ 11:1 */
+  --color-nexus-fill-strong: var(--k-nexus-fill-strong);
 
   /*
-   * Unified palette (redesign, 2026-09). Base values come from the live
-   * reference web.kerinti.com.tr (style.css): red #D80017 on cool neutrals.
+   * Unified palette (redesign, 2026-09): black, white, shades of grey and
+   * Kerinti red (#D80017, from web.kerinti.com.tr) only — no blue or green,
+   * by owner decision. neXa is the red product, nexus the graphite one.
    * Every value resolves through a runtime variable on :root so a dark theme
    * only has to redefine the --k-* layer (see [data-theme="dark"] below).
    * Contrast against the matching surface is noted where text uses it.
@@ -79,18 +81,19 @@
   --color-line-2: var(--k-line-2);
   --color-night: var(--k-night);
 
-  --color-success: var(--k-success); /* #127a42, 5.4:1 */
-  --color-warning: var(--k-warning); /* #a15c00, 5.2:1 */
+  /* No green/blue in the palette: success reads through ink + icon. */
+  --color-success: var(--k-success);
+  --color-warning: var(--k-warning);
   --color-danger: var(--k-danger);
 
-  /* neXa — order energy: deep teal text, cyan glow. */
-  --color-nexa: var(--k-nexa); /* #0f766e, 5.5:1 */
+  /* neXa — the Kerinti red product. */
+  --color-nexa: var(--k-nexa); /* #d80017, 5.3:1 */
   --color-nexa-strong: var(--k-nexa-strong);
   --color-nexa-glow: var(--k-nexa-glow); /* decorative only */
   --color-nexa-soft: var(--k-nexa-soft);
 
-  /* nexus — connected operations: indigo text, violet glow. */
-  --color-nexus: var(--k-nexus); /* #4338ca, 7.9:1 */
+  /* nexus — the graphite (black) product. */
+  --color-nexus: var(--k-nexus); /* #16161a, 18:1 */
   --color-nexus-strong: var(--k-nexus-strong);
   --color-nexus-glow: var(--k-nexus-glow); /* decorative only */
   --color-nexus-soft: var(--k-nexus-soft);
@@ -151,17 +154,19 @@
   --k-line: #e7e7ec;
   --k-line-2: #d8d8e0;
   --k-night: #111116;
-  --k-success: #127a42;
-  --k-warning: #a15c00;
+  --k-success: #16161a;
+  --k-warning: #4a4a55;
   --k-danger: #c0001a;
-  --k-nexa: #0f766e;
-  --k-nexa-strong: #115e59;
-  --k-nexa-glow: #22d3ee;
-  --k-nexa-soft: #e6f7f6;
-  --k-nexus: #4338ca;
-  --k-nexus-strong: #3730a3;
-  --k-nexus-glow: #8b5cf6;
-  --k-nexus-soft: #eeedfc;
+  --k-nexa: #d80017;
+  --k-nexa-strong: #b00013;
+  --k-nexa-glow: #ff3a4a;
+  --k-nexa-soft: #fdecee;
+  --k-nexus: #16161a;
+  --k-nexus-strong: #000000;
+  --k-nexus-glow: #6b6b76;
+  --k-nexus-soft: #eeeef1;
+  --k-nexus-fill: #16161a;
+  --k-nexus-fill-strong: #2e2e36;
 
   /* Chrome */
   --k-header-bg: rgb(255 255 255 / 0.82);
@@ -170,12 +175,12 @@
   --k-hero-bg: linear-gradient(180deg, #fafafc 0%, #f1f1f5 100%);
   --k-hero-grid: rgb(22 22 26 / 0.06);
   --k-glow-red: rgb(216 0 23 / 0.1);
-  --k-glow-nexa: rgb(34 211 238 / 0.16);
-  --k-glow-nexus: rgb(139 92 246 / 0.14);
-  /* Headline gradient; every stop clears 4.5:1 on the light hero. */
-  --k-grad-a: #0f766e;
-  --k-grad-b: #3a4fc4;
-  --k-grad-c: #6d28d9;
+  --k-glow-nexa: rgb(216 0 23 / 0.08);
+  --k-glow-nexus: rgb(22 22 26 / 0.07);
+  /* Headline gradient: red into ink; every stop clears 4.5:1. */
+  --k-grad-a: #d80017;
+  --k-grad-b: #a30012;
+  --k-grad-c: #16161a;
   /* Serif accent in editorial headlines. */
   --k-em: #b00013;
   --k-shadow-lg: 0 30px 80px -30px rgb(20 20 40 / 0.35);
@@ -208,15 +213,17 @@
   --k-line: #2c2c34;
   --k-line-2: #3a3a45;
   --k-night: #0c0c10;
-  --k-success: #3ecf85;
-  --k-warning: #f0b35a;
+  --k-success: #f4f4f7;
+  --k-warning: #b9b9c4;
   --k-danger: #ff7a85;
-  --k-nexa: #2dd4bf;
-  --k-nexa-strong: #5eead4;
-  --k-nexa-soft: #0f2a28;
-  --k-nexus: #a5b4fc;
-  --k-nexus-strong: #c7d2fe;
-  --k-nexus-soft: #1e1c3a;
+  --k-nexa: #ff6b78;
+  --k-nexa-strong: #ff8a94;
+  --k-nexa-soft: #3a1418;
+  --k-nexus: #f4f4f7;
+  --k-nexus-strong: #ffffff;
+  --k-nexus-soft: #26262c;
+  --k-nexus-fill: #3a3a45;
+  --k-nexus-fill-strong: #4a4a55;
 
   --k-header-bg: rgb(16 16 20 / 0.78);
   --k-header-line: rgb(255 255 255 / 0.08);
@@ -224,11 +231,11 @@
   --k-hero-bg: linear-gradient(180deg, #15151b 0%, #0c0c10 100%);
   --k-hero-grid: rgb(255 255 255 / 0.06);
   --k-glow-red: rgb(216 0 23 / 0.22);
-  --k-glow-nexa: rgb(34 211 238 / 0.16);
-  --k-glow-nexus: rgb(139 92 246 / 0.2);
-  --k-grad-a: #5eead4;
-  --k-grad-b: #a5b4fc;
-  --k-grad-c: #c4b5fd;
+  --k-glow-nexa: rgb(216 0 23 / 0.14);
+  --k-glow-nexus: rgb(255 255 255 / 0.05);
+  --k-grad-a: #ff6b78;
+  --k-grad-b: #ff9aa3;
+  --k-grad-c: #f4f4f7;
   --k-em: #ff9aa3;
   --k-shadow-lg: 0 40px 100px -30px rgb(0 0 0 / 0.7);
 
@@ -304,10 +311,10 @@
 
 @keyframes hero-live-dot {
   0% {
-    box-shadow: 0 0 0 0 rgb(34 197 94 / 0.55);
+    box-shadow: 0 0 0 0 rgb(216 0 23 / 0.5);
   }
   100% {
-    box-shadow: 0 0 0 10px rgb(34 197 94 / 0);
+    box-shadow: 0 0 0 10px rgb(216 0 23 / 0);
   }
 }
 

@@ -35,7 +35,7 @@
 .sectorLink:hover > span { text-decoration: underline; text-underline-offset: 4px; }
 .stage { min-width: 0; width: 100%; max-width: 720px; justify-self: center; }
 .stageTop { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 16px; color: var(--k-ink-3); font-size: 9px; letter-spacing: .08em; }
-.product { padding: 10px 10px 0; border: 1px solid #ffffff30; border-radius: 12px; background: #0b3268; box-shadow: 0 24px 50px #000f2b40; }
+.product { padding: 10px 10px 0; border: 1px solid #ffffff30; border-radius: 12px; background: #1c1c22; box-shadow: 0 24px 50px #000f2b40; }
 .productLink { display: block; border-radius: 5px; overflow: hidden; }
 .productImage { display: block; width: 100%; height: auto; }
 .caption { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 18px 8px; }
@@ -86,7 +86,7 @@
 .motionFigure { margin: 0; }
 /* The product "screen": boards were designed on navy, so they keep a navy
    panel in both themes. */
-.motionBoard { padding: 16px 56px 24px; border-radius: 18px; background: linear-gradient(160deg, #002f77, #001f52); box-shadow: var(--k-shadow-lg); }
+.motionBoard { padding: 16px 56px 24px; border-radius: 18px; background: linear-gradient(160deg, #1c1c22, #0c0c10); box-shadow: var(--k-shadow-lg); }
 .motionBoard[data-paused="true"] *, .motionBoard[data-paused="true"] *::before, .motionBoard[data-paused="true"] *::after { animation-play-state: paused !important; }
 .motionCaption { display: flex; justify-content: space-between; align-items: center; gap: 14px; padding: 14px 0; border-bottom: 1px solid var(--k-line); }
 .flowHeadline { margin: 0; font-size: clamp(20px, 1.65vw, 27px); line-height: 1.3; letter-spacing: -.025em; color: var(--k-ink); }

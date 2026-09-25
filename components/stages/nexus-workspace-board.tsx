@@ -112,8 +112,8 @@ export function NexusWorkspaceBoard({ className = "" }: { className?: string }) 
             <svg viewBox="0 0 240 48" className="mt-2 h-12 w-full" preserveAspectRatio="none">
               <defs>
                 <linearGradient id={barsId} x1="0" y1="1" x2="0" y2="0">
-                  <stop offset="0" stopColor="#4338ca" />
-                  <stop offset="1" stopColor="#8b5cf6" />
+                  <stop offset="0" style={{ stopColor: "var(--k-ink-3)" }} />
+                  <stop offset="1" style={{ stopColor: "var(--k-ink)" }} />
                 </linearGradient>
               </defs>
               {BARS.map((v, i) => (

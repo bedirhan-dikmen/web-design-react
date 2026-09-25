@@ -104,6 +104,9 @@ export function ProductMark({ spec, size = 32, variant = "full", title, classNam
           <rect width={TILE} height={TILE} rx="8" fill={`url(#${gradientId})`} />
           {/* Soft top light, same on both products. */}
           <rect x="1" y="1" width={TILE - 2} height="14" rx="7" fill="#fff" opacity="0.12" />
+          {/* Hairline: invisible on light grounds, keeps the graphite tile
+              readable on dark ones. */}
+          <rect x="0.5" y="0.5" width={TILE - 1} height={TILE - 1} rx="7.5" fill="none" stroke="#fff" strokeOpacity="0.16" />
           <g color="#ffffff">{spec.glyph}</g>
         </>
       )}

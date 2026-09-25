@@ -22,7 +22,7 @@ export function ApproachTimelineBoard() {
 
   return (
     <div ref={ref} data-board="approach" aria-hidden="true" className="relative mx-auto w-full max-w-[620px] select-none pb-32 pt-4">
-      <div className="animate-float-slow rounded-2xl bg-[#0b3268] p-5 shadow-[0_40px_90px_-30px_rgba(0,8,30,0.85)] ring-1 ring-white/15 sm:mr-10 sm:p-6">
+      <div className="animate-float-slow rounded-2xl bg-[#1c1c22] p-5 shadow-[0_40px_90px_-30px_rgba(0,8,30,0.85)] ring-1 ring-white/15 sm:mr-10 sm:p-6">
         <p className="text-[0.7rem] font-medium tracking-wide text-white/60">KERİNTİ / ÇALIŞMA YAKLAŞIMI</p>
         <ol className="relative mt-4">
           <span className="absolute bottom-4 left-[17px] top-4 w-0.5 bg-white/15" />

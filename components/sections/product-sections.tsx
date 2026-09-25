@@ -27,7 +27,7 @@ export const ACCENT: Record<
     button: "bg-nexa-fill text-white hover:bg-nexa-fill-strong focus-visible:outline-nexa",
     ring: "hover:border-nexa/40",
     rule: "bg-nexa",
-    glow: "rgb(34 211 238 / 0.18)",
+    glow: "var(--k-glow-nexa)",
     Mark: NexaMark,
   },
   nexus: {
@@ -36,7 +36,7 @@ export const ACCENT: Record<
     button: "bg-nexus-fill text-white hover:bg-nexus-fill-strong focus-visible:outline-nexus",
     ring: "hover:border-nexus/40",
     rule: "bg-nexus",
-    glow: "rgb(139 92 246 / 0.16)",
+    glow: "var(--k-glow-nexus)",
     Mark: NexusMark,
   },
 };
