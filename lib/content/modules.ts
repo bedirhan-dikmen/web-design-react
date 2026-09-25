@@ -14,7 +14,7 @@ import {
 } from "lucide-react";
 
 /**
- * The NeXa module catalogue.
+ * The neXa module catalogue.
  *
  * Source of truth for the homepage feature grid, the Modüller page, the
  * product page and the about page. Wording is transcribed from the approved
@@ -22,7 +22,7 @@ import {
  * corrected by hand.
  *
  * `points` must stay grounded. Each one either restates the reference copy or
- * describes something visible in a real NeXa screenshot in /static_design
+ * describes something visible in a real neXa screenshot in /static_design
  * (the dashboard, POS, kitchen display and QR menu captures). Modules with no
  * screenshot therefore have short lists — that is deliberate, not unfinished.
  * Do not add capabilities here that the product owner has not confirmed.

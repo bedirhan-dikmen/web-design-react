@@ -58,7 +58,7 @@ export const APPROACH: Step[] = [
   },
   {
     title: "Süreçleri Tasarlıyoruz",
-    text: "İş akışınıza en uygun yapıyı planlıyor, NeXa'yı size özel şekilde kurguluyoruz.",
+    text: "İş akışınıza en uygun yapıyı planlıyor, neXa'yı size özel şekilde kurguluyoruz.",
     icon: Settings,
   },
   {
@@ -76,7 +76,7 @@ export const APPROACH: Step[] = [
 /** About page "Yolculuğumuz" — a story in four stages, deliberately undated. */
 export const JOURNEY: Step[] = [
   { title: "Fikir", text: "Sektörün gerçek ihtiyaçlarından yola çıktık.", icon: Lightbulb },
-  { title: "Ürünleşme", text: "NeXa'yı geliştirerek sahaya sunduk.", icon: Boxes },
+  { title: "Ürünleşme", text: "neXa'yı geliştirerek sahaya sunduk.", icon: Boxes },
   {
     title: "Saha Deneyimi",
     text: "Farklı işletmelerle çalışarak ürünümüzü olgunlaştırdık.",
@@ -140,7 +140,7 @@ export const CONTACT_TOPICS: {
   {
     value: "demo",
     title: "Demo Talebi",
-    text: "NeXa'yı yakından tanımak ve demo talep etmek istiyorum.",
+    text: "neXa sys veya nexus için demo talep etmek istiyorum.",
     icon: Monitor,
   },
   {
@@ -185,12 +185,12 @@ export const FAQS: { question: string; answer: string }[] = [
   {
     question: "Demo talebi sonrası süreç nasıl ilerliyor?",
     answer:
-      "Talebiniz bize ulaştıktan sonra ekibimiz sizinle iletişime geçer, işletmenizin ihtiyaçlarını dinler ve NeXa'yı size göstermek için uygun bir görüşme zamanı planlar.",
+      "Talebiniz bize ulaştıktan sonra ekibimiz sizinle iletişime geçer, işletmenizin ihtiyaçlarını dinler ve neXa'yı size göstermek için uygun bir görüşme zamanı planlar.",
   },
   {
-    question: "NeXa hangi işletmeler için uygundur?",
+    question: "neXa hangi işletmeler için uygundur?",
     answer:
-      "NeXa; restoranlar, kafeler, pastaneler, fast food zincirleri, oteller ve birden fazla şubesi olan yeme-içme grupları için tasarlandı. Modüler yapısı sayesinde işletmenizin ihtiyacı olan modüllerle başlayabilirsiniz.",
+      "neXa; restoranlar, kafeler, pastaneler, fast food zincirleri, oteller ve birden fazla şubesi olan yeme-içme grupları için tasarlandı. Modüler yapısı sayesinde işletmenizin ihtiyacı olan modüllerle başlayabilirsiniz.",
   },
   {
     question: "Teknik destek için nasıl iletişime geçebilirim?",

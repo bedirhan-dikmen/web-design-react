@@ -5,7 +5,7 @@ import { ChartColumn, ChefHat, QrCode, ReceiptText } from "lucide-react";
 import { useStageStep } from "@/components/motion/stage-motion";
 
 /**
- * /urun stage — one order's journey through NeXa.
+ * /urun stage — one order's journey through neXa.
  *
  * The real POS capture floats in the back; in front, a four-station track
  * (QR Menü → Kasa → Mutfak → Rapor) with a marker that moves one station per

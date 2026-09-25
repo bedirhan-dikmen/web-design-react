@@ -10,7 +10,7 @@
 
 export const SITE = {
   name: "Kerinti Soft",
-  tagline: "Daha iyi restoranlar için teknoloji.",
+  tagline: "İşinizin akışına güç veren yazılımlar.",
   contact: {
     phoneDisplay: "0532 460 74 47",
     /** E.164, for `tel:` links. */
@@ -44,7 +44,7 @@ export type NavItem = { label: string; href: string };
 /** Primary navigation, in the order the approved header shows it. */
 export const NAV_ITEMS: NavItem[] = [
   { label: "Ana Sayfa", href: "/" },
-  { label: "Ürün", href: "/urun" },
+  { label: "Ürünler", href: "/urun" },
   { label: "Modüller", href: "/moduller" },
   { label: "Çözümler", href: "/cozumler" },
   { label: "Referanslar", href: "/referanslar" },
@@ -55,6 +55,9 @@ export const NAV_ITEMS: NavItem[] = [
 /** Every "Demo Talep Et" on the site lands on the contact form, topic preset. */
 export const DEMO_HREF = "/iletisim?konu=demo#iletisim-formu";
 export const CONTACT_FORM_HREF = "/iletisim#iletisim-formu";
+export const DEALER_LOGIN_HREF = "/bayi-girisi";
+/** Dealer applications go through the contact form with the topic preset. */
+export const DEALER_APPLY_HREF = "/iletisim?konu=is-ortakligi#iletisim-formu";
 
 /**
  * Footer groups. Only routes that exist are linked: the reference footer also
@@ -63,10 +66,11 @@ export const CONTACT_FORM_HREF = "/iletisim#iletisim-formu";
  */
 export const FOOTER_GROUPS: { title: string; links: NavItem[] }[] = [
   {
-    title: "Ürün",
+    title: "Ürünler",
     links: [
-      { label: "NeXa", href: "/urun" },
-      { label: "Modüller", href: "/moduller" },
+      { label: "neXa sys", href: "/urun/nexa" },
+      { label: "nexus", href: "/urun/nexus" },
+      { label: "neXa Modülleri", href: "/moduller" },
     ],
   },
   {
@@ -82,6 +86,8 @@ export const FOOTER_GROUPS: { title: string; links: NavItem[] }[] = [
       { label: "Hakkımızda", href: "/hakkimizda" },
       { label: "İletişim", href: "/iletisim" },
       { label: "Demo Talebi", href: DEMO_HREF },
+      { label: "Bayi Girişi", href: DEALER_LOGIN_HREF },
+      { label: "Marka Rehberi", href: "/marka" },
     ],
   },
 ];

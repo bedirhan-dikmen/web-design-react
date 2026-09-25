@@ -13,12 +13,12 @@ import { DEMO_HREF } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Çözümler",
   description:
-    "Restoran, kafe, pastane, fast food, otel ve çok şubeli yeme-içme işletmeleri için NeXa çözümleri.",
+    "Restoran, kafe, pastane, fast food, otel ve çok şubeli yeme-içme işletmeleri için neXa çözümleri.",
 };
 
 /**
  * One sector: its photograph at the source's own 4:3 ratio, what that kind
- * of business needs, and which NeXa modules answer it. The module chips deep
+ * of business needs, and which neXa modules answer it. The module chips deep
  * link to the matching card on the Modüller page.
  */
 function SectorSolution({ sector }: { sector: Sector }) {
@@ -80,7 +80,7 @@ export default function SolutionsPage() {
   return (
     <>
       <EditorialHero
-        ariaLabel="Sektörlere özel NeXa çözümleri"
+        ariaLabel="Sektörlere özel neXa çözümleri"
         eyebrow="KERİNTİ / ÇÖZÜMLER"
         headline={
           <>
@@ -93,7 +93,7 @@ export default function SolutionsPage() {
           <>
             Restoran, kafe, otel ya da zincir.
             <br />
-            NeXa işletmenize göre kurulur.
+            neXa işletmenize göre kurulur.
           </>
         }
         detail="Farklı konsept ve ölçeklerdeki yeme-içme işletmelerinin dijital dönüşüm yolculuğuna eşlik ediyoruz."
@@ -143,7 +143,7 @@ export default function SolutionsPage() {
 
       <CtaBand
         title="İşletmenize özel çözümü birlikte planlayalım."
-        lead="Konseptinizi ve hedeflerinizi dinleyelim, size en uygun NeXa kurgusunu hazırlayalım."
+        lead="Konseptinizi ve hedeflerinizi dinleyelim, size en uygun neXa kurgusunu hazırlayalım."
       />
     </>
   );

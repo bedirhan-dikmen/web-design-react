@@ -10,7 +10,7 @@ import { SECTOR_IMAGE_SIZE, SECTORS } from "@/lib/content/sectors";
  *
  * The sector photographs cross-fade with a slow settle-in zoom; a tab row with
  * a progress bar shows which sector is on and which is next, and a card
- * lists the NeXa modules recommended for it (from lib/content/sectors.ts).
+ * lists the neXa modules recommended for it (from lib/content/sectors.ts).
  * All photographs are 4:3 sources shown in a 4:3 frame — nothing is cropped.
  */
 

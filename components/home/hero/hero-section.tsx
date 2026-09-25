@@ -2,11 +2,11 @@ import { EditorialHero } from "@/components/layout/editorial-hero";
 import { DEMO_HREF } from "@/lib/site";
 import { LiveBoard } from "./live-board";
 
-/** Homepage opening: one service, replayed live on the NeXa dashboard. */
+/** Homepage opening: one service, replayed live on the neXa dashboard. */
 export function HeroSection() {
   return (
     <EditorialHero
-      ariaLabel="NeXa restoran yönetimi"
+      ariaLabel="neXa restoran yönetimi"
       eyebrow="KERİNTİ’DEN / NEXA"
       headline={
         <>
@@ -19,12 +19,12 @@ export function HeroSection() {
         <>
           Masanın, mutfağın, kasanın.
           <br />
-          NeXa ile hepsi aynı ritimde.
+          neXa ile hepsi aynı ritimde.
         </>
       }
       detail="QR menüden siparişe, kasadan mutfağa. Restoranınızın ihtiyaç duyduğu araçlar, birlikte çalışan tek bir sistemde."
       primary={{ label: "Demo talep edin", href: DEMO_HREF }}
-      secondary={{ label: "NeXa’yı keşfedin", href: "/urun" }}
+      secondary={{ label: "neXa’yı keşfedin", href: "/urun" }}
       aside={{
         lead: "Restoran, kafe veya çok şubeli işletme.",
         label: "İşletmenize uygun çözümü bulun",
@@ -38,7 +38,7 @@ export function HeroSection() {
         </>
       }
       stageDescription="Örnek verilerle gösterilen restoran yönetimi animasyonu."
-      linksLabel="Öne çıkan NeXa modülleri"
+      linksLabel="Öne çıkan neXa modülleri"
       links={[
         { label: "QR Menü ve Sipariş", href: "/moduller#qr-menu" },
         { label: "Kasa (POS)", href: "/moduller#kasa-pos" },

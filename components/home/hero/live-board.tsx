@@ -7,7 +7,7 @@ import { useCountUp, useStageStep } from "@/components/motion/stage-motion";
 /**
  * The homepage hero's "live operations" board.
  *
- * A real NeXa dashboard capture, floating, with live DOM cards around it that
+ * A real neXa dashboard capture, floating, with live DOM cards around it that
  * replay one service in a loop: a QR order lands, the kitchen ticket moves
  * Hazırlanıyor → Pişiyor → Hazır, the payment is taken and the day's revenue
  * and sales chart tick up. It shows the product *working* rather than posing

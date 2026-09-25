@@ -141,7 +141,7 @@ export function ProductVisualCluster() {
     >
       <CounterSurface />
 
-      {/* Main monitor — the NeXa dashboard. Dominant, furthest back, turned
+      {/* Main monitor — the neXa dashboard. Dominant, furthest back, turned
           slightly so its right edge comes toward the viewer (image.png's right
           bezel shows its side face). Anchored by its top edge; see above. */}
       <Grounded
@@ -152,7 +152,7 @@ export function ProductVisualCluster() {
           {...DASHBOARD}
           device="monitor"
           tilt={-7}
-          alt="NeXa ana ekranı: bugünkü ciro, toplam sipariş, satış grafiği ve sipariş dağılımı."
+          alt="neXa ana ekranı: bugünkü ciro, toplam sipariş, satış grafiği ve sipariş dağılımı."
         />
       </Grounded>
 
@@ -163,7 +163,7 @@ export function ProductVisualCluster() {
           {...KITCHEN}
           device="display"
           tilt={-11}
-          alt="NeXa mutfak ekranı: hazırlanıyor, pişiyor ve hazır sipariş sütunları."
+          alt="neXa mutfak ekranı: hazırlanıyor, pişiyor ve hazır sipariş sütunları."
         />
       </Grounded>
 
@@ -175,7 +175,7 @@ export function ProductVisualCluster() {
           {...POS}
           device="pos"
           tilt={6}
-          alt="NeXa sipariş ekranı: masa için ürün listesi, sipariş özeti ve ödeme toplamı."
+          alt="neXa sipariş ekranı: masa için ürün listesi, sipariş özeti ve ödeme toplamı."
         />
       </Grounded>
 
@@ -185,7 +185,7 @@ export function ProductVisualCluster() {
           {...MOBILE}
           device="phone"
           tilt={5}
-          alt="NeXa mobil QR menü: kategoriler ve sepet özeti."
+          alt="neXa mobil QR menü: kategoriler ve sepet özeti."
         />
       </Grounded>
 

@@ -50,7 +50,7 @@ export default function AboutPage() {
         primary={{ label: "Demo talep edin", href: DEMO_HREF }}
         secondary={{ label: "İletişime geçin", href: CONTACT_FORM_HREF }}
         aside={{
-          lead: "NeXa’yı geliştiren ekip.",
+          lead: "neXa’yı geliştiren ekip.",
           label: "Ürünü yakından tanıyın",
           href: "/urun",
         }}
@@ -92,7 +92,7 @@ export default function AboutPage() {
                 <p>
                   Sektörün dinamiklerini yakından tanıyan ekibimizle, işletmelerin günlük
                   operasyonlarını kolaylaştıran, verimliliği artıran ve sürdürülebilir büyümeyi
-                  destekleyen NeXa restoran yönetim sistemini geliştiriyoruz.
+                  destekleyen neXa restoran yönetim sistemini geliştiriyoruz.
                 </p>
                 <p>
                   Daha iyi işletmeler için teknolojinin gerçek değer yarattığına inanıyor; sahaya
@@ -124,12 +124,12 @@ export default function AboutPage() {
             <div>
               <SectionHeader
                 id="ne-gelistiriyoruz"
-                eyebrow="NeXa Ekosistemi"
+                eyebrow="neXa Ekosistemi"
                 title="Ne Geliştiriyoruz?"
-                lead="NeXa, restoranların tüm operasyonlarını tek platformda birleştiren, modüler ve ölçeklenebilir bir restoran yönetim sistemidir. İşletmelerin bugünkü ihtiyaçlarına ve yarının hedeflerine birlikte odaklanır."
+                lead="neXa, restoranların tüm operasyonlarını tek platformda birleştiren, modüler ve ölçeklenebilir bir restoran yönetim sistemidir. İşletmelerin bugünkü ihtiyaçlarına ve yarının hedeflerine birlikte odaklanır."
               />
-              <ButtonLink href="/urun" className="mt-6" arrow>
-                NeXa&apos;yı Keşfet
+              <ButtonLink href="/urun/nexa" className="mt-6" arrow>
+                neXa&apos;yı Keşfet
               </ButtonLink>
             </div>
             <ul className="grid gap-3 min-[420px]:grid-cols-2 md:grid-cols-4">

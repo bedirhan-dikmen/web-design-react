@@ -7,7 +7,7 @@ import { TESTIMONIALS } from "@/lib/content/social-proof";
 
 /**
  * /referanslar stage — a deck of customer quotes, dealt one at a time, over a
- * slowly running strip of the business types NeXa serves.
+ * slowly running strip of the business types neXa serves.
  *
  * The quotes come from lib/content/social-proof.ts. While they are demo
  * entries each card keeps its visible "Örnek yorum" label, exactly as on the

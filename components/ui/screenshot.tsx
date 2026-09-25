@@ -1,7 +1,7 @@
 import Image from "next/image";
 
 /**
- * Real NeXa screenshots, framed.
+ * Real neXa screenshots, framed.
  *
  * Every entry here is a flat capture from /static_design, published under
  * /public/images/product. `maxCss` is the safe rendered width at 2x density
@@ -15,28 +15,28 @@ export const SCREENSHOTS = {
     width: 1442,
     height: 1091,
     maxCss: 721,
-    alt: "NeXa yönetim paneli: günlük satış, sipariş sayısı, satış grafiği ve sipariş dağılımı",
+    alt: "neXa yönetim paneli: günlük satış, sipariş sayısı, satış grafiği ve sipariş dağılımı",
   },
   pos: {
     src: "/images/product/nexa-pos-1448x1086.png",
     width: 1448,
     height: 1086,
     maxCss: 724,
-    alt: "NeXa kasa ekranı: kategori ve ürün seçimi ile masa sipariş listesi",
+    alt: "neXa kasa ekranı: kategori ve ürün seçimi ile masa sipariş listesi",
   },
   kitchen: {
     src: "/images/product/nexa-kitchen-1672x941.png",
     width: 1672,
     height: 941,
     maxCss: 836,
-    alt: "NeXa mutfak ekranı: Hazırlanıyor, Pişiyor ve Hazır sütunlarında siparişler",
+    alt: "neXa mutfak ekranı: Hazırlanıyor, Pişiyor ve Hazır sütunlarında siparişler",
   },
   mobile: {
     src: "/images/product/nexa-mobile-941x1672.png",
     width: 941,
     height: 1672,
     maxCss: 470,
-    alt: "NeXa QR menü: kategoriler ve sepete eklenebilen ürünler",
+    alt: "neXa QR menü: kategoriler ve sepete eklenebilen ürünler",
   },
 } as const;
 

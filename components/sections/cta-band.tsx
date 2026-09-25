@@ -10,7 +10,8 @@ const DISH = {
 };
 
 /**
- * The navy call-to-action band above the footer.
+ * The dark call-to-action band above the footer (night palette since the
+ * 2026-09 redesign; it was navy before).
  *
  * The plated-dish photograph (1448x1086) sits on the right and dissolves into
  * the navy through a mask, as in the references. It renders at most ~560 CSS
@@ -19,11 +20,12 @@ const DISH = {
  * rather than squeezed.
  */
 export function CtaBand({
-  badge = "NeXa",
+  badge = "neXa",
   badgeNote = "Restoran Sipariş Yönetim Sistemi",
   title = "İşletmenizi bir adım öteye taşıyın.",
-  lead = "Siz de NeXa ile tanışın, restoranınızın potansiyelini keşfedin.",
+  lead = "Siz de neXa ile tanışın, restoranınızın potansiyelini keşfedin.",
   secondary = "contact",
+  image = true,
 }: {
   badge?: string;
   badgeNote?: string;
@@ -31,16 +33,19 @@ export function CtaBand({
   lead?: string;
   /** The second button: a link to the contact form, or a phone call. */
   secondary?: "contact" | "call";
+  /** The restaurant dish photo; off for company-level pages. */
+  image?: boolean;
 }) {
   return (
     <section
       aria-labelledby="cta-band-title"
-      className="relative isolate overflow-hidden bg-brand-navy text-white"
+      className="relative isolate overflow-hidden bg-night text-white"
     >
       <div
         aria-hidden="true"
-        className="absolute inset-0 -z-20 bg-[linear-gradient(100deg,#001f52_0%,#002f77_55%,#0a3a8c_100%)]"
+        className="absolute inset-0 -z-20 bg-[radial-gradient(50%_120%_at_0%_0%,rgb(216_0_23/0.28),transparent_70%),linear-gradient(100deg,#111116_0%,#1b1b22_100%)]"
       />
+      {image && (
       <div
         aria-hidden="true"
         className="absolute inset-y-0 right-0 -z-10 hidden w-[42%] max-w-[560px] md:block"
@@ -66,8 +71,9 @@ export function CtaBand({
           Büyüyün.
         </p>
       </div>
+      )}
 
-      <Container className="grid items-center gap-7 py-12 md:grid-cols-[minmax(0,1fr)_auto] md:pr-[42%] lg:py-14 xl:pr-[36%]">
+      <Container className={`grid items-center gap-7 py-12 md:grid-cols-[minmax(0,1fr)_auto] lg:py-14 ${image ? "md:pr-[42%] xl:pr-[36%]" : ""}`}>
         <div>
           <div className="flex flex-wrap items-center gap-3">
             <span className="rounded-full border border-white/35 px-3 py-0.5 text-sm font-semibold">
@@ -98,7 +104,7 @@ export function CtaBand({
             </ButtonLink>
           ) : (
             <ButtonLink href={CONTACT_FORM_HREF} variant="light" size="lg">
-              İletişime Geç
+              Bize Ulaşın
             </ButtonLink>
           )}
         </div>

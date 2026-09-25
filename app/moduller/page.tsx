@@ -10,14 +10,14 @@ import { DEMO_HREF } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Modüller",
   description:
-    "QR menü, kasa (POS), mutfak ekranı, rezervasyon, stok, e-fatura, cari takip, raporlama ve daha fazlası: NeXa modülleri.",
+    "QR menü, kasa (POS), mutfak ekranı, rezervasyon, stok, e-fatura, cari takip, raporlama ve daha fazlası: neXa modülleri.",
 };
 
 export default function ModulesPage() {
   return (
     <>
       <EditorialHero
-        ariaLabel="NeXa modülleri"
+        ariaLabel="neXa modülleri"
         eyebrow="NEXA / MODÜLLER"
         headline={
           <>
@@ -35,7 +35,7 @@ export default function ModulesPage() {
         }
         detail="QR menü, kasa, mutfak ekranı, stok, e-fatura ve raporlama; hepsi aynı ekosistemde, birbirinden haberdar."
         primary={{ label: "Demo talep edin", href: DEMO_HREF }}
-        secondary={{ label: "NeXa’yı keşfedin", href: "/urun" }}
+        secondary={{ label: "neXa’yı keşfedin", href: "/urun/nexa" }}
         aside={{
           lead: "Hangi modül işletmenize uygun?",
           label: "Sektör çözümlerine bakın",
@@ -48,7 +48,7 @@ export default function ModulesPage() {
             On bir modül, <em>tek panel.</em>
           </>
         }
-        stageDescription="NeXa modüllerinin sırayla öne çıkarıldığı ve her birinin özelliklerinin gösterildiği animasyon."
+        stageDescription="neXa modüllerinin sırayla öne çıkarıldığı ve her birinin özelliklerinin gösterildiği animasyon."
         linksLabel="Modüllere git"
         links={[
           { label: "Mutfak Ekranı", href: "#mutfak-ekrani" },
@@ -67,7 +67,7 @@ export default function ModulesPage() {
         <Container>
           <SectionHeader
             id="modul-listesi"
-            title="NeXa modülleri"
+            title="neXa modülleri"
             lead="Bir modüle gitmek için seçin."
           />
           <nav aria-label="Modüller" className="mt-6">

@@ -5,7 +5,7 @@ import { useStageStep } from "@/components/motion/stage-motion";
 import { MODULES } from "@/lib/content/modules";
 
 /**
- * /moduller stage — a control panel of every NeXa module.
+ * /moduller stage — a control panel of every neXa module.
  *
  * All eleven modules sit in a grid; one lights up per step and a detail card
  * opens beside it with that module's own description and capability list,

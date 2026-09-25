@@ -11,7 +11,7 @@ import { DEMO_HREF } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Referanslar",
-  description: "NeXa ile dijital dönüşüm yolculuğuna eşlik ettiğimiz yeme-içme işletmeleri.",
+  description: "neXa ile dijital dönüşüm yolculuğuna eşlik ettiğimiz yeme-içme işletmeleri.",
 };
 
 /**
@@ -78,7 +78,7 @@ export default function ReferencesPage() {
             <SectionHeader
               id="yorum-baslik"
               title="Müşterilerimiz Ne Diyor?"
-              lead="NeXa ile işletmeler büyüyor, misafirler mutlu oluyor."
+              lead="neXa ile işletmeler büyüyor, misafirler mutlu oluyor."
             />
             <div className="mt-8">
               <Testimonials />

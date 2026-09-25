@@ -2,7 +2,7 @@ import Image from "next/image";
 import { safeMaxCssWidth, TARGET_DENSITY } from "@/lib/assets";
 
 /**
- * Layer D — a flat NeXa UI screenshot staged inside a real device body.
+ * Layer D — a flat neXa UI screenshot staged inside a real device body.
  *
  * The screenshot is never distorted: `object-contain`, intrinsic aspect ratio,
  * `h-auto w-full`, no skew, no scale-up, no `image-rendering` hack. What this

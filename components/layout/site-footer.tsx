@@ -14,15 +14,15 @@ export function SiteFooter() {
   const { contact } = SITE;
 
   return (
-    <footer className="bg-brand-navy-deep text-white">
+    <footer className="bg-night text-white">
       <Container className="grid grid-cols-2 gap-x-6 gap-y-10 py-14 sm:grid-cols-3 lg:grid-cols-[1.3fr_repeat(3,minmax(0,0.8fr))_1.4fr] lg:gap-8 lg:py-16">
         <div className="col-span-2 sm:col-span-3 lg:col-span-1">
           <Link href="/" aria-label="Kerinti — ana sayfa" className="inline-block">
             <KerintiWordmark />
           </Link>
           <p className="mt-4 max-w-xs text-sm leading-relaxed text-white/65">
-            Restoran ve yeme-içme işletmeleri için NeXa restoran yönetim sistemini
-            geliştiriyoruz.
+            İşletmeniz için geliştirilen akıllı yazılım çözümleri: neXa sys sipariş
+            yönetimi ve nexus iş yönetim platformu.
           </p>
         </div>
 

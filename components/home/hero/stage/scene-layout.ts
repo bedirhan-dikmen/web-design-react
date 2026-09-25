@@ -132,7 +132,7 @@ export const bodyHeight = (d: DeviceSpec) =>
   d.top + screenHeight(d) + d.chin;
 
 /**
- * Rear monitor — the NeXa dashboard. Dominant object, furthest back.
+ * Rear monitor — the neXa dashboard. Dominant object, furthest back.
  * image.png body 262..790 px wide, so 5.28 units.
  */
 export const MONITOR: DeviceSpec = {

@@ -1,5 +1,5 @@
 /**
- * The business types NeXa is built for ("Kimler için?").
+ * The business types neXa is built for ("Kimler için?").
  *
  * Images are byte-identical copies of the /static_design masters, published
  * under /public/images/sectors (see docs/ASSET_MANIFEST.md, Phase 02). All are
