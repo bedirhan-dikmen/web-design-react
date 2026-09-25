@@ -1,18 +1,18 @@
 import type { Metadata, Viewport } from "next";
-import { Caveat, Inter } from "next/font/google";
+import { Caveat, Manrope } from "next/font/google";
 import { SiteFooter } from "@/components/layout/site-footer";
 import "./globals.css";
 
 /*
- * Placeholder typeface for the foundation phase.
+ * Brand typeface, matching the live reference site (web.kerinti.com.tr).
  *
  * `latin-ext` is required, not optional: the site is Turkish and the copy
  * relies on ş, ğ, ı, İ, ç and ö. Without it those glyphs fall back to a
- * different face mid-word. The real brand typeface is a later decision.
+ * different face mid-word.
  */
-const inter = Inter({
+const manrope = Manrope({
   subsets: ["latin", "latin-ext"],
-  variable: "--font-inter",
+  variable: "--font-manrope",
   display: "swap",
 });
 
@@ -46,8 +46,8 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="tr" className={`${inter.variable} ${caveat.variable}`}>
-      <body className="font-sans text-slate-900">
+    <html lang="tr" className={`${manrope.variable} ${caveat.variable}`}>
+      <body className="bg-surface font-sans text-ink">
         <main id="icerik">{children}</main>
         <SiteFooter />
       </body>

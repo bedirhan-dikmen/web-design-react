@@ -6,7 +6,7 @@
  * --font-sans on :root and the two declarations tie on specificity.
  */
 @theme inline {
-  --font-sans: var(--font-inter);
+  --font-sans: var(--font-manrope);
   --font-script: var(--font-caveat);
 
   /*
@@ -17,10 +17,52 @@
    * the 4.5 threshold. --color-brand-red is the nearest value that clears it
    * (4.58:1) while staying faithful to the reference hue.
    */
-  --color-brand-red: #e81532;
-  --color-brand-red-strong: #cc0e2c;
+  --color-brand-red: var(--k-red);
+  --color-brand-red-strong: var(--k-red-strong);
   --color-brand-navy: #002f77;
   --color-brand-navy-deep: #001f52;
+
+  /*
+   * Unified palette (redesign, 2026-09). Base values come from the live
+   * reference web.kerinti.com.tr (style.css): red #D80017 on cool neutrals.
+   * Every value resolves through a runtime variable on :root so a dark theme
+   * only has to redefine the --k-* layer (see [data-theme="dark"] below).
+   * Contrast against the matching surface is noted where text uses it.
+   */
+  --color-red: var(--k-red); /* 5.3:1 on white, 4.9:1 on surface-2 */
+  --color-red-strong: var(--k-red-strong);
+  --color-red-soft: var(--k-red-soft);
+
+  --color-surface: var(--k-surface);
+  --color-surface-2: var(--k-surface-2);
+  --color-surface-3: var(--k-surface-3);
+  --color-ink: var(--k-ink); /* 18.0:1 */
+  --color-ink-2: var(--k-ink-2); /* 8.7:1 */
+  --color-ink-3: var(--k-ink-3); /* 5.3:1 — reference #8a8a96 fails AA */
+  --color-line: var(--k-line);
+  --color-line-2: var(--k-line-2);
+  --color-night: var(--k-night);
+
+  --color-success: var(--k-success); /* #127a42, 5.4:1 */
+  --color-warning: var(--k-warning); /* #a15c00, 5.2:1 */
+  --color-danger: var(--k-danger);
+
+  /* neXa — order energy: deep teal text, cyan glow. */
+  --color-nexa: var(--k-nexa); /* #0f766e, 5.5:1 */
+  --color-nexa-strong: var(--k-nexa-strong);
+  --color-nexa-glow: var(--k-nexa-glow); /* decorative only */
+  --color-nexa-soft: var(--k-nexa-soft);
+
+  /* nexus — connected operations: indigo text, violet glow. */
+  --color-nexus: var(--k-nexus); /* #4338ca, 7.9:1 */
+  --color-nexus-strong: var(--k-nexus-strong);
+  --color-nexus-glow: var(--k-nexus-glow); /* decorative only */
+  --color-nexus-soft: var(--k-nexus-soft);
+
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 22px;
+  --spacing-page-max: 1240px;
 
   /*
    * Bounds from docs/HERO_RESPONSIVE_SPEC.md and the Phase 01 brief.
@@ -45,6 +87,58 @@
   --animate-marquee: hero-marquee 32s linear infinite;
   --animate-progress: hero-progress 3s linear both;
   --animate-kenburns: hero-kenburns 7s ease-out both;
+}
+
+/* Runtime layer for the tokens above. Light is the default and only shipped
+   theme; the dark block is ready but nothing sets data-theme yet. */
+:root {
+  --k-red: #d80017;
+  --k-red-strong: #b00013;
+  --k-red-soft: #fdecee;
+  --k-surface: #ffffff;
+  --k-surface-2: #f6f6f8;
+  --k-surface-3: #eeeef1;
+  --k-ink: #16161a;
+  --k-ink-2: #4a4a55;
+  --k-ink-3: #6b6b76;
+  --k-line: #e7e7ec;
+  --k-line-2: #d8d8e0;
+  --k-night: #111116;
+  --k-success: #127a42;
+  --k-warning: #a15c00;
+  --k-danger: #c0001a;
+  --k-nexa: #0f766e;
+  --k-nexa-strong: #115e59;
+  --k-nexa-glow: #22d3ee;
+  --k-nexa-soft: #e6f7f6;
+  --k-nexus: #4338ca;
+  --k-nexus-strong: #3730a3;
+  --k-nexus-glow: #8b5cf6;
+  --k-nexus-soft: #eeedfc;
+}
+
+[data-theme="dark"] {
+  --k-red: #ff4d5c;
+  --k-red-strong: #ff6b78;
+  --k-red-soft: #3a1418;
+  --k-surface: #1b1b1f;
+  --k-surface-2: #212126;
+  --k-surface-3: #26262c;
+  --k-ink: #f4f4f7;
+  --k-ink-2: #b4b4c0;
+  --k-ink-3: #9a9aa8;
+  --k-line: #32323b;
+  --k-line-2: #3d3d48;
+  --k-night: #0c0c10;
+  --k-success: #3ecf85;
+  --k-warning: #f0b35a;
+  --k-danger: #ff6b78;
+  --k-nexa: #2dd4bf;
+  --k-nexa-strong: #5eead4;
+  --k-nexa-soft: #0f2e2c;
+  --k-nexus: #a5b4fc;
+  --k-nexus-strong: #c7d2fe;
+  --k-nexus-soft: #1f1d3d;
 }
 
 @keyframes hero-marquee {

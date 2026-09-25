@@ -18,14 +18,14 @@
 }
 .copy { min-width: 0; }
 .eyebrow { display: flex; align-items: center; gap: 10px; color: #c6d5ef; font-size: 11px; letter-spacing: .14em; }
-.eyebrow > span { width: 22px; height: 2px; background: #e81532; }
+.eyebrow > span { width: 22px; height: 2px; background: var(--k-red); }
 .headline { margin: 27px 0 24px; font-size: clamp(54px, 5.6vw, 94px); line-height: 1.04; letter-spacing: -.055em; font-weight: 500; }
 .headline em { font-family: Georgia, "Times New Roman", serif; font-weight: 400; color: #8fbbff; letter-spacing: -.055em; }
 .description { font-size: clamp(21px, 1.7vw, 27px); line-height: 1.45; letter-spacing: -.025em; }
 .detail { max-width: 390px; margin-top: 17px; font-size: 14px; line-height: 1.8; color: #c1d0e7; }
 .actions { display: flex; align-items: center; flex-wrap: wrap; gap: 25px; margin-top: 30px; font-size: 13px; }
-.primary { display: inline-flex; align-items: center; gap: 24px; background: #e81532; padding: 17px 23px; border-radius: 5px; font-weight: 600; }
-.primary:hover { background: #cc0e2c; }
+.primary { display: inline-flex; align-items: center; gap: 24px; background: var(--k-red); padding: 17px 23px; border-radius: 5px; font-weight: 600; }
+.primary:hover { background: var(--k-red-strong); }
 .secondary { display: inline-flex; align-items: center; gap: 8px; border-bottom: 1px solid #ffffff55; padding: 12px 0; }
 .secondary:hover { color: #b1ceff; }
 .hero a:focus-visible { outline: 2px solid #b1ceff; outline-offset: 5px; }
