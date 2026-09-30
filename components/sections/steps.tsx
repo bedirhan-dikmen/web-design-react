@@ -1,12 +1,12 @@
 import type { Step } from "@/lib/content/company";
+import { getLocale } from "@/lib/i18n-server";
 
 /**
- * Numbered process steps ("Nasıl Çalışır?", "Çalışma Yaklaşımımız",
- * "Yolculuğumuz"). An ordered list, so the sequence is real structure, not
+ * Numbered process steps ("Çalışma yaklaşımımız", the nexus work flow). An ordered list, so the sequence is real structure, not
  * just visual numbering. Four across from lg, two from sm, stacked on phones;
  * separators are borders, so they disappear cleanly when the row wraps.
  */
-export function Steps({
+export async function Steps({
   steps,
   numbered = true,
   columns = 4,
@@ -15,6 +15,7 @@ export function Steps({
   numbered?: boolean;
   columns?: 2 | 4;
 }) {
+  const en = (await getLocale()) === "en";
   const grid = columns === 4 ? "sm:grid-cols-2 lg:grid-cols-4" : "sm:grid-cols-2";
   return (
     <ol className={`grid gap-y-8 sm:gap-x-8 ${grid}`}>
@@ -38,7 +39,7 @@ export function Steps({
             </div>
             <div>
               <h3 className="text-base font-bold text-ink">
-                {numbered && <span className="sr-only">{i + 1}. adım: </span>}
+                {numbered && <span className="sr-only">{en ? `Step ${i + 1}: ` : `${i + 1}. adım: `}</span>}
                 {step.title}
               </h3>
               <p className="mt-1 text-sm leading-relaxed text-slate-600">{step.text}</p>

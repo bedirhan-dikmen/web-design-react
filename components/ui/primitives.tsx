@@ -4,26 +4,55 @@ import { ArrowRight } from "lucide-react";
 /**
  * Small shared building blocks for every page below the hero.
  *
- * `Container` uses the same max width and gutters as the hero's content row,
- * so section headings line up with the hero headline's left edge at every
- * viewport width.
+ * `Container` is the single reading width of the site (--spacing-page-max,
+ * 1280px) with the same gutters as the header, so every hero, section and the
+ * footer share one left edge at every viewport width.
  */
 
 export function Container({
   className = "",
-  width = "content",
   children,
 }: {
   className?: string;
-  /** "page" is the 1240px reading width used by the redesigned sections. */
-  width?: "content" | "page";
   children: React.ReactNode;
 }) {
-  const max = width === "page" ? "max-w-page-max" : "max-w-content-max";
+  return <div className={`mx-auto w-full max-w-page-max px-5 sm:px-6 lg:px-10 ${className}`}>{children}</div>;
+}
+
+/**
+ * One section rhythm for every page: the same vertical padding, an optional
+ * tinted band with hairline borders, and the Container inside.
+ */
+export function Section({
+  id,
+  labelledBy,
+  label,
+  tone = "plain",
+  size = "md",
+  className = "",
+  containerClassName = "",
+  children,
+}: {
+  id?: string;
+  labelledBy?: string;
+  label?: string;
+  tone?: "plain" | "tint";
+  size?: "sm" | "md";
+  className?: string;
+  containerClassName?: string;
+  children: React.ReactNode;
+}) {
+  const pad = size === "sm" ? "py-10 lg:py-12" : "py-12 lg:py-16";
+  const band = tone === "tint" ? "border-y border-line bg-surface-2" : "";
   return (
-    <div className={`mx-auto w-full ${max} px-5 sm:px-6 lg:px-10 ${className}`}>
-      {children}
-    </div>
+    <section
+      id={id}
+      aria-labelledby={labelledBy}
+      aria-label={label}
+      className={`scroll-mt-[calc(var(--header-h)+16px)] ${pad} ${band} ${className}`}
+    >
+      <Container className={containerClassName}>{children}</Container>
+    </section>
   );
 }
 
@@ -106,8 +135,9 @@ export function ArrowLink({ href, children }: { href: string; children: React.Re
 }
 
 /**
- * Section heading block: optional red eyebrow, navy title, muted lead, and an
- * optional action link that sits on the right from `md` up.
+ * Section heading block: optional red eyebrow, the title (wrap one accent
+ * word in <em> for the red accent), a muted lead, and an optional action
+ * that sits on the right from `md` up.
  */
 export function SectionHeader({
   eyebrow,
@@ -115,6 +145,7 @@ export function SectionHeader({
   lead,
   action,
   id,
+  as: Heading = "h2",
   className = "",
 }: {
   eyebrow?: string;
@@ -122,6 +153,7 @@ export function SectionHeader({
   lead?: React.ReactNode;
   action?: React.ReactNode;
   id?: string;
+  as?: "h1" | "h2";
   className?: string;
 }) {
   return (
@@ -129,21 +161,20 @@ export function SectionHeader({
       data-reveal
       className={`flex flex-col gap-4 md:flex-row md:items-end md:justify-between md:gap-10 ${className}`}
     >
-      <div className="max-w-5xl">
+      <div className="max-w-3xl">
         {eyebrow && (
-          <p className="mb-2 text-sm font-semibold text-red">
+          <p className="mb-3 flex items-center gap-2.5 text-xs font-bold uppercase tracking-[0.14em] text-ink-2">
+            <span aria-hidden="true" className="h-0.5 w-5 bg-red" />
             {eyebrow}
           </p>
         )}
-        <h2
+        <Heading
           id={id}
-          className="text-balance text-[clamp(1.5rem,2.2vw,2rem)] font-extrabold leading-tight tracking-[-0.03em] text-ink"
+          className="text-balance text-[clamp(1.75rem,3vw,2.625rem)] font-bold leading-[1.08] tracking-[-0.035em] text-ink"
         >
           {title}
-        </h2>
-        {lead && (
-          <p className="mt-2 max-w-2xl text-pretty text-ink-2">{lead}</p>
-        )}
+        </Heading>
+        {lead && <p className="mt-3 max-w-2xl text-pretty text-base leading-relaxed text-ink-2 lg:text-[1.0625rem]">{lead}</p>}
       </div>
       {action && <div className="shrink-0">{action}</div>}
     </div>

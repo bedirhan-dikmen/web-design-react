@@ -1,7 +1,9 @@
 "use client";
 
 import { CalendarClock, CircleCheck, Mail, MapPin, Phone, Send } from "lucide-react";
+import { useLocale } from "@/components/i18n/locale-provider";
 import { useStageStep } from "@/components/motion/stage-motion";
+import type { L } from "@/lib/i18n";
 import { CONTACT_TOPICS } from "@/lib/content/company";
 import { SITE } from "@/lib/site";
 
@@ -13,17 +15,38 @@ import { SITE } from "@/lib/site";
  * describes; once planned, a meeting card appears (face-to-face or online, as
  * the contact page offers). The channel strip underneath is the real, verified
  * contact data from lib/site.ts. No response time is promised.
+ *
+ * Paced slowly (4.2s a step, owner request 2026-09) so each state can be read.
  */
 
-const STEP_MS = 2600;
-const STATES = ["Talep alındı", "Ekibe iletildi", "Görüşme planlandı"] as const;
-const PHASES = STATES.length + 1; // one extra beat to hold the finished state
+const STEP_MS = 4200;
+const T: L<{ states: [string, string, string]; now: string; planned: string; online: string; office: string }> = {
+  tr: {
+    states: ["Talep alındı", "Ekibe iletildi", "Görüşme planlandı"],
+    now: "şimdi",
+    planned: "Görüşme planlandı",
+    online: "Online toplantı",
+    office: "Yüz yüze, ofisimizde",
+  },
+  en: {
+    states: ["Request received", "Passed to the team", "Meeting scheduled"],
+    now: "now",
+    planned: "Meeting scheduled",
+    online: "Online meeting",
+    office: "In person, at our office",
+  },
+};
+const PHASES = 4; // three states plus one beat to hold the finished state
 
 export function RequestFlowBoard() {
+  const locale = useLocale();
+  const t = T[locale];
+  const STATES = t.states;
+  const topics = CONTACT_TOPICS[locale];
   const { ref, step } = useStageStep(STEP_MS);
   const phase = step % PHASES;
   const reached = Math.min(phase, STATES.length - 1);
-  const topic = CONTACT_TOPICS[Math.floor(step / PHASES) % CONTACT_TOPICS.length];
+  const topic = topics[Math.floor(step / PHASES) % topics.length];
   const TopicIcon = topic.icon;
   const meetingOnline = Math.floor(step / PHASES) % 2 === 1;
 
@@ -58,7 +81,7 @@ export function RequestFlowBoard() {
                 </span>
                 {i === reached && (
                   <span key={`n-${step}`} className="ml-auto animate-card-in rounded-full bg-board-100 px-2 py-0.5 text-[0.7rem] font-medium text-board-800">
-                    şimdi
+                    {t.now}
                   </span>
                 )}
               </li>
@@ -76,8 +99,8 @@ export function RequestFlowBoard() {
             <CalendarClock className="size-5" />
           </span>
           <div className="text-xs">
-            <p className="text-sm font-semibold">Görüşme planlandı</p>
-            <p className="mt-0.5 text-white/65">{meetingOnline ? "Online toplantı" : "Yüz yüze, ofisimizde"}</p>
+            <p className="text-sm font-semibold">{t.planned}</p>
+            <p className="mt-0.5 text-white/65">{meetingOnline ? t.online : t.office}</p>
           </div>
         </div>
       )}

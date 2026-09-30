@@ -4,6 +4,7 @@ import { useId, useRef, useState } from "react";
 import Link from "next/link";
 import { AlertCircle, Eye, EyeOff, Info, Loader2, LogIn } from "lucide-react";
 import { signInDealer, validateDealerLogin, type DealerLoginErrors } from "@/lib/dealer-auth";
+import { useLocale } from "@/components/i18n/locale-provider";
 import { DEALER_COPY } from "@/lib/content/dealer";
 
 /**
@@ -13,6 +14,7 @@ import { DEALER_COPY } from "@/lib/content/dealer";
  * The submit result is announced through a role="alert" region.
  */
 export function DealerLoginForm() {
+  const copy = DEALER_COPY[useLocale()];
   const uid = useId();
   const ids = {
     identifier: `${uid}-id`,
@@ -33,7 +35,7 @@ export function DealerLoginForm() {
   const [pending, setPending] = useState(false);
   const [result, setResult] = useState<"not-available" | "invalid-credentials" | "network" | null>(null);
 
-  const errors: DealerLoginErrors = validateDealerLogin({ identifier, password });
+  const errors: DealerLoginErrors = validateDealerLogin({ identifier, password }, copy.errors);
   const show = (field: "identifier" | "password") => (submitted || touched[field]) && errors[field];
 
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -68,7 +70,7 @@ export function DealerLoginForm() {
   return (
     <form noValidate onSubmit={onSubmit} aria-describedby={`${uid}-hint`} className="space-y-5">
       <p id={`${uid}-hint`} className="sr-only">
-        Tüm alanlar zorunludur.
+        {copy.allRequired}
       </p>
 
       {result && (
@@ -83,13 +85,13 @@ export function DealerLoginForm() {
           ) : (
             <AlertCircle aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-danger" />
           )}
-          <p>{DEALER_COPY.results[result]}</p>
+          <p>{copy.results[result]}</p>
         </div>
       )}
 
       <div>
         <label htmlFor={ids.identifier} className="mb-1.5 block text-sm font-semibold text-ink">
-          {DEALER_COPY.identifierLabel}
+          {copy.identifierLabel}
         </label>
         <input
           ref={identifierRef}
@@ -106,7 +108,7 @@ export function DealerLoginForm() {
           onBlur={() => setTouched((t) => ({ ...t, identifier: true }))}
           aria-invalid={show("identifier") ? true : undefined}
           aria-describedby={show("identifier") ? ids.identifierError : undefined}
-          placeholder={DEALER_COPY.identifierPlaceholder}
+          placeholder={copy.identifierPlaceholder}
           className={`${inputBase} ${inputState(Boolean(show("identifier")))}`}
         />
         {show("identifier") && (
@@ -120,13 +122,13 @@ export function DealerLoginForm() {
       <div>
         <div className="mb-1.5 flex items-baseline justify-between gap-3">
           <label htmlFor={ids.password} className="block text-sm font-semibold text-ink">
-            {DEALER_COPY.passwordLabel}
+            {copy.passwordLabel}
           </label>
           <Link
-            href={DEALER_COPY.forgotHref}
+            href={copy.forgotHref}
             className="text-sm font-semibold text-red underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red"
           >
-            {DEALER_COPY.forgot}
+            {copy.forgot}
           </Link>
         </div>
         <div className="relative">
@@ -147,7 +149,7 @@ export function DealerLoginForm() {
           <button
             type="button"
             onClick={() => setShowPassword((v) => !v)}
-            aria-label={showPassword ? "Şifreyi gizle" : "Şifreyi göster"}
+            aria-label={showPassword ? copy.hidePassword : copy.showPassword}
             aria-pressed={showPassword}
             aria-controls={ids.password}
             className="absolute inset-y-0 right-0 flex w-11 items-center justify-center rounded-r-[var(--radius-sm)] text-ink-2 hover:text-ink focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-red"
@@ -172,7 +174,7 @@ export function DealerLoginForm() {
           className="size-4.5 rounded border-line-2 accent-red focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red"
         />
         <label htmlFor={ids.remember} className="text-sm text-ink-2">
-          {DEALER_COPY.remember}
+          {copy.remember}
         </label>
       </div>
 
@@ -185,12 +187,12 @@ export function DealerLoginForm() {
         {pending ? (
           <>
             <Loader2 aria-hidden="true" className="size-4 animate-spin" />
-            {DEALER_COPY.pending}
+            {copy.pending}
           </>
         ) : (
           <>
             <LogIn aria-hidden="true" className="size-4" />
-            {DEALER_COPY.submit}
+            {copy.submit}
           </>
         )}
       </button>

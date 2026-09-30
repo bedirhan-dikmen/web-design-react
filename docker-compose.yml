@@ -1,18 +1,19 @@
-# Kerinti website — CasaOS / Docker Compose deployment.
+# Kerinti website v2 — CasaOS / Docker Compose deployment.
 #
-#   git clone https://github.com/bedirhan-dikmen/web-design-react.git
-#   cd web-design-react
-#   cp .env.example .env        # fill in the Cloudflare tunnel token
+#   git clone -b v2 https://github.com/bedirhan-dikmen/web-design-react.git web-design-react-v2
+#   cd web-design-react-v2
+#   cp .env.example .env        # optional: fill in a Cloudflare tunnel token
 #   docker compose up -d --build
 #
 # Full walkthrough (Turkish): DEPLOY.md
 #
-# Every name below (project, image, containers, network) is unique to this
-# repository, so this site runs next to other Kerinti deployments on the same
-# server. With shared names Docker treats two sites as one project and each
-# deploy replaces the other.
+# Every name below (project, image, containers, network) carries the -v2
+# suffix and the host port defaults to 3030, so v2 runs next to the first
+# version (web-design-react, port 3080) and other sites on the same server.
+# With shared names Docker treats two sites as one project and each deploy
+# replaces the other.
 
-name: web-design-react
+name: web-design-react-v2
 
 services:
   web:
@@ -20,14 +21,15 @@ services:
       context: .
       args:
         NEXT_PUBLIC_CONTACT_ENDPOINT: ${NEXT_PUBLIC_CONTACT_ENDPOINT:-}
-    image: web-design-react:latest
-    container_name: web-design-react
+    image: web-design-react-v2:latest
+    container_name: web-design-react-v2
     restart: unless-stopped
     ports:
-      # Host port for LAN access (http://<server-ip>:3080). Pick a port no
-      # other site on the server uses. Cloudflare Tunnel does not need it —
-      # it reaches the site over this project's own network.
-      - "${WEB_PORT:-3080}:3000"
+      # Host port for LAN access (http://<server-ip>:3030). Inside the
+      # container the app still listens on 3000; only the host side changes.
+      # Pick a port no other site on the server uses. Cloudflare Tunnel run by
+      # this project does not need it — it reaches the site over the network.
+      - "${WEB_PORT:-3030}:3000"
     environment:
       NODE_ENV: production
       TZ: ${TZ:-Europe/Istanbul}
@@ -38,7 +40,7 @@ services:
       start_period: 20s
       retries: 3
     networks:
-      - web-design-react
+      - web-design-react-v2
 
   # Cloudflare Tunnel: publishes the site on your domain without opening any
   # port on the router. Started only when the "tunnel" profile is enabled —
@@ -47,7 +49,7 @@ services:
   # Use a tunnel of its own, separate from any other site's tunnel.
   cloudflared:
     image: cloudflare/cloudflared:latest
-    container_name: web-design-react-tunnel
+    container_name: web-design-react-v2-tunnel
     restart: unless-stopped
     command: tunnel --no-autoupdate run
     environment:
@@ -60,11 +62,11 @@ services:
     profiles:
       - tunnel
     networks:
-      - web-design-react
+      - web-design-react-v2
 
 networks:
-  web-design-react:
-    name: web-design-react
+  web-design-react-v2:
+    name: web-design-react-v2
 
 # CasaOS app metadata (shown on the CasaOS dashboard when this compose file is
 # imported through "Custom Install"). Ignored by plain Docker Compose.
@@ -76,11 +78,11 @@ x-casaos:
   author: Kerinti Soft
   category: Web
   title:
-    en_us: Kerinti Website (NeXa)
-    tr_tr: Kerinti Web Sitesi (NeXa)
+    en_us: Kerinti Website v2
+    tr_tr: Kerinti Web Sitesi v2
   tagline:
-    en_us: Kerinti Soft / NeXa website
-    tr_tr: Kerinti Soft / NeXa web sitesi
-  port_map: "3080"
+    en_us: Kerinti Soft website (neXa sys and nexus), version 2
+    tr_tr: Kerinti Soft web sitesi (neXa sys ve nexus), 2. sürüm
+  port_map: "3030"
   scheme: http
   index: /

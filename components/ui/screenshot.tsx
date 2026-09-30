@@ -1,49 +1,14 @@
 import Image from "next/image";
+import { SCREENSHOTS, type ScreenshotKey } from "@/lib/content/screenshots";
+import { getLocale } from "@/lib/i18n-server";
 
 /**
- * Real neXa screenshots, framed.
- *
- * Every entry here is a flat capture from /static_design, published under
- * /public/images/product. `maxCss` is the safe rendered width at 2x density
- * (docs/VISUAL_ASSET_ARCHITECTURE.md): the frame never grows past it, so UI
- * text stays sharp on high-DPR screens. Layouts may render smaller, never
- * larger.
+ * Real neXa screenshots, framed (server components). The capture data and
+ * safe sizes live in lib/content/screenshots.ts.
  */
-export const SCREENSHOTS = {
-  dashboard: {
-    src: "/images/product/nexa-dashboard-1442x1091.png",
-    width: 1442,
-    height: 1091,
-    maxCss: 721,
-    alt: "neXa yönetim paneli: günlük satış, sipariş sayısı, satış grafiği ve sipariş dağılımı",
-  },
-  pos: {
-    src: "/images/product/nexa-pos-1448x1086.png",
-    width: 1448,
-    height: 1086,
-    maxCss: 724,
-    alt: "neXa kasa ekranı: kategori ve ürün seçimi ile masa sipariş listesi",
-  },
-  kitchen: {
-    src: "/images/product/nexa-kitchen-1672x941.png",
-    width: 1672,
-    height: 941,
-    maxCss: 836,
-    alt: "neXa mutfak ekranı: Hazırlanıyor, Pişiyor ve Hazır sütunlarında siparişler",
-  },
-  mobile: {
-    src: "/images/product/nexa-mobile-941x1672.png",
-    width: 941,
-    height: 1672,
-    maxCss: 470,
-    alt: "neXa QR menü: kategoriler ve sepete eklenebilen ürünler",
-  },
-} as const;
-
-export type ScreenshotKey = keyof typeof SCREENSHOTS;
 
 /** Landscape capture in a light window frame. */
-export function ScreenshotFrame({
+export async function ScreenshotFrame({
   shot,
   maxWidth = 640,
   eager = false,
@@ -56,6 +21,7 @@ export function ScreenshotFrame({
   dark?: boolean;
 }) {
   const s = SCREENSHOTS[shot];
+  const locale = await getLocale();
   const cap = Math.min(maxWidth, s.maxCss);
   return (
     <div
@@ -68,7 +34,7 @@ export function ScreenshotFrame({
         src={s.src}
         width={s.width}
         height={s.height}
-        alt={s.alt}
+        alt={s.alt[locale]}
         sizes={`(min-width: 1024px) ${cap}px, 92vw`}
         quality={90}
         {...(eager ? { fetchPriority: "high" as const, loading: "eager" as const } : {})}
@@ -79,8 +45,9 @@ export function ScreenshotFrame({
 }
 
 /** The QR menu capture inside a phone-shaped frame. */
-export function PhoneScreenshot({ width = 280 }: { width?: number }) {
+export async function PhoneScreenshot({ width = 280 }: { width?: number }) {
   const s = SCREENSHOTS.mobile;
+  const locale = await getLocale();
   const cap = Math.min(width, s.maxCss);
   return (
     <div
@@ -91,7 +58,7 @@ export function PhoneScreenshot({ width = 280 }: { width?: number }) {
         src={s.src}
         width={s.width}
         height={s.height}
-        alt={s.alt}
+        alt={s.alt[locale]}
         sizes={`${cap}px`}
         quality={90}
         className="w-full rounded-[1.7rem]"

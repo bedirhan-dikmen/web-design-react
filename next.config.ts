@@ -10,6 +10,16 @@ const nextConfig: NextConfig = {
   // so the generator stays off.
   agentRules: false,
 
+  // Pages removed in the 2026-09 restructure: old links land somewhere
+  // useful instead of a 404. Modules are introduced on the neXa page now.
+  async redirects() {
+    return [
+      { source: "/cozumler", destination: "/", permanent: false },
+      { source: "/referanslar", destination: "/", permanent: false },
+      { source: "/moduller", destination: "/urun/nexa#moduller", permanent: false },
+    ];
+  },
+
   images: {
     // Breakpoints chosen to match the display matrix in docs/VISUAL_QA.md
     // (1366 / 1440 / 1920 / 2560 / 3840) plus tablet and mobile widths.

@@ -1,213 +1,201 @@
 import type { Metadata } from "next";
-import { CircleCheck } from "lucide-react";
-import { EditorialHero } from "@/components/layout/editorial-hero";
-import { ApproachTimelineBoard } from "@/components/stages/approach-timeline-board";
+import Link from "next/link";
+import { ArrowRight, CircleCheck } from "lucide-react";
+import { PageIntro } from "@/components/layout/page-intro";
 import { CtaBand } from "@/components/sections/cta-band";
-import { ModuleCard } from "@/components/sections/module-grid";
-import { SectorGrid } from "@/components/sections/sector-grid";
 import { Steps } from "@/components/sections/steps";
-import { ArrowLink, ButtonLink, Container, IconTile, SectionHeader } from "@/components/ui/primitives";
-import { APPROACH, JOURNEY, REASONS, VALUES } from "@/lib/content/company";
-import { ABOUT_MODULE_SLUGS, modulesBySlug } from "@/lib/content/modules";
-import { SECTORS } from "@/lib/content/sectors";
-import { CONTACT_FORM_HREF, DEMO_HREF } from "@/lib/site";
-
-export const metadata: Metadata = {
-  title: "Hakkımızda",
-  description:
-    "Kerinti Soft; restoran, kafe, pastane, fast food zincirleri, oteller ve çok şubeli yeme-içme işletmeleri için yazılım çözümleri geliştiren bir teknoloji şirketidir.",
-};
+import { ArrowLink, Container, SectionHeader } from "@/components/ui/primitives";
+import { ProductLogo } from "@/components/ui/product-logo";
+import { APPROACH, REASONS, VALUES } from "@/lib/content/company";
+import { PRODUCTS } from "@/lib/content/products";
+import type { L } from "@/lib/i18n";
+import { getLocale } from "@/lib/i18n-server";
 
 /**
- * About page, following the about reference section by section. All copy is
- * transcribed from that mockup; it states no founding date, headcount,
- * customer count, award or certification, because none were supplied.
- *
- * The reference's two team photographs do not exist in the project, so the
- * hero uses the restaurant photograph and "Biz Kimiz?" is text only.
+ * About page, in the plain corporate style (no animated stage): a compact
+ * intro, who we are, the two programs, how we work, values and a short list
+ * of reasons. Written to cover both programs and to avoid superlatives; it
+ * states no founding date, headcount, customer count, award or
+ * certification, because none were supplied.
  */
-export default function AboutPage() {
+
+const T: L<{
+  metaDescription: string;
+  eyebrow: string;
+  title: [string, string];
+  lead: string;
+  whoTitle: string;
+  who: string[];
+  whatEyebrow: string;
+  whatTitle: string;
+  approachTitle: string;
+  approachLead: string;
+  valuesTitle: string;
+  more: string;
+  reasonsTitle: string;
+}> = {
+  tr: {
+    metaDescription: "Kerinti Soft; sipariş yönetimi için neXa sys, iş yönetimi için nexus yazılımlarını geliştiren, Giresun Teknopark merkezli bir yazılım şirketidir.",
+    eyebrow: "Kurumsal / Hakkımızda",
+    title: ["Sahaya yakın bir", "yazılım ekibi."],
+    lead: "Sipariş yönetimi için neXa sys'i, iş yönetimi için nexus'u geliştiriyoruz.",
+    whoTitle: "Biz kimiz?",
+    who: [
+      "Kerinti Soft, Giresun Teknopark'ta kurulu bir yazılım şirketidir. İşletmelerin günlük işini kolaylaştıran, pratik ve kullanımı kolay yazılımlar geliştiriyoruz.",
+      "Kurulumu, eğitimi ve desteği aynı ekip veriyor; konuştuğunuz ekip, sistemi kuran ekiptir.",
+    ],
+    whatEyebrow: "Programlarımız",
+    whatTitle: "Ne geliştiriyoruz?",
+    approachTitle: "Çalışma yaklaşımımız",
+    approachLead: "Her projede aynı dört adımla ilerliyoruz.",
+    valuesTitle: "Değerlerimiz",
+    more: "Devamını okuyun",
+    reasonsTitle: "Neden Kerinti?",
+  },
+  en: {
+    metaDescription: "Kerinti Soft is a software company based at Giresun Teknopark that builds neXa sys for order management and nexus for business management.",
+    eyebrow: "Company / About us",
+    title: ["A software team", "close to the field."],
+    lead: "We build neXa sys for order management and nexus for business management.",
+    whoTitle: "Who we are",
+    who: [
+      "Kerinti Soft is a software company based at Giresun Teknopark. We build practical, easy-to-use software that makes everyday business work easier.",
+      "The same team handles setup, training and support; the team you talk to is the team that installs the system.",
+    ],
+    whatEyebrow: "Our programs",
+    whatTitle: "What we build",
+    approachTitle: "How we work",
+    approachLead: "Every project follows the same four steps.",
+    valuesTitle: "Our values",
+    more: "Read more",
+    reasonsTitle: "Why Kerinti?",
+  },
+};
+
+/** Values that have a page of their own under Kurumsal (by position). */
+const VALUE_PAGES = ["/misyon", "/vizyon"];
+
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getLocale();
+  return { title: locale === "en" ? "About us" : "Hakkımızda", description: T[locale].metaDescription };
+}
+
+export default async function AboutPage() {
+  const locale = await getLocale();
+  const t = T[locale];
+  const products = PRODUCTS[locale];
+
   return (
     <>
-      <EditorialHero
-        ariaLabel="Kerinti Soft hakkında"
-        eyebrow="KERİNTİ / HAKKIMIZDA"
-        headline={
+      <PageIntro
+        eyebrow={t.eyebrow}
+        title={
           <>
-            Restoranı bilen
-            <br />
-            bir <em>ekip.</em>
+            {t.title[0]} <em>{t.title[1]}</em>
           </>
         }
-        description={
-          <>
-            Sahaya yakın, restoran odaklı.
-            <br />
-            Uzun vadeli bir iş ortağı.
-          </>
-        }
-        primary={{ label: "Demo talep edin", href: DEMO_HREF }}
-        secondary={{ label: "İletişime geçin", href: CONTACT_FORM_HREF }}
-        aside={{
-          lead: "neXa’yı geliştiren ekip.",
-          label: "Ürünü yakından tanıyın",
-          href: "/urun",
-        }}
-        stageLabel="KERİNTİ / YAKLAŞIM"
-        stage={<ApproachTimelineBoard />}
-        caption={
-          <>
-            Sizi dinleyerek <em>başlıyoruz.</em>
-          </>
-        }
-        stageDescription="Kerinti'nin dört adımlı çalışma yaklaşımını ve değerlerini sırayla gösteren animasyon."
-        linksLabel="Sayfa bölümleri"
-        links={[
-          { label: "Biz Kimiz?", href: "#biz-kimiz" },
-          { label: "Çalışma Yaklaşımımız", href: "#yaklasim" },
-          { label: "Yolculuğumuz", href: "#yolculuk" },
-        ]}
-        footer={{
-          left: "KERİNTİ YAZILIM / NEXA",
-          scrollHref: "#biz-kimiz",
-          scrollLabel: "Bizi tanıyın",
-          right: "SAHAYA YAKIN, DAİMA YANINIZDA.",
-        }}
+        lead={t.lead}
       />
 
-      <div className="bg-surface">
-        {/* Biz Kimiz? + values */}
-        <section aria-labelledby="biz-kimiz" className="pt-14 pb-12 lg:pt-16">
-          <Container>
-            <div className="max-w-4xl">
-              <SectionHeader id="biz-kimiz" eyebrow="Hakkımızda" title="Biz Kimiz?" />
-              <div className="mt-5 space-y-4 text-base leading-relaxed text-slate-600 lg:text-[1.0625rem]">
-                <p>
-                  <strong className="font-semibold text-ink">Kerinti Soft</strong>,
-                  restoran, kafe, pastane, fast food zincirleri, oteller ve çok şubeli yeme-içme
-                  işletmeleri için pratik, ölçeklenebilir ve kullanıcı dostu yazılım çözümleri
-                  geliştiren bir teknoloji şirketidir.
-                </p>
-                <p>
-                  Sektörün dinamiklerini yakından tanıyan ekibimizle, işletmelerin günlük
-                  operasyonlarını kolaylaştıran, verimliliği artıran ve sürdürülebilir büyümeyi
-                  destekleyen neXa restoran yönetim sistemini geliştiriyoruz.
-                </p>
-                <p>
-                  Daha iyi işletmeler için teknolojinin gerçek değer yarattığına inanıyor; sahaya
-                  yakın, çözüm odaklı ve uzun vadeli bir iş ortağı olarak yol alıyoruz.
-                </p>
-              </div>
-            </div>
+      {/* Who we are */}
+      <section aria-labelledby="biz-kimiz" className="py-12 lg:py-16">
+        <Container className="grid gap-6 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,2fr)] lg:gap-16">
+          <SectionHeader id="biz-kimiz" title={t.whoTitle} className="lg:self-start" />
+          <div className="max-w-2xl space-y-4 text-base leading-relaxed text-ink-2 lg:text-[1.0625rem]">
+            {t.who.map((para) => (
+              <p key={para.slice(0, 24)}>{para}</p>
+            ))}
+          </div>
+        </Container>
+      </section>
 
-            <ul className="mt-10 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-              {VALUES.map((v) => {
-                const Icon = v.icon;
-                return (
-                  <li key={v.title} className="rounded-xl border border-slate-200 p-6">
-                    <IconTile>
-                      <Icon className="size-9" strokeWidth={1.5} />
-                    </IconTile>
-                    <h3 className="mt-3 text-lg font-bold text-ink">{v.title}</h3>
-                    <p className="mt-2 text-sm leading-relaxed text-slate-600">{v.text}</p>
-                  </li>
-                );
-              })}
-            </ul>
-          </Container>
-        </section>
-
-        {/* Ne Geliştiriyoruz? */}
-        <section aria-labelledby="ne-gelistiriyoruz" className="py-12">
-          <Container className="grid items-start gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,2.2fr)] lg:gap-12">
-            <div>
-              <SectionHeader
-                id="ne-gelistiriyoruz"
-                eyebrow="neXa Ekosistemi"
-                title="Ne Geliştiriyoruz?"
-                lead="neXa, restoranların tüm operasyonlarını tek platformda birleştiren, modüler ve ölçeklenebilir bir restoran yönetim sistemidir. İşletmelerin bugünkü ihtiyaçlarına ve yarının hedeflerine birlikte odaklanır."
-              />
-              <ButtonLink href="/urun/nexa" className="mt-6" arrow>
-                neXa&apos;yı Keşfet
-              </ButtonLink>
-            </div>
-            <ul className="grid gap-3 min-[420px]:grid-cols-2 md:grid-cols-4">
-              {modulesBySlug(ABOUT_MODULE_SLUGS).map((m) => (
-                <ModuleCard key={m.slug} module={m} />
-              ))}
-            </ul>
-          </Container>
-        </section>
-
-        {/* Çalışma Yaklaşımımız */}
-        <section aria-labelledby="yaklasim" className="py-12">
-          <Container>
-            <SectionHeader
-              id="yaklasim"
-              title="Çalışma Yaklaşımımız"
-              lead="Sizi dinliyor, ihtiyaçlarınıza en uygun çözümü birlikte tasarlıyor ve her adımda yanınızda oluyoruz."
-            />
-            <div className="mt-8 rounded-2xl border border-slate-200 p-6 sm:p-8">
-              <Steps steps={APPROACH} />
-            </div>
-          </Container>
-        </section>
-
-        {/* Neden Kerinti? */}
-        <section aria-labelledby="neden" className="py-12">
-          <Container className="grid items-start gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,2.2fr)] lg:gap-12">
-            <SectionHeader
-              id="neden"
-              title="Neden Kerinti?"
-              lead="Restoranların ihtiyaçlarını gerçekten anlayan ve bu alana odaklanan bir çözüm ortağıyız."
-            />
-            <ul className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
-              {REASONS.map((r) => (
-                <li key={r.title} className="flex gap-3 rounded-xl border border-slate-200 p-4">
-                  <CircleCheck aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-red" strokeWidth={2.2} />
-                  <div>
-                    <h3 className="text-[0.9375rem] font-semibold text-ink">{r.title}</h3>
-                    <p className="mt-0.5 text-sm text-slate-600">{r.text}</p>
-                  </div>
+      {/* The two programs */}
+      <section aria-labelledby="ne-gelistiriyoruz" className="border-y border-line bg-surface-2 py-12 lg:py-16">
+        <Container>
+          <SectionHeader id="ne-gelistiriyoruz" eyebrow={t.whatEyebrow} title={t.whatTitle} />
+          <ul className="mt-8 grid gap-4 md:grid-cols-2">
+            {(["nexa", "nexus"] as const).map((slug) => {
+              const p = products[slug];
+              return (
+                <li key={slug}>
+                  <Link
+                    href={p.href}
+                    className="group flex h-full flex-col rounded-[var(--radius-lg)] border border-line bg-surface p-6 transition-colors hover:border-line-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink sm:p-7"
+                  >
+                    <div className="flex items-center justify-between gap-4">
+                      <ProductLogo product={slug} height={slug === "nexa" ? 36 : 42} />
+                      <span className="rounded-full border border-line px-3 py-1 text-xs font-semibold text-ink-2">{p.category}</span>
+                    </div>
+                    <h3 className="mt-5 text-xl font-bold tracking-tight text-ink">
+                      {p.headline[0]} {p.headline[1]}
+                    </h3>
+                    <p className="mt-2 text-sm leading-relaxed text-ink-2">
+                      {p.lead} {p.idealFor}.
+                    </p>
+                    <span className="mt-auto inline-flex items-center gap-1.5 pt-5 text-sm font-semibold text-ink group-hover:text-red">
+                      {p.cta}
+                      <ArrowRight aria-hidden="true" className="size-4 transition-transform group-hover:translate-x-0.5" />
+                    </span>
+                  </Link>
                 </li>
-              ))}
-            </ul>
-          </Container>
-        </section>
+              );
+            })}
+          </ul>
+        </Container>
+      </section>
 
-        {/* Kimlerle Çalışıyoruz? */}
-        <section aria-labelledby="kimlerle" className="py-12">
-          <Container>
-            <SectionHeader
-              id="kimlerle"
-              title="Kimlerle Çalışıyoruz?"
-              lead="Farklı konsept ve ölçeklerdeki yeme-içme işletmelerinin dijital dönüşüm yolculuğuna eşlik ediyoruz."
-              action={<ArrowLink href="/cozumler">Sektör Çözümlerimiz</ArrowLink>}
-            />
-            <div className="mt-8">
-              <SectorGrid sectors={SECTORS} showTagline={false} />
-            </div>
-          </Container>
-        </section>
+      {/* How we work */}
+      <section aria-labelledby="yaklasim" className="py-12 lg:py-16">
+        <Container>
+          <SectionHeader id="yaklasim" title={t.approachTitle} lead={t.approachLead} />
+          <div className="mt-8 rounded-2xl border border-line p-6 sm:p-8">
+            <Steps steps={APPROACH[locale]} />
+          </div>
+        </Container>
+      </section>
 
-        {/* Yolculuğumuz */}
-        <section aria-labelledby="yolculuk" className="pt-12 pb-14 lg:pb-16">
-          <Container>
-            <SectionHeader
-              id="yolculuk"
-              title="Yolculuğumuz"
-              lead="Daha iyi işletmeler için çıktığımız bu yolculukta, her zaman daha fazlası için çalışıyoruz."
-            />
-            <div className="mt-8 rounded-2xl border border-slate-200 p-6 sm:p-8">
-              <Steps steps={JOURNEY} numbered={false} />
-            </div>
-          </Container>
-        </section>
-      </div>
+      {/* Values */}
+      <section aria-labelledby="degerler" className="border-t border-line py-12 lg:py-16">
+        <Container>
+          <SectionHeader id="degerler" title={t.valuesTitle} />
+          <ul className="mt-8 grid gap-px overflow-hidden rounded-[var(--radius-lg)] border border-line bg-line sm:grid-cols-2 xl:grid-cols-4">
+            {VALUES[locale].map((v, i) => (
+              <li key={v.title} className="flex flex-col bg-surface p-6">
+                <span className="flex size-10 items-center justify-center rounded-xl bg-red-soft text-red">
+                  <v.icon aria-hidden="true" className="size-5" strokeWidth={1.8} />
+                </span>
+                <h3 className="mt-5 text-lg font-bold text-ink">{v.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-ink-2">{v.text}</p>
+                {VALUE_PAGES[i] && (
+                  <span className="mt-auto block pt-4">
+                    <ArrowLink href={VALUE_PAGES[i]}>{t.more}</ArrowLink>
+                  </span>
+                )}
+              </li>
+            ))}
+          </ul>
+        </Container>
+      </section>
 
-      <CtaBand
-        title="Kerinti Soft ile tanışın."
-      />
+      {/* Why Kerinti */}
+      <section aria-labelledby="neden" className="pb-4 pt-4 lg:pb-8">
+        <Container className="grid items-start gap-8 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,2fr)] lg:gap-16">
+          <SectionHeader id="neden" title={t.reasonsTitle} className="lg:self-start" />
+          <ul className="grid gap-3 sm:grid-cols-2">
+            {REASONS[locale].map((r) => (
+              <li key={r.title} className="flex gap-3 rounded-xl border border-line p-4">
+                <CircleCheck aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-red" strokeWidth={2.2} />
+                <div>
+                  <h3 className="text-[0.9375rem] font-semibold text-ink">{r.title}</h3>
+                  <p className="mt-0.5 text-sm text-ink-2">{r.text}</p>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </Container>
+      </section>
+
+      <CtaBand />
     </>
   );
 }

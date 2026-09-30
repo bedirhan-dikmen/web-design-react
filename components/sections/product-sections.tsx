@@ -1,133 +1,52 @@
-import Link from "next/link";
-import { ArrowRight } from "lucide-react";
-import { NexaMark } from "@/components/ui/nexa-mark";
-import { NexusMark } from "@/components/ui/nexus-mark";
 import { Container } from "@/components/ui/primitives";
-import { ScreenshotFrame } from "@/components/ui/screenshot";
-import { NexusWorkspaceBoard } from "@/components/stages/nexus-workspace-board";
-import { COMPARISON, DIFFERENCE, PRODUCTS, type ProductSlug } from "@/lib/content/products";
+import { DIFFERENCE, PRODUCTS, type ProductSlug } from "@/lib/content/products";
+import { getLocale } from "@/lib/i18n-server";
+import { ACCENT, SectionTitle } from "./product-accent";
 
 /**
- * Sections for the homepage and product pages (minimal pass, 2026-09).
- *
- * Each product carries its own accent (neXa red, nexus graphite; see the
- * tokens in app/globals.css). Tailwind only generates classes it can see as
- * literals, so the per-product class sets live in ACCENT.
+ * Server sections for the homepage and product pages: "Yaklaşımımız" and the
+ * feature grid. Shared accents and the section title live in product-accent.
  */
 
-export const ACCENT: Record<ProductSlug, { text: string; soft: string; button: string; Mark: typeof NexaMark }> = {
-  nexa: {
-    text: "text-nexa",
-    soft: "bg-nexa-soft",
-    button: "bg-nexa-fill text-white hover:bg-nexa-fill-strong",
-    Mark: NexaMark,
-  },
-  nexus: {
-    text: "text-nexus",
-    soft: "bg-nexus-soft",
-    button: "bg-nexus-fill text-white hover:bg-nexus-fill-strong",
-    Mark: NexusMark,
-  },
-};
-
-const FOCUS = "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink";
-
-export function SectionTitle({ id, eyebrow, title, as: Heading = "h2" }: { id: string; eyebrow: string; title: string; as?: "h1" | "h2" }) {
+/**
+ * Anla / geliştir / devreye al, as one line of work rather than three
+ * cards: the title on the left, a single rule to its right. Each step sits
+ * on the rule as its own icon; above its title a short "when" label (önce /
+ * ardından / sonrasında da) says where it falls. Once the list is in view
+ * the red line draws across in a loop with a dot at its tip, and each icon
+ * turns from grey to red as the line reaches it (.k-flow-* in globals.css).
+ * Below md the rule turns vertical and the steps stack beside it.
+ */
+export async function DifferenceBlock() {
+  const d = DIFFERENCE[await getLocale()];
   return (
-    <div data-reveal>
-      <p className="text-sm font-semibold text-red">{eyebrow}</p>
-      <Heading id={id} className="mt-2 text-balance text-[clamp(1.625rem,2.6vw,2.25rem)] font-extrabold leading-[1.1] tracking-[-0.03em] text-ink">
-        {title}
-      </Heading>
-    </div>
-  );
-}
+    <section aria-labelledby="fark-baslik" data-starfield="0.35" className="py-12 lg:py-16">
+      <Container className="grid gap-10 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,2fr)] lg:items-center lg:gap-16">
+        <SectionTitle
+          id="fark-baslik"
+          eyebrow={d.eyebrow}
+          title={d.title}
+          lead={d.lead}
+        />
 
-/** Cropped UI preview for a product card (top of the UI, faded at the bottom). */
-function Peek({ slug }: { slug: ProductSlug }) {
-  return (
-    <div
-      aria-hidden="true"
-      className="relative h-56 overflow-hidden sm:h-64"
-      style={{
-        maskImage: "linear-gradient(to bottom, black 55%, transparent)",
-        WebkitMaskImage: "linear-gradient(to bottom, black 55%, transparent)",
-      }}
-    >
-      <div className="absolute inset-x-6 top-0 transition-transform duration-500 ease-out group-hover:-translate-y-2 sm:inset-x-10">
-        {/* Dashboard capture: 1442px source, ≤ 520 CSS px here (≥ 2.7x). */}
-        {slug === "nexa" ? <ScreenshotFrame shot="dashboard" maxWidth={520} /> : <NexusWorkspaceBoard />}
-      </div>
-    </div>
-  );
-}
+        <ol data-reveal className="k-flow relative grid gap-10 pl-16 md:grid-cols-3 md:gap-8 md:pl-0 md:pt-[4.5rem]">
+          {/* The rule: grey track, red fill, travelling dot (through the icon centres). */}
+          <span aria-hidden="true" className="absolute bottom-6 left-[23px] top-6 w-px bg-line-2 md:inset-x-6 md:bottom-auto md:left-6 md:top-[23px] md:h-px md:w-auto">
+            <span className="k-flow-fill absolute inset-0 bg-red-fill" />
+            <span className="k-flow-dot absolute -ml-[3px] -mt-[3px] size-[7px] rounded-full bg-red-fill shadow-[0_0_0_5px_var(--k-glow-red)] md:top-0" />
+          </span>
 
-/** Two product cards (bento). Doubles as the comparison: tags side by side. */
-export function ProductBento({ headingAs = "h2" }: { headingAs?: "h1" | "h2" }) {
-  return (
-    <section id="programlar" aria-labelledby="programlar-baslik" className="scroll-mt-[calc(var(--header-h)+16px)] py-16 lg:py-24">
-      <Container width="page">
-        <SectionTitle id="programlar-baslik" eyebrow={COMPARISON.eyebrow} title={COMPARISON.title} as={headingAs} />
-        <div data-reveal-group className="mt-10 grid gap-5 lg:grid-cols-2">
-          {(["nexa", "nexus"] as const).map((slug) => {
-            const p = PRODUCTS[slug];
-            const a = ACCENT[slug];
-            return (
-              <article
-                key={slug}
-                id={slug}
-                data-spotlight
-                className="group flex scroll-mt-[calc(var(--header-h)+16px)] flex-col overflow-hidden rounded-[var(--radius-lg)] border border-line bg-surface-2 transition-colors hover:border-line-2"
+          {d.steps.map((s, i) => (
+            <li key={s.title} className="relative">
+              <span
+                aria-hidden="true"
+                className={`k-flow-node k-flow-node-${i} absolute -left-16 top-0 flex size-12 items-center justify-center rounded-2xl bg-surface text-ink-3 ring-1 ring-line-2 md:-top-[4.5rem] md:left-0`}
               >
-                <div className="p-7 sm:p-8">
-                  <div className="flex items-center justify-between gap-4">
-                    <a.Mark size={26} title={p.name} />
-                    <span className="text-xs font-semibold text-ink-3">{p.category}</span>
-                  </div>
-                  <h3 className="mt-6 text-balance text-xl font-bold leading-snug tracking-tight text-ink sm:text-2xl">
-                    {p.headline[0]} <span className="text-ink-3">{p.headline[1]}</span>
-                  </h3>
-                  <ul className="mt-5 flex flex-wrap gap-1.5" aria-label={`${p.name} özellikleri`}>
-                    {p.highlights.map((h) => (
-                      <li key={h} className="rounded-full border border-line bg-surface px-2.5 py-1 text-xs font-medium text-ink-2">
-                        {h}
-                      </li>
-                    ))}
-                  </ul>
-                  <div className="mt-7 flex items-center gap-4">
-                    <Link
-                      href={p.href}
-                      className={`inline-flex items-center gap-2 rounded-full px-4 py-2.5 text-sm font-semibold transition-colors ${a.button} ${FOCUS}`}
-                    >
-                      {p.nameAcc} İnceleyin
-                      <ArrowRight aria-hidden="true" className="size-4 transition-transform group-hover:translate-x-0.5" />
-                    </Link>
-                  </div>
-                </div>
-                <Peek slug={slug} />
-              </article>
-            );
-          })}
-        </div>
-      </Container>
-    </section>
-  );
-}
-
-/** Anla / geliştir / devreye al — one compact row. */
-export function DifferenceBlock() {
-  return (
-    <section aria-labelledby="fark-baslik" className="border-y border-line bg-surface-2 py-16 lg:py-20">
-      <Container width="page" className="grid gap-10 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,2fr)] lg:gap-16">
-        <SectionTitle id="fark-baslik" eyebrow={DIFFERENCE.eyebrow} title={DIFFERENCE.title} />
-        <ol data-reveal-group className="grid gap-px overflow-hidden rounded-[var(--radius-lg)] border border-line bg-line sm:grid-cols-3">
-          {DIFFERENCE.steps.map((s, i) => (
-            <li key={s.title} data-spotlight className="bg-surface p-6">
-              <span aria-hidden="true" className="font-mono text-xs font-semibold text-red">
-                0{i + 1}
+                <s.icon className="size-5" strokeWidth={1.8} />
               </span>
-              <h3 className="mt-6 font-bold text-ink">{s.title}</h3>
-              <p className="mt-1 text-sm leading-relaxed text-ink-2">{s.text}</p>
+              <p className="text-xs font-bold uppercase tracking-[0.14em] text-red">{d.when[i]}</p>
+              <h3 className="mt-2 text-2xl font-semibold tracking-[-0.03em] text-ink">{s.title}</h3>
+              <p className="mt-2 max-w-[30ch] text-[0.9375rem] leading-relaxed text-ink-2">{s.text}</p>
             </li>
           ))}
         </ol>
@@ -137,8 +56,8 @@ export function DifferenceBlock() {
 }
 
 /** All features of one product as a compact grid (product pages). */
-export function FeatureGrid({ slug }: { slug: ProductSlug }) {
-  const p = PRODUCTS[slug];
+export async function FeatureGrid({ slug }: { slug: ProductSlug }) {
+  const p = PRODUCTS[await getLocale()][slug];
   const a = ACCENT[slug];
   return (
     <ul data-reveal-group className="grid gap-px overflow-hidden rounded-[var(--radius-lg)] border border-line bg-line sm:grid-cols-2 lg:grid-cols-3">

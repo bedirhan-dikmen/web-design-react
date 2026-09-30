@@ -1,6 +1,5 @@
 import type { LucideIcon } from "lucide-react";
 import {
-  Boxes,
   ChartNoAxesColumn,
   Eye,
   GraduationCap,
@@ -8,198 +7,138 @@ import {
   Headset,
   Lightbulb,
   Monitor,
-  Play,
-  Rocket,
   Search,
   Settings,
   Target,
   UsersRound,
   Wrench,
 } from "lucide-react";
+import type { L } from "@/lib/i18n";
 
 /**
- * Company and process copy, transcribed from the approved reference mockups
- * (homepage, about and contact). Nothing here states a date, a customer
- * count, an award or any other fact that was not in the references.
+ * Company and process copy, in Turkish and English.
+ *
+ * Based on the approved reference mockups (about and contact), rewritten in
+ * 2026-09 to cover both programs (neXa sys and nexus) and to drop
+ * superlatives. Nothing here states a date, a customer count, an award or
+ * any other fact that was not in the references.
  */
 
 export type Step = { title: string; text: string; icon: LucideIcon };
 
-/** Homepage "Nasıl Çalışır?". */
-export const HOW_IT_WORKS: Step[] = [
-  {
-    title: "Keşfedin",
-    text: "İhtiyaçlarınızı birlikte analiz edelim, size en uygun çözümü planlayalım.",
-    icon: Search,
-  },
-  {
-    title: "Kurulum",
-    text: "Hızlı ve sorunsuz kurulumla sisteminizi hazır hale getirelim.",
-    icon: Settings,
-  },
-  {
-    title: "Kullanın",
-    text: "Ekibinize kısa bir eğitimle hemen kullanmaya başlayın.",
-    icon: Play,
-  },
-  {
-    title: "Büyüyün",
-    text: "Verimliliğinizi artırın, misafir memnuniyetinizi ve kârlılığınızı yükseltin.",
-    icon: ChartNoAxesColumn,
-  },
-];
-
-/** About page "Çalışma Yaklaşımımız". */
-export const APPROACH: Step[] = [
-  {
-    title: "İhtiyacı Analiz Ediyoruz",
-    text: "İşletmenizi ve hedeflerinizi dinliyor, doğru çözüm için ihtiyaçları birlikte belirliyoruz.",
-    icon: Search,
-  },
-  {
-    title: "Süreçleri Tasarlıyoruz",
-    text: "İş akışınıza en uygun yapıyı planlıyor, neXa'yı size özel şekilde kurguluyoruz.",
-    icon: Settings,
-  },
-  {
-    title: "Kuruyor ve Eğitiyoruz",
-    text: "Sistemi hızlıca devreye alıyor, ekibinize kapsamlı eğitimler veriyoruz.",
-    icon: GraduationCap,
-  },
-  {
-    title: "Sürekli Geliştiriyoruz",
-    text: "Kullanıcı geri bildirimleriyle sistemi birlikte iyileştiriyor, her zaman yanınızda oluyoruz.",
-    icon: ChartNoAxesColumn,
-  },
-];
-
-/** About page "Yolculuğumuz" — a story in four stages, deliberately undated. */
-export const JOURNEY: Step[] = [
-  { title: "Fikir", text: "Sektörün gerçek ihtiyaçlarından yola çıktık.", icon: Lightbulb },
-  { title: "Ürünleşme", text: "neXa'yı geliştirerek sahaya sunduk.", icon: Boxes },
-  {
-    title: "Saha Deneyimi",
-    text: "Farklı işletmelerle çalışarak ürünümüzü olgunlaştırdık.",
-    icon: UsersRound,
-  },
-  {
-    title: "Sürekli İyileştirme",
-    text: "Bugün de yarın da daha iyi çözümler için çalışıyoruz.",
-    icon: Rocket,
-  },
-];
+/** How every project runs (about page). */
+export const APPROACH: L<Step[]> = {
+  tr: [
+    { title: "İhtiyacı dinliyoruz", text: "İşletmenizi ve hedeflerinizi dinliyor, ihtiyaçları birlikte belirliyoruz.", icon: Search },
+    { title: "Kurguluyoruz", text: "neXa sys ya da nexus'u iş akışınıza göre yapılandırıyoruz.", icon: Settings },
+    { title: "Kuruyor ve eğitiyoruz", text: "Sistemi devreye alıyor, ekibinize kullanım eğitimi veriyoruz.", icon: GraduationCap },
+    { title: "Destekliyoruz", text: "Kurulumdan sonra da geri bildirimlerinizle sistemi birlikte iyileştiriyoruz.", icon: ChartNoAxesColumn },
+  ],
+  en: [
+    { title: "We listen", text: "We listen to your business and goals, and define the needs together.", icon: Search },
+    { title: "We configure", text: "We set neXa sys or nexus up around your workflow.", icon: Settings },
+    { title: "We install and train", text: "We put the system into use and train your team on it.", icon: GraduationCap },
+    { title: "We support", text: "After setup we keep improving the system with your feedback.", icon: ChartNoAxesColumn },
+  ],
+};
 
 export type Value = { title: string; text: string; icon: LucideIcon };
 
-export const VALUES: Value[] = [
-  {
-    title: "Misyonumuz",
-    text: "Restoran ve yeme-içme sektörünün dijital dönüşümünü kolaylaştıran, pratik ve etkili çözümlerle işletmelerin başarısına katkı sağlamak.",
-    icon: Target,
-  },
-  {
-    title: "Vizyonumuz",
-    text: "Türkiye'nin ve bölgenin restoran yazılımları alanında en çok tercih edilen, en güvenilen teknoloji markası olmak.",
-    icon: Eye,
-  },
-  {
-    title: "Müşteri Odaklılık",
-    text: "Müşterilerimizin ihtiyaçlarını dinleyen, saha gerçeklerine uygun, hızlı ve kalıcı çözümler üretiyoruz.",
-    icon: UsersRound,
-  },
-  {
-    title: "Sürekli Gelişim",
-    text: "Teknolojiyi, sektörü ve kullanıcı deneyimini sürekli takip ediyor, ürünümüzü ve hizmetlerimizi durmadan geliştiriyoruz.",
-    icon: ChartNoAxesColumn,
-  },
-];
+/** Mission, vision and two working values (about page). */
+export const VALUES: L<Value[]> = {
+  tr: [
+    { title: "Misyonumuz", text: "İşletmelerin sipariş ve iş süreçlerini sade, pratik yazılımlarla kolaylaştırmak.", icon: Target },
+    { title: "Vizyonumuz", text: "İşletmelerin uzun yıllar güvenle kullandığı yazılımları geliştiren bir ekip olmak.", icon: Eye },
+    { title: "Müşteri odaklılık", text: "Önce dinliyor, sahanın gerçeklerine uygun çözümler kuruyoruz.", icon: UsersRound },
+    { title: "Sürekli gelişim", text: "Ürünlerimizi kullanıcı geri bildirimleriyle düzenli olarak geliştiriyoruz.", icon: ChartNoAxesColumn },
+  ],
+  en: [
+    { title: "Our mission", text: "To make order and business processes easier with simple, practical software.", icon: Target },
+    { title: "Our vision", text: "To be the team behind software businesses rely on for years.", icon: Eye },
+    { title: "Customer focus", text: "We listen first and build solutions that fit how the work really runs.", icon: UsersRound },
+    { title: "Continuous improvement", text: "We improve our products regularly with feedback from their users.", icon: ChartNoAxesColumn },
+  ],
+};
 
-/** About page "Neden Kerinti?". */
-export const REASONS: { title: string; text: string }[] = [
-  {
-    title: "Restoran operasyonlarına odaklı uzmanlık",
-    text: "Sektörü bilen, sahayı tanıyan bir ekip.",
-  },
-  { title: "Tek platform yaklaşımı", text: "Tüm operasyonlar tek ekosistemde." },
-  { title: "Sahaya yakın çözüm geliştirme", text: "Gerçek ihtiyaçlara, gerçek çözümler." },
-  { title: "Kolay kullanım", text: "Hızlı öğrenilen, pratik arayüzler." },
-  { title: "Esnek yapı", text: "Her ölçek ve konsepte uygun." },
-  { title: "Uzun vadeli destek", text: "Kurulumdan sonra da daima yanınızda." },
-];
+/** About page "Neden Kerinti?" — plain statements, no superlatives. */
+export const REASONS: L<{ title: string; text: string }[]> = {
+  tr: [
+    { title: "Kurulumdan desteğe tek ekip", text: "Konuştuğunuz ekip, sistemi kuran ve destekleyen ekiptir." },
+    { title: "Sahaya yakınlık", text: "Giresun Teknopark'tan kurulum ve yerinde görüşme." },
+    { title: "Modüler yapı", text: "İhtiyacınız olan modüllerle başlar, zamanla eklersiniz." },
+    { title: "Sade ekranlar", text: "Ekibinizin kısa bir eğitimle kullanabileceği arayüzler." },
+  ],
+  en: [
+    { title: "One team, setup to support", text: "The team you talk to is the team that installs and supports it." },
+    { title: "Close to the field", text: "Setup and on-site meetings from Giresun Teknopark." },
+    { title: "Modular", text: "Start with the modules you need and add more over time." },
+    { title: "Simple screens", text: "Interfaces your team can use after a short training." },
+  ],
+};
 
 /**
- * Contact page "Size Nasıl Yardımcı Olabiliriz?". `value` is the form's topic
- * option; each card links to the form with that topic preselected.
+ * Contact form topics. `value` is the form's topic option and the `konu`
+ * query parameter, so it stays the same in both languages.
  */
-export const CONTACT_TOPICS: {
-  value: string;
-  title: string;
-  text: string;
-  icon: LucideIcon;
-}[] = [
-  {
-    value: "demo",
-    title: "Demo Talebi",
-    text: "neXa sys veya nexus için demo talep etmek istiyorum.",
-    icon: Monitor,
-  },
-  {
-    value: "satis",
-    title: "Satış Öncesi Bilgi",
-    text: "Ürün, fiyatlandırma ve paketler hakkında bilgi almak istiyorum.",
-    icon: UsersRound,
-  },
-  {
-    value: "destek",
-    title: "Teknik Destek",
-    text: "Mevcut sistemimle ilgili destek talebinde bulunmak istiyorum.",
-    icon: Headset,
-  },
-  {
-    value: "is-ortakligi",
-    title: "İş Ortaklığı",
-    text: "Bayilik ve iş birliği fırsatlarını değerlendirmek istiyorum.",
-    icon: Handshake,
-  },
-  {
-    value: "danismanlik",
-    title: "Ürün Danışmanlığı",
-    text: "İşletmem için en uygun çözüm hakkında danışmanlık almak istiyorum.",
-    icon: Wrench,
-  },
-  {
-    value: "genel",
-    title: "Genel Bilgilendirme",
-    text: "Diğer sorularım için ekibinizle iletişime geçmek istiyorum.",
-    icon: Lightbulb,
-  },
-];
+export const CONTACT_TOPICS: L<{ value: string; title: string; text: string; icon: LucideIcon }[]> = {
+  tr: [
+    { value: "demo", title: "Demo Talebi", text: "neXa sys veya nexus için demo talep etmek istiyorum.", icon: Monitor },
+    { value: "satis", title: "Satış Öncesi Bilgi", text: "Ürün, fiyatlandırma ve paketler hakkında bilgi almak istiyorum.", icon: UsersRound },
+    { value: "destek", title: "Teknik Destek", text: "Mevcut sistemimle ilgili destek talebinde bulunmak istiyorum.", icon: Headset },
+    { value: "is-ortakligi", title: "İş Ortaklığı", text: "Bayilik ve iş birliği fırsatlarını değerlendirmek istiyorum.", icon: Handshake },
+    { value: "danismanlik", title: "Ürün Danışmanlığı", text: "İşletmem için uygun çözüm hakkında danışmanlık almak istiyorum.", icon: Wrench },
+    { value: "genel", title: "Genel Bilgilendirme", text: "Diğer sorularım için ekibinizle iletişime geçmek istiyorum.", icon: Lightbulb },
+  ],
+  en: [
+    { value: "demo", title: "Demo request", text: "I would like a demo of neXa sys or nexus.", icon: Monitor },
+    { value: "satis", title: "Pre-sales information", text: "I would like information on the products, pricing and packages.", icon: UsersRound },
+    { value: "destek", title: "Technical support", text: "I need support with my current system.", icon: Headset },
+    { value: "is-ortakligi", title: "Partnership", text: "I would like to discuss dealership and partnership options.", icon: Handshake },
+    { value: "danismanlik", title: "Product advice", text: "I would like advice on the right solution for my business.", icon: Wrench },
+    { value: "genel", title: "General enquiry", text: "I have another question for your team.", icon: Lightbulb },
+  ],
+};
 
 /**
- * Contact page FAQ. The questions are from the reference; the answers are
- * written only from facts the site already states elsewhere (the process
- * steps, the sector list, the contact channels and the reference's note that
- * face-to-face and online meetings can be booked).
+ * Contact page FAQ, covering both programs. Answers use only facts the site
+ * already states (process, sectors and teams, contact channels, the
+ * reference's note that face-to-face and online meetings can be booked).
  */
-export const FAQS: { question: string; answer: string }[] = [
-  {
-    question: "Demo talebi sonrası süreç nasıl ilerliyor?",
-    answer:
-      "Talebiniz bize ulaştıktan sonra ekibimiz sizinle iletişime geçer, işletmenizin ihtiyaçlarını dinler ve neXa'yı size göstermek için uygun bir görüşme zamanı planlar.",
-  },
-  {
-    question: "neXa hangi işletmeler için uygundur?",
-    answer:
-      "neXa; restoranlar, kafeler, pastaneler, fast food zincirleri, oteller ve birden fazla şubesi olan yeme-içme grupları için tasarlandı. Modüler yapısı sayesinde işletmenizin ihtiyacı olan modüllerle başlayabilirsiniz.",
-  },
-  {
-    question: "Teknik destek için nasıl iletişime geçebilirim?",
-    answer:
-      "Bizi telefonla arayabilir, e-posta gönderebilir ya da bu sayfadaki formda konu olarak “Teknik Destek”i seçerek talebinizi iletebilirsiniz.",
-  },
-  {
-    question: "Yerinde görüşme yapıyor musunuz?",
-    answer:
-      "Evet. Yüz yüze veya online toplantı için randevu alabilirsiniz; sizi ofisimizde ağırlamaktan memnuniyet duyarız.",
-  },
-];
+export const FAQS: L<{ question: string; answer: string }[]> = {
+  tr: [
+    {
+      question: "Demo talebinden sonra süreç nasıl ilerliyor?",
+      answer: "Talebiniz bize ulaştıktan sonra ekibimiz sizinle iletişime geçer, ihtiyaçlarınızı dinler ve ilgilendiğiniz programı (neXa sys ya da nexus) göstermek için bir görüşme planlar.",
+    },
+    {
+      question: "neXa sys ve nexus hangi işletmeler için uygun?",
+      answer: "neXa sys; restoran, kafe, pastane, fast food zinciri, otel ve çok şubeli yeme-içme işletmeleri içindir. nexus ise görev, onay, cari, teklif ve fatura süreçlerini tek yerden yönetmek isteyen, ekipleri büyüyen işletmeler içindir.",
+    },
+    {
+      question: "Teknik destek için nasıl iletişime geçebilirim?",
+      answer: "Bizi telefonla arayabilir, e-posta gönderebilir ya da bu sayfadaki formda konu olarak “Teknik Destek”i seçerek talebinizi iletebilirsiniz.",
+    },
+    {
+      question: "Yüz yüze görüşme yapıyor musunuz?",
+      answer: "Evet. Yüz yüze veya online görüşme için randevu alabilirsiniz; ofisimiz Giresun Teknopark'tadır.",
+    },
+  ],
+  en: [
+    {
+      question: "What happens after a demo request?",
+      answer: "Once your request reaches us, our team contacts you, listens to your needs and schedules a meeting to show you the program you are interested in (neXa sys or nexus).",
+    },
+    {
+      question: "Which businesses are neXa sys and nexus for?",
+      answer: "neXa sys is for restaurants, cafés, patisseries, fast food chains, hotels and multi-branch food and beverage businesses. nexus is for businesses with growing teams that want to manage tasks, approvals, accounts, quotes and invoices in one place.",
+    },
+    {
+      question: "How do I reach technical support?",
+      answer: "Call us, send an e-mail, or use the form on this page and choose “Technical support” as the topic.",
+    },
+    {
+      question: "Do you meet in person?",
+      answer: "Yes. You can book a face-to-face or online meeting; our office is at Giresun Teknopark.",
+    },
+  ],
+};

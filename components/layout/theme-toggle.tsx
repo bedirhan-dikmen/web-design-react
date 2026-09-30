@@ -2,6 +2,7 @@
 
 import { useSyncExternalStore } from "react";
 import { Moon, Sun } from "lucide-react";
+import { useLocale } from "@/components/i18n/locale-provider";
 import { THEME_STORAGE_KEY, type Theme } from "@/lib/theme";
 
 /**
@@ -38,13 +39,14 @@ export function useTheme() {
 /** Round icon button for the header bar. */
 export function ThemeToggle({ className = "" }: { className?: string }) {
   const { theme, setTheme } = useTheme();
+  const en = useLocale() === "en";
   const dark = theme === "dark";
   return (
     <button
       type="button"
       onClick={() => setTheme(dark ? "light" : "dark")}
-      aria-label={dark ? "Aydınlık temaya geç" : "Koyu temaya geç"}
-      title={dark ? "Aydınlık tema" : "Koyu tema"}
+      aria-label={dark ? (en ? "Switch to light theme" : "Aydınlık temaya geç") : en ? "Switch to dark theme" : "Koyu temaya geç"}
+      title={dark ? (en ? "Light theme" : "Aydınlık tema") : en ? "Dark theme" : "Koyu tema"}
       className={`flex size-10 items-center justify-center rounded-full text-ink-2 transition-colors hover:bg-surface-3 hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink ${className}`}
     >
       {dark ? <Sun aria-hidden="true" className="size-[18px]" /> : <Moon aria-hidden="true" className="size-[18px]" />}
@@ -55,12 +57,13 @@ export function ThemeToggle({ className = "" }: { className?: string }) {
 /** Labelled two-option switch for the mobile menu. */
 export function ThemeSwitch() {
   const { theme, setTheme } = useTheme();
+  const en = useLocale() === "en";
   const options: { value: Theme; label: string; Icon: typeof Sun }[] = [
-    { value: "light", label: "Aydınlık", Icon: Sun },
-    { value: "dark", label: "Koyu", Icon: Moon },
+    { value: "light", label: en ? "Light" : "Aydınlık", Icon: Sun },
+    { value: "dark", label: en ? "Dark" : "Koyu", Icon: Moon },
   ];
   return (
-    <div role="group" aria-label="Tema" className="grid grid-cols-2 gap-1 rounded-[var(--radius-sm)] bg-surface-3 p-1">
+    <div role="group" aria-label={en ? "Theme" : "Tema"} className="grid grid-cols-2 gap-1 rounded-[var(--radius-sm)] bg-surface-3 p-1">
       {options.map(({ value, label, Icon }) => {
         const on = theme === value;
         return (

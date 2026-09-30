@@ -11,7 +11,7 @@ import { Plus } from "lucide-react";
  * the button element; items open independently. Answers stay in the DOM
  * (`hidden` when collapsed) so find-in-page still reaches them.
  */
-export function FaqAccordion({ items }: { items: { question: string; answer: string }[] }) {
+export function FaqAccordion({ items, columns = 1 }: { items: { question: string; answer: string }[]; columns?: 1 | 2 }) {
   const baseId = useId();
   const [open, setOpen] = useState<Set<number>>(() => new Set());
 
@@ -24,7 +24,7 @@ export function FaqAccordion({ items }: { items: { question: string; answer: str
     });
 
   return (
-    <div className="grid items-start gap-3 md:grid-cols-2">
+    <div className={`grid items-start gap-3 ${columns === 2 ? "md:grid-cols-2" : ""}`}>
       {items.map((item, i) => {
         const expanded = open.has(i);
         const buttonId = `${baseId}-q${i}`;

@@ -9,6 +9,7 @@ import {
   useSyncExternalStore,
 } from "react";
 import { Pause, Play } from "lucide-react";
+import { useLocale } from "@/components/i18n/locale-provider";
 import styles from "@/components/layout/editorial-hero.module.css";
 
 /**
@@ -114,7 +115,7 @@ export function useCountUp(target: number, enabled: boolean) {
 
 /**
  * The stage figure: the animated board, then a caption with the stage's
- * serif-accented line and the pause/play button that controls every step
+ * red-accented line and the pause/play button that controls every step
  * counter inside it.
  */
 export function StageFrame({
@@ -128,6 +129,7 @@ export function StageFrame({
   children: React.ReactNode;
 }) {
   const [paused, setPaused] = useState(false);
+  const en = useLocale() === "en";
   return (
     <figure className={styles.motionFigure}>
       <div className={styles.motionBoard} data-paused={paused}>
@@ -141,7 +143,7 @@ export function StageFrame({
         <button
           type="button"
           onClick={() => setPaused((p) => !p)}
-          aria-label={paused ? "Animasyonu oynat" : "Animasyonu duraklat"}
+          aria-label={paused ? (en ? "Play animation" : "Animasyonu oynat") : en ? "Pause animation" : "Animasyonu duraklat"}
           aria-pressed={paused}
         >
           {paused ? <Play size={17} aria-hidden="true" /> : <Pause size={17} aria-hidden="true" />}

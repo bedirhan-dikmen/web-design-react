@@ -1,5 +1,4 @@
-import Link from "next/link";
-import { Check, Ellipsis } from "lucide-react";
+import { Check } from "lucide-react";
 import type { Module } from "@/lib/content/modules";
 import { IconTile } from "@/components/ui/primitives";
 
@@ -25,59 +24,13 @@ export function ModuleCard({ module }: { module: Module }) {
   );
 }
 
-/**
- * The homepage grid: every module, closed by a tinted "Ve Çok Daha Fazlası"
- * card that links to the full Modüller page, as in the reference.
- */
-export function ModuleGrid({
-  modules,
-  moreHref,
-  columns = "home",
-}: {
-  modules: Module[];
-  moreHref?: string;
-  columns?: "home" | "compact";
-}) {
-  const grid =
-    columns === "home"
-      ? "grid-cols-1 min-[420px]:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6"
-      : "grid-cols-1 min-[420px]:grid-cols-2 xl:grid-cols-4";
-  return (
-    <ul className={`grid gap-3 sm:gap-4 ${grid}`}>
-      {modules.map((m) => (
-        <ModuleCard key={m.slug} module={m} />
-      ))}
-      {moreHref && (
-        <li className="h-full">
-          <Link
-            href={moreHref}
-            className="flex h-full gap-4 rounded-xl border border-brand-red/20 bg-brand-red/[0.06] p-4 transition-colors hover:bg-brand-red/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red min-[420px]:flex-col min-[420px]:gap-0 min-[420px]:p-5"
-          >
-            <IconTile>
-              <Ellipsis aria-hidden="true" className="size-8" strokeWidth={1.8} />
-            </IconTile>
-            <span>
-              <span className="block text-base font-bold text-ink min-[420px]:mt-3">
-                Ve Çok Daha Fazlası
-              </span>
-              <span className="mt-1 block text-sm leading-relaxed text-slate-600 min-[420px]:mt-1.5">
-                İşletmenize özel çözümlerimizle yanınızdayız.
-              </span>
-            </span>
-          </Link>
-        </li>
-      )}
-    </ul>
-  );
-}
-
-/** Full module card for the Modüller page, with its grounded capability list. */
+/** Full module card for the neXa page, with its grounded capability list. */
 export function ModuleDetailCard({ module }: { module: Module }) {
   const Icon = module.icon;
   return (
     <article
       id={module.slug}
-      className="flex h-full scroll-mt-6 flex-col rounded-2xl border border-slate-200 bg-surface p-6 lg:p-7"
+      className="flex h-full scroll-mt-[calc(var(--header-h)+16px)] flex-col rounded-2xl border border-slate-200 bg-surface p-6 lg:p-7"
     >
       <div className="flex items-center gap-4">
         <IconTile tone="tint">
