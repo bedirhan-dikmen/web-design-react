@@ -2,7 +2,9 @@
 
 import Image from "next/image";
 import { ChartColumn, ChefHat, QrCode, ReceiptText } from "lucide-react";
+import { useLocale } from "@/components/i18n/locale-provider";
 import { useStageStep } from "@/components/motion/stage-motion";
+import { LOCALE_TAG, type L, type Locale } from "@/lib/i18n";
 
 /**
  * /urun stage — one order's journey through neXa.
@@ -15,39 +17,53 @@ import { useStageStep } from "@/components/motion/stage-motion";
 
 const STEP_MS = 2600;
 
-const ORDERS = [
-  { table: "Masa 12", items: "2× Izgara Tavuk, 1× Çoban Salata", total: 640, minutes: 12 },
-  { table: "Masa 4", items: "1× Mantı, 2× Ayran", total: 390, minutes: 9 },
-  { table: "Paket #208", items: "2× Cheeseburger, 1× Patates", total: 720, minutes: 7 },
-] as const;
+type Order = { table: string; items: string; total: number; minutes: number };
 
-const STATIONS = [
-  { label: "QR Menü", icon: QrCode },
-  { label: "Kasa", icon: ReceiptText },
-  { label: "Mutfak", icon: ChefHat },
-  { label: "Rapor", icon: ChartColumn },
-] as const;
+const ORDERS: L<Order[]> = {
+  tr: [
+    { table: "Masa 12", items: "2× Izgara Tavuk, 1× Çoban Salata", total: 640, minutes: 12 },
+    { table: "Masa 4", items: "1× Mantı, 2× Ayran", total: 390, minutes: 9 },
+    { table: "Paket #208", items: "2× Cheeseburger, 1× Patates", total: 720, minutes: 7 },
+  ],
+  en: [
+    { table: "Table 12", items: "2× Grilled chicken, 1× Shepherd's salad", total: 640, minutes: 12 },
+    { table: "Table 4", items: "1× Manti, 2× Ayran", total: 390, minutes: 9 },
+    { table: "Delivery #208", items: "2× Cheeseburger, 1× Fries", total: 720, minutes: 7 },
+  ],
+};
 
-const tl = new Intl.NumberFormat("tr-TR");
+const STATIONS: { label: L<string>; icon: typeof QrCode }[] = [
+  { label: { tr: "QR Menü", en: "QR menu" }, icon: QrCode },
+  { label: { tr: "Kasa", en: "Till" }, icon: ReceiptText },
+  { label: { tr: "Mutfak", en: "Kitchen" }, icon: ChefHat },
+  { label: { tr: "Rapor", en: "Report" }, icon: ChartColumn },
+];
 
-function stationCopy(station: number, order: (typeof ORDERS)[number]) {
+function stationCopy(station: number, order: Order, locale: Locale) {
+  const tl = new Intl.NumberFormat(LOCALE_TAG[locale]);
+  const en = locale === "en";
   switch (station) {
     case 0:
-      return { title: `Sipariş alındı · ${order.table}`, body: order.items };
+      return { title: `${en ? "Order received" : "Sipariş alındı"} · ${order.table}`, body: order.items };
     case 1:
-      return { title: "Adisyon açıldı", body: `${order.table} · ₺${tl.format(order.total)}` };
+      return { title: en ? "Bill opened" : "Adisyon açıldı", body: `${order.table} · ₺${tl.format(order.total)}` };
     case 2:
-      return { title: "Mutfakta hazırlanıyor", body: `Tahmini ${order.minutes} dk · ${order.items.split(",")[0]}` };
+      return {
+        title: en ? "Being prepared in the kitchen" : "Mutfakta hazırlanıyor",
+        body: `${en ? `About ${order.minutes} min` : `Tahmini ${order.minutes} dk`} · ${order.items.split(",")[0]}`,
+      };
     default:
-      return { title: "Ciroya işlendi", body: `+₺${tl.format(order.total)} · günün raporunda` };
+      return { title: en ? "Added to revenue" : "Ciroya işlendi", body: `+₺${tl.format(order.total)} · ${en ? "in today's report" : "günün raporunda"}` };
   }
 }
 
 export function OrderFlowBoard() {
+  const locale = useLocale();
   const { ref, step } = useStageStep(STEP_MS);
   const station = step % STATIONS.length;
-  const order = ORDERS[Math.floor(step / STATIONS.length) % ORDERS.length];
-  const copy = stationCopy(station, order);
+  const orders = ORDERS[locale];
+  const order = orders[Math.floor(step / STATIONS.length) % orders.length];
+  const copy = stationCopy(station, order, locale);
   const Icon = STATIONS[station].icon;
 
   return (
@@ -95,7 +111,7 @@ export function OrderFlowBoard() {
             const done = i < station;
             const active = i === station;
             return (
-              <div key={s.label} className="relative z-10 flex w-1/4 flex-col items-center gap-1.5">
+              <div key={s.label.tr} className="relative z-10 flex w-1/4 flex-col items-center gap-1.5">
                 <span
                   className={`flex size-9 items-center justify-center rounded-full transition-colors duration-500 ${
                     active
@@ -107,7 +123,7 @@ export function OrderFlowBoard() {
                 >
                   <StationIcon className="size-4" />
                 </span>
-                <span className={`text-[0.7rem] font-medium ${active ? "text-white" : "text-white/55"}`}>{s.label}</span>
+                <span className={`text-[0.7rem] font-medium ${active ? "text-white" : "text-white/55"}`}>{s.label[locale]}</span>
               </div>
             );
           })}

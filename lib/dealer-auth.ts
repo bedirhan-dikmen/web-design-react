@@ -29,19 +29,23 @@ const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
  */
 const DEALER_CODE = /^[A-Za-z0-9-]{4,20}$/;
 
+/** Messages for validateDealerLogin, supplied by the caller in its language. */
+export type DealerLoginMessages = { identifier: string; email: string; code: string; password: string };
+
 /** Field validation. Passwords are only checked for presence at sign-in. */
-export function validateDealerLogin(input: Pick<DealerLoginInput, "identifier" | "password">): DealerLoginErrors {
+export function validateDealerLogin(
+  input: Pick<DealerLoginInput, "identifier" | "password">,
+  messages: DealerLoginMessages,
+): DealerLoginErrors {
   const errors: DealerLoginErrors = {};
   const id = input.identifier.trim();
   if (!id) {
-    errors.identifier = "Bayi kodunuzu veya e-posta adresinizi girin.";
+    errors.identifier = messages.identifier;
   } else if (id.includes("@") ? !EMAIL.test(id) : !DEALER_CODE.test(id)) {
-    errors.identifier = id.includes("@")
-      ? "Geçerli bir e-posta adresi girin (ör. ad@firma.com)."
-      : "Bayi kodu 4–20 karakter olmalı; yalnızca harf, rakam ve tire içerebilir.";
+    errors.identifier = id.includes("@") ? messages.email : messages.code;
   }
   if (!input.password) {
-    errors.password = "Şifrenizi girin.";
+    errors.password = messages.password;
   }
   return errors;
 }

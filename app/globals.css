@@ -7,7 +7,6 @@
  */
 @theme inline {
   --font-sans: var(--font-manrope);
-  --font-script: var(--font-caveat);
 
   /*
    * Brand tokens sampled from reference/kerinti-homepage-final-reference.png
@@ -101,7 +100,8 @@
   --radius-sm: 8px;
   --radius-md: 14px;
   --radius-lg: 22px;
-  --spacing-page-max: 1240px;
+  /* One reading width for header, sections and footer (2026-09 template). */
+  --spacing-page-max: 1280px;
   --spacing-header: 72px;
 
   /*
@@ -291,6 +291,68 @@
   opacity: 1;
 }
 
+/*
+ * Headline accent: an <em> inside any heading is the one Kerinti-red word,
+ * set upright in the heading's own face (as on web.kerinti.com.tr). Owner
+ * decision, 2026-09: no italics in headings anywhere on the site.
+ */
+:where(h1, h2, h3, .k-accent) em {
+  font-style: normal;
+  color: #d80017;
+}
+
+/* Horizontal scroller without a visible scrollbar (sector rail). */
+.k-rail {
+  scrollbar-width: none;
+}
+.k-rail::-webkit-scrollbar {
+  display: none;
+}
+
+/*
+ * Reading progress bar under the header. Scroll-driven where supported;
+ * elsewhere (and under reduced motion) it simply does not render.
+ */
+.k-progress {
+  display: none;
+}
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .k-progress {
+      display: block;
+      transform-origin: 0 50%;
+      transform: scaleX(0);
+      animation: k-progress linear both;
+      animation-timeline: scroll(root block);
+    }
+  }
+}
+@keyframes k-progress {
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* Route change: the new page settles in (app/template.tsx). */
+@media (prefers-reduced-motion: no-preference) {
+  .k-page-enter {
+    /* backwards, not both: a transform left on after the animation would
+       make this wrapper the containing block for position: fixed children
+       (the homepage starfield canvas). */
+    animation: k-page-enter 0.45s cubic-bezier(0.2, 0.7, 0.2, 1) backwards;
+  }
+}
+@keyframes k-page-enter {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 /* Headline gradient text (hero). */
 .text-hero-gradient {
   background-image: linear-gradient(90deg, var(--k-grad-a), var(--k-grad-b) 55%, var(--k-grad-c));
@@ -437,5 +499,385 @@
       transition-duration: 0.01ms !important;
       scroll-behavior: auto !important;
     }
+  }
+}
+
+/*
+ * Product screen scenes (homepage hero and product cards). Scenes share one
+ * box; the active one has data-on. Changes are never a hard cut: the outgoing
+ * screen softens (blur + slight zoom) while the incoming one settles in, and
+ * a light sheen sweeps across the window once per change.
+ */
+.k-scene {
+  opacity: 0;
+  transform: scale(1.035);
+  filter: blur(10px);
+  transition:
+    opacity 0.9s cubic-bezier(0.22, 0.8, 0.2, 1),
+    transform 1.1s cubic-bezier(0.22, 0.8, 0.2, 1),
+    filter 0.9s cubic-bezier(0.22, 0.8, 0.2, 1);
+  pointer-events: none;
+}
+.k-scene[data-on="true"] {
+  opacity: 1;
+  transform: none;
+  filter: none;
+  z-index: 1;
+}
+
+/* "Live" screens: a slow push-in, or a pan across a wide capture. */
+.k-scene[data-on="true"] .k-screen-zoom {
+  animation: k-screen-zoom 7s ease-out both;
+}
+.k-scene[data-on="true"] .k-screen-pan {
+  animation: k-screen-pan 6.5s ease-in-out 0.4s both;
+}
+@keyframes k-screen-zoom {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.06) translateY(-1.5%);
+  }
+}
+@keyframes k-screen-pan {
+  from {
+    object-position: 0% 0%;
+  }
+  to {
+    object-position: 100% 0%;
+  }
+}
+
+.k-sheen {
+  background: linear-gradient(105deg, transparent 35%, rgb(255 255 255 / 0.28) 50%, transparent 65%);
+  transform: translateX(-120%);
+  animation: k-sheen 1.2s cubic-bezier(0.3, 0.6, 0.2, 1) 0.15s both;
+}
+@keyframes k-sheen {
+  to {
+    transform: translateX(120%);
+  }
+}
+
+/* DOM screens (nexus): pieces that build when their scene comes on. */
+.k-scene [data-build] {
+  opacity: 0;
+  transform: translateY(8px);
+}
+.k-scene[data-on="true"] [data-build] {
+  animation: k-build 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) calc(var(--d, 0) * 90ms + 250ms) both;
+}
+@keyframes k-build {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.k-scene [data-grow] {
+  transform: scaleY(0);
+  transform-origin: bottom;
+}
+.k-scene[data-on="true"] [data-grow] {
+  animation: k-grow 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) calc(var(--d, 0) * 50ms + 350ms) both;
+}
+@keyframes k-grow {
+  to {
+    transform: scaleY(1);
+  }
+}
+.k-scene [data-draw] {
+  clip-path: inset(0 100% 0 0);
+}
+.k-scene[data-on="true"] [data-draw] {
+  animation: k-draw 1.6s cubic-bezier(0.4, 0.1, 0.2, 1) 0.4s both;
+}
+@keyframes k-draw {
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+/* The task card that moves to "Onayda" mid-scene: one column over (card
+   width + 2 x p-2 + gap-2), landing under the card already there. */
+.k-scene[data-on="true"] [data-hop] {
+  animation: k-hop 5s cubic-bezier(0.5, 0, 0.2, 1) both;
+}
+@keyframes k-hop {
+  0%,
+  35% {
+    transform: none;
+    box-shadow: none;
+  }
+  45% {
+    transform: translate(0, -6px) rotate(-1.5deg);
+    box-shadow: 0 14px 30px -12px rgb(0 0 0 / 0.35);
+  }
+  60%,
+  100% {
+    transform: translate(calc(100% + 1.5rem), 0);
+    box-shadow: none;
+  }
+}
+
+/* Floating pieces around the hero window. */
+.k-float {
+  transition:
+    opacity 0.7s cubic-bezier(0.22, 0.8, 0.2, 1),
+    transform 0.9s cubic-bezier(0.22, 0.8, 0.2, 1);
+}
+.k-float[data-on="false"] {
+  opacity: 0;
+  transform: translateY(16px) scale(0.94);
+}
+
+/* Story-style progress segment under the hero window. */
+.k-seg-fill {
+  transform: scaleX(0);
+  transform-origin: left;
+}
+.k-seg-fill[data-state="done"] {
+  transform: scaleX(1);
+}
+.k-seg-fill[data-state="run"] {
+  animation: hero-progress var(--seg-ms, 5s) linear both;
+}
+.k-seg-fill[data-state="hold"] {
+  transform: scaleX(1);
+  opacity: 0.35;
+}
+
+.animate-marquee-reverse {
+  animation: hero-marquee 70s linear infinite reverse;
+}
+
+/*
+ * Homepage brand X beside each product (components/home/brand-x.tsx).
+ * Transform/opacity only; the global reduced-motion rule freezes them.
+ * Tailwind's translate/scale utilities use the individual properties, so
+ * these transforms compose with the positioning classes.
+ */
+.k-bx-float {
+  animation: k-bx-float 14s ease-in-out infinite;
+}
+@keyframes k-bx-float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-18px) rotate(-2.5deg);
+  }
+}
+.k-bx-half-a,
+.k-bx-half-b {
+  animation: k-bx-part 7s ease-in-out infinite;
+}
+.k-bx-half-a {
+  --bx: 5px;
+  --by: -5px;
+}
+.k-bx-half-b {
+  --bx: -5px;
+  --by: 5px;
+}
+@keyframes k-bx-part {
+  0%,
+  100% {
+    transform: translate(calc(var(--bx) * 0.4), calc(var(--by) * 0.4));
+  }
+  50% {
+    transform: translate(calc(var(--bx) * 2.4), calc(var(--by) * 2.4));
+  }
+}
+
+/*
+ * "Yaklaşımımız" flow (DifferenceBlock), one loop of 7s once the list is
+ * revealed: the red line draws from the first step to the last with a dot
+ * at its tip, each step's icon turns from grey to red as the line reaches
+ * it (at ~0%, ~33% and ~66% of the line's travel, i.e. where the md grid
+ * puts the second and third icons), then everything dims and starts over.
+ * Without JS, and under reduced motion, it shows the finished state.
+ */
+.k-flow-fill {
+  transform: scaleX(0);
+  transform-origin: left;
+}
+.k-flow-dot {
+  opacity: 0;
+}
+.k-flow[data-shown] .k-flow-fill {
+  animation: k-flow-fill 7s linear 0.4s infinite;
+}
+.k-flow[data-shown] .k-flow-dot {
+  animation: k-flow-dot 7s linear 0.4s infinite;
+}
+.k-flow[data-shown] .k-flow-node-0 {
+  animation: k-flow-node-0 7s linear 0.4s infinite;
+}
+.k-flow[data-shown] .k-flow-node-1 {
+  animation: k-flow-node-1 7s linear 0.4s infinite;
+}
+.k-flow[data-shown] .k-flow-node-2 {
+  animation: k-flow-node-2 7s linear 0.4s infinite;
+}
+@keyframes k-flow-fill {
+  0% {
+    transform: scaleX(0);
+    opacity: 1;
+  }
+  88% {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scaleX(1);
+    opacity: 0;
+  }
+}
+@keyframes k-flow-dot {
+  0% {
+    left: 0%;
+    top: 0%;
+    opacity: 0;
+  }
+  3% {
+    opacity: 1;
+  }
+  88% {
+    left: 100%;
+    opacity: 1;
+  }
+  100% {
+    left: 100%;
+    opacity: 0;
+  }
+}
+@keyframes k-flow-node-0 {
+  0% {
+    background-color: var(--k-surface);
+    color: var(--k-ink-3);
+  }
+  3%,
+  88% {
+    background-color: #d80017;
+    color: #fff;
+  }
+  96%,
+  100% {
+    background-color: var(--k-surface);
+    color: var(--k-ink-3);
+  }
+}
+@keyframes k-flow-node-1 {
+  0%,
+  30% {
+    background-color: var(--k-surface);
+    color: var(--k-ink-3);
+  }
+  33%,
+  88% {
+    background-color: #d80017;
+    color: #fff;
+  }
+  96%,
+  100% {
+    background-color: var(--k-surface);
+    color: var(--k-ink-3);
+  }
+}
+@keyframes k-flow-node-2 {
+  0%,
+  62% {
+    background-color: var(--k-surface);
+    color: var(--k-ink-3);
+  }
+  65%,
+  88% {
+    background-color: #d80017;
+    color: #fff;
+  }
+  96%,
+  100% {
+    background-color: var(--k-surface);
+    color: var(--k-ink-3);
+  }
+}
+/* Below md the rule is vertical. */
+@media (max-width: 767px) {
+  .k-flow-fill {
+    transform: scaleY(0);
+    transform-origin: top;
+  }
+  .k-flow[data-shown] .k-flow-fill {
+    animation-name: k-flow-fill-y;
+  }
+  .k-flow[data-shown] .k-flow-dot {
+    animation-name: k-flow-dot-y;
+  }
+}
+@keyframes k-flow-fill-y {
+  0% {
+    transform: scaleY(0);
+    opacity: 1;
+  }
+  88% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scaleY(1);
+    opacity: 0;
+  }
+}
+@keyframes k-flow-dot-y {
+  0% {
+    top: 0%;
+    left: 0%;
+    opacity: 0;
+  }
+  3% {
+    opacity: 1;
+  }
+  88% {
+    top: 100%;
+    opacity: 1;
+  }
+  100% {
+    top: 100%;
+    opacity: 0;
+  }
+}
+/* Finished state: no JS, or reduced motion. */
+html:not(.motion) .k-flow-fill {
+  transform: none;
+}
+html:not(.motion) .k-flow-node {
+  background-color: #d80017;
+  color: #fff;
+}
+@media (prefers-reduced-motion: reduce) {
+  .k-flow .k-flow-fill,
+  .k-flow .k-flow-node,
+  .k-flow .k-flow-dot {
+    animation: none !important;
+  }
+  .k-flow-fill {
+    transform: none;
+  }
+  .k-flow-node {
+    background-color: #d80017;
+    color: #fff;
+  }
+}
+
+
+/*
+ * Product showcases (components/home/product-showcase.tsx): from lg up the
+ * side X shows ~8.8vw of itself (40% of a 22vw mark), so the container's
+ * gutters grow to clear it wherever the page box would reach that far.
+ */
+@media (min-width: 1024px) {
+  .k-showcase-gutter {
+    padding-inline: max(2.5rem, calc(8.8vw + 1.5rem - max(0px, (100vw - 1280px) / 2)));
   }
 }

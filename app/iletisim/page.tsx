@@ -1,163 +1,228 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import Link from "next/link";
-import {
-  CalendarClock,
-  ChevronRight,
-  Clock,
-  Mail,
-  MapPin,
-  Navigation,
-  Phone,
-} from "lucide-react";
+import { CalendarClock, Clock, Mail, MapPin, Navigation, Phone } from "lucide-react";
 import { ContactForm, ContactFormFromUrl } from "@/components/contact/contact-form";
+import { XStarfield } from "@/components/home/x-starfield";
 import { EditorialHero } from "@/components/layout/editorial-hero";
-import { RequestFlowBoard } from "@/components/stages/request-flow-board";
-import { CtaBand } from "@/components/sections/cta-band";
 import { FaqAccordion } from "@/components/sections/faq-accordion";
+import { RequestFlowBoard } from "@/components/stages/request-flow-board";
 import { ButtonLink, Container, IconTile, SectionHeader } from "@/components/ui/primitives";
-import { CONTACT_TOPICS, FAQS } from "@/lib/content/company";
-import { CONTACT_FORM_HREF, DIRECTIONS_HREF, SITE } from "@/lib/site";
+import { FAQS } from "@/lib/content/company";
+import type { L } from "@/lib/i18n";
+import { getLocale } from "@/lib/i18n-server";
+import { CONTACT_FORM_HREF, DIRECTIONS_HREF, MAP_EMBED_SRC, SITE } from "@/lib/site";
 
-export const metadata: Metadata = {
-  title: "İletişim",
-  description:
-    "Kerinti Soft ile iletişime geçin: demo talebi, satış öncesi bilgi, teknik destek ve iş birliği.",
+/**
+ * Contact page: the editorial hero with the request-flow stage over the
+ * homepage's moving x starfield, the contact channels, the form and the
+ * office card side by side at equal height (the office card carries a live
+ * Google Maps view of the address), then the questions in one column. No
+ * closing call to action: the page is the call to action.
+ */
+
+type Copy = {
+  metaTitle: string;
+  metaDescription: string;
+  aria: string;
+  eyebrow: string;
+  headline: [string, string];
+  description: [string, string];
+  primary: string;
+  secondary: string;
+  asideLabel: string;
+  stageLabel: string;
+  caption: [string, string];
+  stageDescription: string;
+  linksLabel: string;
+  links: [string, string, string];
+  footer: { left: string; scroll: string };
+  channelsTitle: string;
+  channelsLead: string;
+  channels: { phone: [string, string]; email: [string, string]; address: string; hours: [string, string] };
+  formTitle: string;
+  formLead: string;
+  officeTitle: string;
+  officeLead: string;
+  mapTitle: string;
+  directions: string;
+  newTab: string;
+  meeting: [string, string];
+  sectionLabel: string;
+  faqTitle: string;
+  faqLead: string;
 };
 
-const { contact } = SITE;
+const T: L<Copy> = {
+  tr: {
+    metaTitle: "İletişim",
+    metaDescription: "Kerinti Soft ile iletişime geçin: demo talebi, satış öncesi bilgi, teknik destek ve iş birliği.",
+    aria: "Kerinti Soft iletişim",
+    eyebrow: "KERİNTİ / İLETİŞİM",
+    headline: ["Konuşarak", "başlayalım."],
+    description: ["Demo, destek ya da iş birliği.", "Doğru ekibe ulaşın."],
+    primary: "Mesaj gönderin",
+    secondary: "Bizi arayın",
+    asideLabel: "Yol tarifi alın",
+    stageLabel: "KERİNTİ / TALEP AKIŞI",
+    caption: ["Mesajınız,", "doğru ekibe."],
+    stageDescription: "Bir iletişim talebinin alındı, ekibe iletildi ve görüşme planlandı adımlarından geçişini gösteren animasyon.",
+    linksLabel: "İletişim kanalları",
+    links: ["Telefon", "E-posta", "Mesaj formu"],
+    footer: { left: "KERİNTİ YAZILIM", scroll: "İletişim kanallarını görün" },
+    channelsTitle: "İletişim kanalları",
+    channelsLead: "Bize dilediğiniz kanaldan ulaşabilirsiniz.",
+    channels: {
+      phone: ["Telefon", "Sorularınız için bizi arayabilirsiniz."],
+      email: ["E-posta", "Soru, talep ve görüşleriniz için."],
+      address: "Adres",
+      hours: ["Çalışma saatleri", "Mesai saatleri içinde dönüş yapıyoruz."],
+    },
+    formTitle: "Bize mesaj gönderin",
+    formLead: "Formu doldurun, ekibimiz sizinle iletişime geçsin.",
+    officeTitle: "Ofisimiz ve konum",
+    officeLead: "Bizi ziyaret edebilir ya da haritadan yol tarifi alabilirsiniz.",
+    mapTitle: "Kerinti Soft ofisinin haritadaki konumu",
+    directions: "Yol tarifi al",
+    newTab: " (Google Haritalar, yeni sekmede açılır)",
+    meeting: ["Görüşme", "Yüz yüze veya online görüşme için randevu alabilirsiniz."],
+    sectionLabel: "Mesaj ve ofis bilgileri",
+    faqTitle: "Sıkça sorulan sorular",
+    faqLead: "En çok merak edilen soruların yanıtları.",
+  },
+  en: {
+    metaTitle: "Contact",
+    metaDescription: "Get in touch with Kerinti Soft: demo requests, pre-sales information, technical support and partnerships.",
+    aria: "Contact Kerinti Soft",
+    eyebrow: "KERINTI / CONTACT",
+    headline: ["Let’s start", "with a talk."],
+    description: ["Demo, support or partnership.", "Reach the right team."],
+    primary: "Send a message",
+    secondary: "Call us",
+    asideLabel: "Get directions",
+    stageLabel: "KERINTI / REQUEST FLOW",
+    caption: ["Your message,", "to the right team."],
+    stageDescription: "Animation showing a contact request being received, passed to the team and a meeting being scheduled.",
+    linksLabel: "Contact channels",
+    links: ["Phone", "E-mail", "Message form"],
+    footer: { left: "KERINTI SOFTWARE", scroll: "See the contact channels" },
+    channelsTitle: "Contact channels",
+    channelsLead: "Reach us through whichever channel suits you.",
+    channels: {
+      phone: ["Phone", "Call us with your questions."],
+      email: ["E-mail", "For questions, requests and feedback."],
+      address: "Address",
+      hours: ["Office hours", "We reply within office hours."],
+    },
+    formTitle: "Send us a message",
+    formLead: "Fill in the form and our team will get in touch.",
+    officeTitle: "Our office",
+    officeLead: "Visit us, or get directions from the map.",
+    mapTitle: "Location of the Kerinti Soft office on the map",
+    directions: "Get directions",
+    newTab: " (Google Maps, opens in a new tab)",
+    meeting: ["Meetings", "Book a face-to-face or online meeting."],
+    sectionLabel: "Message and office details",
+    faqTitle: "Frequently asked questions",
+    faqLead: "Answers to the questions we hear most.",
+  },
+};
 
-const CHANNELS = [
-  {
-    title: "Telefon",
-    value: contact.phoneDisplay,
-    href: contact.phoneHref,
-    note: "Sorularınız için bizi hemen arayabilirsiniz.",
-    icon: Phone,
-  },
-  {
-    title: "E-posta",
-    value: contact.email,
-    href: `mailto:${contact.email}`,
-    note: "Tüm soru, talep ve görüşleriniz için bize e-posta gönderebilirsiniz.",
-    icon: Mail,
-  },
-  {
-    title: "Adres",
-    value: contact.address.short,
-    href: DIRECTIONS_HREF,
-    note: contact.address.lines.join(", "),
-    icon: MapPin,
-  },
-  {
-    title: "Çalışma Saatleri",
-    value: contact.hours,
-    note: "Mesai saatleri içerisinde size yardımcı olmaktan memnuniyet duyarız.",
-    icon: Clock,
-  },
-];
+export async function generateMetadata(): Promise<Metadata> {
+  const t = T[await getLocale()];
+  return { title: t.metaTitle, description: t.metaDescription };
+}
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  const locale = await getLocale();
+  const t = T[locale];
+  const { contact } = SITE;
+
+  const channels = [
+    { title: t.channels.phone[0], value: contact.phoneDisplay, href: contact.phoneHref, note: t.channels.phone[1], icon: Phone },
+    { title: t.channels.email[0], value: contact.email, href: `mailto:${contact.email}`, note: t.channels.email[1], icon: Mail },
+    { title: t.channels.address, value: contact.address.short, href: DIRECTIONS_HREF, note: contact.address.lines.join(", "), icon: MapPin },
+    { title: t.channels.hours[0], value: contact.hours[locale], note: t.channels.hours[1], icon: Clock },
+  ];
+
   return (
     <>
-      <EditorialHero
-        ariaLabel="Kerinti Soft iletişim"
-        eyebrow="KERİNTİ / İLETİŞİM"
-        headline={
-          <>
-            Konuşarak
-            <br />
-            <em>başlayalım.</em>
-          </>
-        }
-        description={
-          <>
-            Demo, destek ya da iş birliği.
-            <br />
-            Doğru ekibe ulaşın.
-          </>
-        }
-        primary={{ label: "Mesaj gönderin", href: CONTACT_FORM_HREF }}
-        secondary={{ label: "Bizi arayın", href: SITE.contact.phoneHref }}
-        aside={{
-          lead: SITE.contact.address.short,
-          label: "Yol tarifi alın",
-          href: DIRECTIONS_HREF,
-        }}
-        stageLabel="KERİNTİ / TALEP AKIŞI"
-        stage={<RequestFlowBoard />}
-        caption={
-          <>
-            Mesajınız, <em>doğru ekibe.</em>
-          </>
-        }
-        stageDescription="Bir iletişim talebinin alındı, ekibe iletildi ve görüşme planlandı adımlarından geçişini gösteren animasyon."
-        linksLabel="İletişim kanalları"
-        links={[
-          { label: "Telefon", href: SITE.contact.phoneHref },
-          { label: "E-posta", href: `mailto:${SITE.contact.email}` },
-          { label: "Mesaj formu", href: "#iletisim-formu" },
-        ]}
-        footer={{
-          left: "KERİNTİ YAZILIM / NEXA",
-          scrollHref: "#kanallar",
-          scrollLabel: "İletişim kanallarını görün",
-          right: "HAFTA İÇİ 09:00 – 18:00.",
-        }}
-      />
+      <XStarfield />
+      <div className="relative z-[1]">
+        <EditorialHero
+          starfield
+          ariaLabel={t.aria}
+          eyebrow={t.eyebrow}
+          headline={
+            <>
+              {t.headline[0]}
+              <br />
+              <em>{t.headline[1]}</em>
+            </>
+          }
+          description={
+            <>
+              {t.description[0]}
+              <br />
+              {t.description[1]}
+            </>
+          }
+          primary={{ label: t.primary, href: CONTACT_FORM_HREF }}
+          secondary={{ label: t.secondary, href: contact.phoneHref }}
+          aside={{ lead: contact.address.short, label: t.asideLabel, href: DIRECTIONS_HREF }}
+          stageLabel={t.stageLabel}
+          stage={<RequestFlowBoard />}
+          caption={
+            <>
+              {t.caption[0]} <em>{t.caption[1]}</em>
+            </>
+          }
+          stageDescription={t.stageDescription}
+          linksLabel={t.linksLabel}
+          links={[
+            { label: t.links[0], href: contact.phoneHref },
+            { label: t.links[1], href: `mailto:${contact.email}` },
+            { label: t.links[2], href: "#iletisim-formu" },
+          ]}
+          footer={{ left: t.footer.left, scrollHref: "#kanallar", scrollLabel: t.footer.scroll, right: contact.hours[locale].toLocaleUpperCase(locale) }}
+        />
 
-      <div className="bg-surface">
-        {/* İletişim Kanalları */}
-        <section aria-labelledby="kanallar" className="pt-14 pb-10 lg:pt-16">
+        {/* Contact channels */}
+        <section aria-labelledby="kanallar" className="py-12 lg:py-16">
           <Container>
-            <SectionHeader
-              id="kanallar"
-              title="İletişim Kanalları"
-              lead="Bize dilediğiniz kanaldan ulaşabilirsiniz. Ekibimiz en kısa sürede size dönüş yapacaktır."
-            />
+            <SectionHeader id="kanallar" title={t.channelsTitle} lead={t.channelsLead} />
             <ul className="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-              {CHANNELS.map((c) => {
-                const Icon = c.icon;
-                return (
-                  <li key={c.title} className="flex gap-4 rounded-xl border border-slate-200 p-5">
-                    <IconTile>
-                      <Icon className="size-8" strokeWidth={1.5} />
-                    </IconTile>
-                    <div className="min-w-0">
-                      <h3 className="font-bold text-ink">{c.title}</h3>
-                      {c.href ? (
-                        <a
-                          href={c.href}
-                          {...(c.href.startsWith("http")
-                            ? { target: "_blank", rel: "noopener noreferrer" }
-                            : {})}
-                          className="mt-0.5 block break-words font-semibold text-ink hover:text-red focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red"
-                        >
-                          {c.value}
-                        </a>
-                      ) : (
-                        <p className="mt-0.5 font-semibold text-ink">{c.value}</p>
-                      )}
-                      <p className="mt-1.5 text-sm leading-relaxed text-slate-600">{c.note}</p>
-                    </div>
-                  </li>
-                );
-              })}
+              {channels.map((c) => (
+                <li key={c.title} className="flex gap-4 rounded-xl border border-line bg-surface p-5">
+                  <IconTile>
+                    <c.icon className="size-7" strokeWidth={1.5} />
+                  </IconTile>
+                  <div className="min-w-0">
+                    <h3 className="font-bold text-ink">{c.title}</h3>
+                    {c.href ? (
+                      <a
+                        href={c.href}
+                        {...(c.href.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                        className="mt-0.5 block break-words font-semibold text-ink hover:text-red focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red"
+                      >
+                        {c.value}
+                      </a>
+                    ) : (
+                      <p className="mt-0.5 font-semibold text-ink">{c.value}</p>
+                    )}
+                    <p className="mt-1.5 text-sm leading-relaxed text-ink-2">{c.note}</p>
+                  </div>
+                </li>
+              ))}
             </ul>
           </Container>
         </section>
 
-        {/* Form + office */}
-        <section aria-label="Mesaj ve ofis bilgileri" className="py-10">
-          <Container className="grid items-start gap-6 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)]">
-            <div
-              id="iletisim-formu"
-              className="scroll-mt-6 rounded-2xl border border-slate-200 p-6 sm:p-8"
-            >
-              <h2 className="text-2xl font-bold text-ink">Bize Mesaj Gönderin</h2>
-              <p className="mt-1 text-slate-600">
-                Formu doldurun, ekibimiz en kısa sürede sizinle iletişime geçsin.
-              </p>
+        {/* Form + office: equal height side by side from lg up. */}
+        <section aria-label={t.sectionLabel} className="pb-12 lg:pb-16">
+          <Container className="grid gap-6 lg:grid-cols-2">
+            <div id="iletisim-formu" className="flex scroll-mt-[calc(var(--header-h)+16px)] flex-col rounded-2xl border border-line bg-surface p-6 sm:p-8">
+              <h2 className="text-2xl font-bold text-ink">{t.formTitle}</h2>
+              <p className="mt-1 text-ink-2">{t.formLead}</p>
               <div className="mt-5">
                 {/* useSearchParams needs a Suspense boundary; the fallback is
                     the same form, so the prerendered HTML is complete. */}
@@ -167,109 +232,63 @@ export default function ContactPage() {
               </div>
             </div>
 
-            <div className="rounded-2xl border border-slate-200 p-6 sm:p-8">
-              <h2 className="text-2xl font-bold text-ink">Ofisimiz &amp; Konum</h2>
-              <p className="mt-1 text-slate-600">
-                Bizi ziyaret edebilir veya harita üzerinden yol tarifi alabilirsiniz.
-              </p>
+            <div className="flex flex-col rounded-2xl border border-line bg-surface p-6 sm:p-8">
+              <h2 className="text-2xl font-bold text-ink">{t.officeTitle}</h2>
+              <p className="mt-1 text-ink-2">{t.officeLead}</p>
 
-              <div className="mt-6 rounded-xl bg-[radial-gradient(120%_120%_at_0%_0%,#4a0d17,#111116_70%)] p-6 text-white">
-                <MapPin aria-hidden="true" className="size-8 text-red" strokeWidth={1.8} />
-                <p className="mt-3 text-lg font-semibold">Kerinti Soft</p>
-                <address className="mt-1 text-sm not-italic leading-relaxed text-white/80">
-                  {contact.address.lines.map((line) => (
-                    <span key={line} className="block">
-                      {line}
-                    </span>
-                  ))}
-                </address>
-                <ButtonLink
-                  href={DIRECTIONS_HREF}
-                  variant="light"
-                  className="mt-5"
-                  icon={<Navigation aria-hidden="true" className="size-4" />}
-                >
-                  Yol Tarifi Al
-                  <span className="sr-only"> (Google Haritalar, yeni sekmede açılır)</span>
+              {/* Google Maps embed (keyless). Grows to fill the card so both
+                  cards end at the same line. See the cookie policy. */}
+              <div className="relative mt-5 min-h-[280px] flex-1 overflow-hidden rounded-xl border border-line bg-surface-2">
+                <iframe
+                  title={t.mapTitle}
+                  src={MAP_EMBED_SRC}
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  className="absolute inset-0 h-full w-full border-0"
+                  allowFullScreen
+                />
+              </div>
+
+              <div className="mt-5 flex flex-wrap items-start justify-between gap-4">
+                <div>
+                  <p className="font-semibold text-ink">Kerinti Soft</p>
+                  <address className="mt-1 text-sm not-italic leading-relaxed text-ink-2">
+                    {contact.address.lines.map((line) => (
+                      <span key={line} className="block">
+                        {line}
+                      </span>
+                    ))}
+                  </address>
+                </div>
+                <ButtonLink href={DIRECTIONS_HREF} icon={<Navigation aria-hidden="true" className="size-4" />}>
+                  {t.directions}
+                  <span className="sr-only">{t.newTab}</span>
                 </ButtonLink>
               </div>
 
-              <dl className="mt-6 divide-y divide-slate-100 text-sm">
-                {[
-                  { icon: Phone, term: "Telefon", detail: <a href={contact.phoneHref} className="hover:text-red">{contact.phoneDisplay}</a> },
-                  { icon: Mail, term: "E-posta", detail: <a href={`mailto:${contact.email}`} className="break-all hover:text-red">{contact.email}</a> },
-                  { icon: Clock, term: "Çalışma Saatleri", detail: contact.hours },
-                  {
-                    icon: CalendarClock,
-                    term: "Toplantı",
-                    detail:
-                      "Yüz yüze veya online toplantı için randevu alabilirsiniz. Sizi ofisimizde ağırlamaktan memnuniyet duyarız.",
-                  },
-                ].map(({ icon: Icon, term, detail }) => (
-                  <div key={term} className="grid grid-cols-[1.5rem_7.5rem_minmax(0,1fr)] items-start gap-2 py-3.5 max-sm:grid-cols-[1.5rem_minmax(0,1fr)]">
-                    <Icon aria-hidden="true" className="size-5 text-red" strokeWidth={1.8} />
-                    <dt className="font-semibold text-ink">{term}</dt>
-                    <dd className="text-slate-600 max-sm:col-start-2">{detail}</dd>
-                  </div>
-                ))}
-              </dl>
+              <p className="mt-5 flex gap-2.5 border-t border-line pt-4 text-sm text-ink-2">
+                <CalendarClock aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-red" strokeWidth={1.8} />
+                <span>
+                  <span className="font-semibold text-ink">{t.meeting[0]}: </span>
+                  {t.meeting[1]}
+                </span>
+              </p>
             </div>
           </Container>
         </section>
 
-        {/* Size Nasıl Yardımcı Olabiliriz? */}
-        <section aria-labelledby="yardim" className="py-10">
+        {/* FAQ, one column */}
+        <section aria-labelledby="sss" className="border-t border-line py-12 lg:py-16">
           <Container>
-            <SectionHeader
-              id="yardim"
-              title="Size Nasıl Yardımcı Olabiliriz?"
-              lead="İhtiyacınıza en uygun başlığı seçin; form konu seçili olarak açılır."
-            />
-            <ul className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-              {CONTACT_TOPICS.map((t) => {
-                const Icon = t.icon;
-                return (
-                  <li key={t.value}>
-                    <Link
-                      href={`/iletisim?konu=${t.value}#iletisim-formu`}
-                      className="group flex h-full items-center gap-4 rounded-xl border border-slate-200 p-5 transition-colors hover:border-brand-red/40 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red"
-                    >
-                      <IconTile>
-                        <Icon className="size-8" strokeWidth={1.5} />
-                      </IconTile>
-                      <span className="min-w-0 flex-1">
-                        <span className="block font-bold text-ink">{t.title}</span>
-                        <span className="mt-1 block text-sm leading-relaxed text-slate-600">
-                          {t.text}
-                        </span>
-                      </span>
-                      <ChevronRight
-                        aria-hidden="true"
-                        className="size-5 shrink-0 text-red transition-transform group-hover:translate-x-0.5"
-                      />
-                    </Link>
-                  </li>
-                );
-              })}
-            </ul>
-          </Container>
-        </section>
-
-        {/* SSS */}
-        <section aria-labelledby="sss" className="pt-10 pb-14 lg:pb-16">
-          <Container>
-            <SectionHeader id="sss" title="Sıkça Sorulan Sorular" lead="En çok merak edilen soruları yanıtladık." />
-            <div className="mt-8">
-              <FaqAccordion items={FAQS} />
+            <div className="mx-auto max-w-3xl">
+              <SectionHeader id="sss" title={t.faqTitle} lead={t.faqLead} />
+              <div className="mt-8">
+                <FaqAccordion items={FAQS[locale]} />
+              </div>
             </div>
           </Container>
         </section>
       </div>
-
-      <CtaBand
-        title="Kerinti Soft ile iletişime geçin."
-        secondary="call"
-      />
     </>
   );
 }

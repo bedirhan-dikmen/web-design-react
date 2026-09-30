@@ -1,98 +1,116 @@
 import type { Metadata } from "next";
 import { Check, X } from "lucide-react";
 import { PageIntro } from "@/components/layout/page-intro";
-import { NexaMark } from "@/components/ui/nexa-mark";
-import { NexusMark } from "@/components/ui/nexus-mark";
 import { Container } from "@/components/ui/primitives";
+import { ProductLogo } from "@/components/ui/product-logo";
 import { LOGO_RULES, SWATCH_GROUPS } from "@/lib/content/brand";
+import type { ProductSlug } from "@/lib/content/products";
+import type { L } from "@/lib/i18n";
+import { getLocale } from "@/lib/i18n-server";
 
-export const metadata: Metadata = {
-  title: "Marka Rehberi",
-  description: "neXa sys ve nexus logoları, Kerinti renk paleti ve kullanım kuralları.",
+type Copy = {
+  metaTitle: string;
+  metaDescription: string;
+  eyebrow: string;
+  title: string;
+  lead: string;
+  logos: string;
+  roles: Record<ProductSlug, string>;
+  light: string;
+  dark: string;
+  colours: string;
+  rules: string;
+  do: string;
+  dont: string;
 };
 
-const PRODUCTS = [
-  {
-    Mark: NexaMark,
-    name: "neXa sys",
-    role: "Sipariş yönetim sistemi",
-    story:
-      "X, birbirini kesen siparişleri temsil eder. Yükselen kol bir okla biter: her sipariş masadan mutfağa, oradan rapora doğru ilerler.",
+const T: L<Copy> = {
+  tr: {
+    metaTitle: "Marka Rehberi",
+    metaDescription: "neXa sys ve nexus logoları, Kerinti renk paleti ve kullanım kuralları.",
+    eyebrow: "Kerinti / Marka",
+    title: "İki program, tek bir aile.",
+    lead: "neXa sys ve nexus'un resmî logoları, Kerinti renk paleti ve kullanım kuralları.",
+    logos: "Logolar",
+    roles: { nexa: "Sipariş yönetim sistemi", nexus: "İş yönetim sistemi" },
+    light: "Açık zemin",
+    dark: "Koyu zemin",
+    colours: "Renk paleti",
+    rules: "Kullanım kuralları",
+    do: "Yapın",
+    dont: "Yapmayın",
   },
-  {
-    Mark: NexusMark,
-    name: "nexus",
-    role: "Uçtan uca iş yönetim platformu",
-    story:
-      "Merkezdeki halka ve ona bağlı dört düğüm, her şeyin tek noktada buluştuğunu anlatır. neXa köşegenlerde, nexus eksenlerde çizilir.",
+  en: {
+    metaTitle: "Brand guide",
+    metaDescription: "neXa sys and nexus logos, the Kerinti colour palette and usage rules.",
+    eyebrow: "Kerinti / Brand",
+    title: "Two programs, one family.",
+    lead: "The official neXa sys and nexus logos, the Kerinti colour palette and usage rules.",
+    logos: "Logos",
+    roles: { nexa: "Order management system", nexus: "Business management system" },
+    light: "Light ground",
+    dark: "Dark ground",
+    colours: "Colour palette",
+    rules: "Usage rules",
+    do: "Do",
+    dont: "Don’t",
   },
-] as const;
+};
 
-const VARIANTS = [
-  { variant: "full", label: "Tam logo", ground: "bg-surface border border-line" },
-  { variant: "symbol", label: "Yalnızca sembol", ground: "bg-surface-2" },
-  { variant: "mono", label: "Tek renk", ground: "bg-surface border border-line text-ink" },
-  { variant: "on-dark", label: "Koyu zemin", ground: "bg-night" },
-] as const;
+export async function generateMetadata(): Promise<Metadata> {
+  const t = T[await getLocale()];
+  return { title: t.metaTitle, description: t.metaDescription };
+}
 
-export default function BrandPage() {
+/**
+ * Brand guide: the official program logos (light- and dark-ground versions,
+ * from web.kerinti.com.tr), the palette and the usage rules.
+ */
+export default async function BrandPage() {
+  const locale = await getLocale();
+  const t = T[locale];
+
   return (
     <>
-      <PageIntro
-        eyebrow="Kerinti / Marka"
-        title="İki ürün, tek bir aile."
-        lead="neXa sys ve nexus aynı ızgara, aynı çizgi kalınlığı ve aynı köşe mantığıyla çizildi. Birlikte durduklarında akraba, yan yana geldiklerinde bir bakışta ayırt edilir."
-      />
+      <PageIntro eyebrow={t.eyebrow} title={t.title} lead={t.lead} />
 
-      <section aria-labelledby="logolar-baslik" className="py-16 lg:py-24">
-        <Container width="page">
+      <section aria-labelledby="logolar-baslik" className="py-12 lg:py-16">
+        <Container>
           <h2 id="logolar-baslik" className="text-3xl font-extrabold tracking-tight text-ink">
-            Logolar
+            {t.logos}
           </h2>
-          <div className="mt-10 grid gap-8 lg:grid-cols-2">
-            {PRODUCTS.map(({ Mark, name, role, story }) => (
-              <article key={name} className="rounded-[var(--radius-lg)] border border-line p-6 sm:p-8">
-                <div className="flex min-h-40 items-center justify-center rounded-[var(--radius-md)] bg-surface-2 p-6">
-                  <Mark size={56} />
-                </div>
-                <h3 className="mt-6 text-xl font-bold text-ink">{name}</h3>
-                <p className="text-sm font-medium text-ink-3">{role}</p>
-                <p className="mt-3 leading-relaxed text-ink-2">{story}</p>
-
+          <div className="mt-8 grid gap-6 lg:grid-cols-2">
+            {(["nexa", "nexus"] as const).map((slug) => (
+              <article key={slug} className="rounded-[var(--radius-lg)] border border-line p-6 sm:p-8">
+                <h3 className="text-xl font-bold text-ink">{slug === "nexa" ? "neXa sys" : "nexus"}</h3>
+                <p className="text-sm font-medium text-ink-3">{t.roles[slug]}</p>
                 <ul className="mt-6 grid grid-cols-2 gap-3">
-                  {VARIANTS.map((v) => (
-                    <li key={v.variant}>
-                      <div className={`flex h-24 items-center justify-center rounded-[var(--radius-sm)] ${v.ground}`}>
-                        <Mark size={v.variant === "symbol" ? 40 : 28} variant={v.variant} title={`${name} — ${v.label}`} />
-                      </div>
-                      <p className="mt-1.5 text-xs font-medium text-ink-3">{v.label}</p>
-                    </li>
-                  ))}
+                  <li>
+                    <div className="flex h-40 items-center justify-center rounded-[var(--radius-md)] border border-line bg-white">
+                      <ProductLogo product={slug} height={slug === "nexa" ? 64 : 76} ground="light" />
+                    </div>
+                    <p className="mt-1.5 text-xs font-medium text-ink-3">{t.light}</p>
+                  </li>
+                  <li>
+                    <div className="flex h-40 items-center justify-center rounded-[var(--radius-md)] bg-[#111116]">
+                      <ProductLogo product={slug} height={slug === "nexa" ? 64 : 76} ground="dark" />
+                    </div>
+                    <p className="mt-1.5 text-xs font-medium text-ink-3">{t.dark}</p>
+                  </li>
                 </ul>
               </article>
-            ))}
-          </div>
-
-          <div className="mt-8 flex flex-wrap items-end gap-8 rounded-[var(--radius-lg)] border border-line p-6 sm:p-8">
-            <p className="w-full text-sm font-semibold text-ink">Ölçek testi</p>
-            {[16, 24, 32, 48].map((s) => (
-              <div key={s} className="flex items-end gap-3">
-                <NexaMark size={s} variant="symbol" title={`neXa sembol ${s} piksel`} />
-                <NexusMark size={s} variant="symbol" title={`nexus sembol ${s} piksel`} />
-                <span className="text-xs text-ink-3">{s} px</span>
-              </div>
             ))}
           </div>
         </Container>
       </section>
 
-      <section aria-labelledby="renk-baslik" className="bg-surface-2 py-16 lg:py-24">
-        <Container width="page">
+      <section aria-labelledby="renk-baslik" className="bg-surface-2 py-12 lg:py-16">
+        <Container>
           <h2 id="renk-baslik" className="text-3xl font-extrabold tracking-tight text-ink">
-            Renk paleti
+            {t.colours}
           </h2>
-          <div className="mt-10 space-y-12">
-            {SWATCH_GROUPS.map((group) => (
+          <div className="mt-8 space-y-12">
+            {SWATCH_GROUPS[locale].map((group) => (
               <div key={group.title}>
                 <h3 className="text-lg font-bold text-ink">{group.title}</h3>
                 <p className="mt-1 text-ink-2">{group.lead}</p>
@@ -117,28 +135,28 @@ export default function BrandPage() {
         </Container>
       </section>
 
-      <section aria-labelledby="kural-baslik" className="py-16 lg:py-24">
-        <Container width="page">
+      <section aria-labelledby="kural-baslik" className="py-12 lg:py-16">
+        <Container>
           <h2 id="kural-baslik" className="text-3xl font-extrabold tracking-tight text-ink">
-            Kullanım kuralları
+            {t.rules}
           </h2>
-          <div className="mt-10 grid gap-6 md:grid-cols-2">
+          <div className="mt-8 grid gap-6 md:grid-cols-2">
             <div className="rounded-[var(--radius-lg)] border border-line p-6">
               <h3 className="flex items-center gap-2 font-bold text-success">
-                <Check aria-hidden="true" className="size-5" /> Yapın
+                <Check aria-hidden="true" className="size-5" /> {t.do}
               </h3>
               <ul className="mt-4 space-y-3 text-ink-2">
-                {LOGO_RULES.do.map((r) => (
+                {LOGO_RULES[locale].do.map((r) => (
                   <li key={r}>{r}</li>
                 ))}
               </ul>
             </div>
             <div className="rounded-[var(--radius-lg)] border border-line p-6">
               <h3 className="flex items-center gap-2 font-bold text-danger">
-                <X aria-hidden="true" className="size-5" /> Yapmayın
+                <X aria-hidden="true" className="size-5" /> {t.dont}
               </h3>
               <ul className="mt-4 space-y-3 text-ink-2">
-                {LOGO_RULES.dont.map((r) => (
+                {LOGO_RULES[locale].dont.map((r) => (
                   <li key={r}>{r}</li>
                 ))}
               </ul>

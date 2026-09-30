@@ -569,3 +569,16 @@ for overlay QA only (a temporary copy in /public was deleted after QA).
 - Breakpoints: all; max CSS width 152px; target density 2; status usable.
 - Used unmodified by the shared header/footer wordmark; original embedded slogan retained.
 - Homepage POS preview: `nexa-pos-1448x1086.png`, product-ui; max CSS width 698px, density 2.07×. No photographic background or generated backdrop is added.
+
+## Official neXa sys and nexus logos — 2026-09-30
+
+- Source: https://web.kerinti.com.tr/assets/images/products/{nexa,nexus}/{nexa,nexus}-logo-{light,dark}.png
+  (the logos the reference homepage uses in its product cards).
+- Local files: `public/images/brand/products/nexa-logo-{light,dark}.png`,
+  `public/images/brand/products/nexus-logo-{light,dark}.png`. `-light` is for
+  light backgrounds, `-dark` for dark; `components/ui/product-logo.tsx` picks by theme.
+- Role: brand artwork (official raster; vector source not supplied).
+- neXa: 520 × 274; PNG; 34193 / 32491 bytes; alpha yes.
+- nexus: 313 × 292; PNG; 11865 / 11215 bytes; alpha yes.
+- Breakpoints: all. Max CSS size at density 2: neXa 260 × 137, nexus 156 × 146.
+  Rendered: homepage hero 87 × 46 / 54 × 50; product cards 68 × 36 / 45 × 42. Status usable.

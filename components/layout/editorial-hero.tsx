@@ -7,7 +7,7 @@ import styles from "./editorial-hero.module.css";
  * The editorial page hero — the homepage's opening, generalised so every page
  * in the navigation opens the same way while telling its own story.
  *
- * Left: red-ruled eyebrow, large light headline with a serif-italic accent
+ * Left: red-ruled eyebrow, large light headline with a red accent word
  * (<em>), a two-line statement, a short detail, the primary/secondary
  * actions and a small aside link. Right: a live stage (each page supplies its
  * own animated board) with its caption and pause button, then three numbered
@@ -38,6 +38,11 @@ export type EditorialHeroProps = {
   links: LinkItem[];
   linksLabel: string;
   footer: { left: string; scrollHref: string; scrollLabel: string; right: string };
+  /**
+   * See-through background with a [data-starfield] region, for pages that
+   * run the homepage x starfield behind the hero (the contact page).
+   */
+  starfield?: boolean;
 };
 
 function SmartLink({ href, className, children }: { href: string; className?: string; children: React.ReactNode }) {
@@ -72,10 +77,11 @@ export function EditorialHero(props: EditorialHeroProps) {
     links,
     linksLabel,
     footer,
+    starfield = false,
   } = props;
 
   return (
-    <section className={styles.hero} aria-label={ariaLabel}>
+    <section className={`${styles.hero} ${starfield ? styles.clear : ""}`} aria-label={ariaLabel} data-starfield={starfield ? "1" : undefined}>
       <div className={styles.layout}>
         <div className={styles.copy}>
           <p className={styles.eyebrow}>

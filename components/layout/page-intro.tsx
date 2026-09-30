@@ -1,42 +1,48 @@
 /**
- * A short opening band for utility pages (products overview, nexus, brand)
- * that do not need the full editorial hero: eyebrow, title, lead and an
- * optional action row. Follows the theme through the --k-hero-* tokens; the
- * accent only tints the glow and the eyebrow rule.
+ * The compact member of the page-hero family, for pages that do not need a
+ * live stage (products overview, brand guide, legal texts). Same eyebrow,
+ * headline scale and serif <em> accent as EditorialHero, same 1280px box, so
+ * switching pages never changes the opening's typography — only its height.
  */
 export function PageIntro({
   eyebrow,
   title,
   lead,
   accent = "red",
+  aside,
   children,
 }: {
   eyebrow: string;
+  /** Wrap the accent word in <em>. */
   title: React.ReactNode;
   lead?: React.ReactNode;
   accent?: "red" | "nexa" | "nexus";
+  /** Optional right-hand column (a mark, a small visual). */
+  aside?: React.ReactNode;
   children?: React.ReactNode;
 }) {
   const glow = { red: "var(--k-glow-red)", nexa: "var(--k-glow-nexa)", nexus: "var(--k-glow-nexus)" }[accent];
-  const rule = { red: "bg-red", nexa: "bg-nexa", nexus: "bg-nexus" }[accent];
 
   return (
     <section className="relative isolate overflow-hidden border-b border-line text-ink">
       <div
         aria-hidden="true"
         className="absolute inset-0 -z-10"
-        style={{ background: `radial-gradient(60% 90% at 85% 0%, ${glow}, transparent 70%), var(--k-hero-bg)` }}
+        style={{ background: `radial-gradient(50% 90% at 90% 0%, ${glow}, transparent 70%), var(--k-hero-bg)` }}
       />
-      <div className="mx-auto w-full max-w-page-max px-5 pb-12 pt-12 sm:px-6 lg:px-10 lg:pb-16 lg:pt-16">
-        <p className="inline-flex items-center gap-2 rounded-full border border-line bg-surface/70 px-3 py-1 text-xs font-semibold text-ink-2">
-          <span aria-hidden="true" className={`size-1.5 rounded-full ${rule}`} />
-          {eyebrow}
-        </p>
-        <h1 className="mt-5 max-w-2xl text-balance text-[clamp(2rem,3.4vw,2.875rem)] font-extrabold leading-[1.08] tracking-[-0.035em]">
-          {title}
-        </h1>
-        {lead && <p className="mt-4 max-w-xl text-pretty leading-relaxed text-ink-2">{lead}</p>}
-        {children}
+      <div className="mx-auto grid w-full max-w-page-max items-end gap-10 px-5 pb-10 pt-10 sm:px-6 lg:grid-cols-[minmax(0,1fr)_auto] lg:px-10 lg:pb-14 lg:pt-14">
+        <div>
+          <p className="flex items-center gap-2.5 text-[11px] font-bold uppercase tracking-[0.14em] text-ink-2">
+            <span aria-hidden="true" className="h-0.5 w-[22px] bg-red" />
+            {eyebrow}
+          </p>
+          <h1 className="mt-5 max-w-3xl text-balance text-[clamp(2.25rem,4.4vw,3.625rem)] font-semibold leading-[1.05] tracking-[-0.045em]">
+            {title}
+          </h1>
+          {lead && <p className="mt-5 max-w-xl text-pretty text-[clamp(1.0625rem,1.25vw,1.25rem)] leading-relaxed text-ink-2">{lead}</p>}
+          {children}
+        </div>
+        {aside && <div className="hidden lg:block">{aside}</div>}
       </div>
     </section>
   );
